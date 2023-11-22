@@ -1,7 +1,7 @@
 import { PlusOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import React, { useCallback, useState } from "react";
-import ImageZoom from "./imageZoom";
+import ImageZoom from "./ImageZoom";
 
 const PostImages = ({ images }) => {
   const [showImagesZoom, setShowImagesZoom] = useState(false);
