@@ -1,3 +1,5 @@
+//여기서 isAuthenticated는 password에서 보내게 되는 녀석이다
+
 exports.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();

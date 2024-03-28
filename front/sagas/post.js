@@ -229,6 +229,7 @@ function* retweet(action) {
   }
 }
 
+//이게 singPost 만드는 api임... 다이나믹 라우팅과 연관
 function loadPostsAPI(data) {
   return axios.get(`post/${data}`);
 }

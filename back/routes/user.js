@@ -325,6 +325,7 @@ router.get("/:userId", async (req, res, next) => {
   // GET /user/1
 
   try {
+    //해당 data는 sequalize에서 가지고 왔기 때문에 json으로 바꿔줘야한다
     const fullUserWithoutPassword = await User.findOne({
       where: { id: req.params.userId },
       attributes: {
@@ -353,7 +354,7 @@ router.get("/:userId", async (req, res, next) => {
     if (fullUserWithoutPassword) {
       //sequelize에서 보낸온 녀석은 JSON이 아니기 때문에 한번 바꿔줘야함
       const data = fullUserWithoutPassword.toJSON();
-      //백엔드에서 넣은 이유는 해당 length를 포함해서 post id와 팔로워 팔로잉 정보를 다 얻을 수 있기 때문에 redux를 사용해서 브라우저를 통해
+      //백엔드에서 넣은 이유는 해당 length를 포함해서 post id와 팔로워 팔로잉 정보를 다 얻을 수 있기 때문에 redux를 사용해서 브라우저를 통해 (이 부분은 front에서도 가능하지만 보안 위협때문에 이렇게 서버에서 조작하도록 한다)
       data.Posts = data.Posts.length;
       data.Followers = data.Followers.length;
       data.Followings = data.Followings.length;

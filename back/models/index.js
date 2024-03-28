@@ -78,4 +78,6 @@ db.Sequelize = Sequelize;
 //sequalizer가 mysql2라는 드라이버같은
 //녀석을 이용해서 서로 이어준다
 
+console.log(db);
+
 module.exports = db;

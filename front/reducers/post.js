@@ -215,7 +215,6 @@ const reducer = (state = initialState, action) => {
       case LOAD_HASHTAG_POSTS_SUCCESS:
       case LOAD_POST_SUCCESS:
         //여기 unshift도 immer문법이다
-        console.log(action.data);
         draft.loadPostLoading = false;
         draft.loadPostDone = true;
         draft.mainPosts = draft.mainPosts.concat(action.data);

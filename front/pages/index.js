@@ -26,7 +26,6 @@ const Home = () => {
 
   //post에서는 모든 포스트를 보여주는 것이 아니라, 10개를 먼저 보여주고 그다음에 스크롤이 내리면 보여주는 방식으로 해야하는데, 이는 limit과 offset을 이용해서 할 수 있다
 
-  //useEffect에서 window method를 쓸 경우에는 무조건 return을 넣어줘야하고 removeEventLister을 안하면 게속이 이벤트가 메모리에 쌓여있어서 좋지 않다
   useEffect(() => {
     function onScroll() {
       if (
@@ -57,6 +56,8 @@ const Home = () => {
       );
     }
 
+    
+  //useEffect에서 window method를 쓸 경우에는 무조건 return을 넣어줘야하고 removeEventLister을 안하면 게속이 이벤트가 메모리에 쌓여있어서 좋지 않다
     window.addEventListener("scroll", onScroll);
     return () => {
       window.removeEventListener("scroll", onScroll);

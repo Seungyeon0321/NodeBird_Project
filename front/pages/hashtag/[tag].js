@@ -20,7 +20,6 @@ const Hashtag = () => {
     (state) => state.post
   );
 
-  console.log(mainPosts[0].User);
   useEffect(() => {
     function onScroll() {
       if (
