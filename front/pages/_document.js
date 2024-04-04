@@ -43,5 +43,3 @@ export default class MyDocument extends Document {
     );
   }
 }
-
-//이 해당 document는 _app.js보다 상위에 놓인다

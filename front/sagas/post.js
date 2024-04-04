@@ -1,13 +1,4 @@
-import {
-  all,
-  fork,
-  takeEvery,
-  takeLatest,
-  call,
-  put,
-  delay,
-  throttle,
-} from "redux-saga/effects";
+import { all, fork, takeLatest, call, put, throttle } from "redux-saga/effects";
 import axios from "axios";
 
 import {
@@ -48,7 +39,6 @@ import {
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
 import shortid from "shortid";
 
-//get method로는 data를 못 받기 때문에 ?를 이용해서 'key = 값' 형식으로 받아야 한다 (주소에 데이터가 다 포함되어 있다고 생각하면 된다) 이렇게 하면 데이터 캐싱까지 같이 되기 때문에 좋다는데 찾아봐야 할듯
 function loadPostAPI(lastId) {
   return axios.get(`/posts?lastId=${lastId || 0}`);
 }
@@ -58,7 +48,6 @@ function* loadPost(action) {
     const result = yield call(loadPostAPI, action.lastId);
     yield put({
       type: LOAD_POST_SUCCESS,
-      //여기 action.data는 어떤 게시글이 지워졌는지 id가 들어있을 것이다
       data: result.data,
     });
   } catch (err) {
@@ -68,13 +57,6 @@ function* loadPost(action) {
   }
 }
 
-//여기 data에 게시글이 들어있어야 한다, 그럼 이제 이 녀석을
-//back으로 넘겨줘야 한다.
-
-//이렇게 data만 넘기는 게 아니라 content라는 이름이 붙여줘야
-//백엔드에서 req.body.content로 해당 data에 접근이 가능하다.
-
-//formData를 받기 때문에 data 그대로 보내줘야 함
 function addPostAPI(data) {
   console.log(data);
   return axios.post("/post", data);
@@ -82,13 +64,10 @@ function addPostAPI(data) {
 
 function* addPost(action) {
   try {
-    //해당 result에 우리가 back에서 보낸 데이터가 들어있다
     const result = yield call(addPostAPI, action.data);
-    //포스트가 한개 생성될때마다 해당 id가 data 즉 내용물에 들어오는 포스팅에 해당 id를 전달해주는 구조이다
     const id = shortid.generate();
     yield put({
       type: ADD_POST_SUCCESS,
-      //여기 action.data는 어떤 게시글이 지워졌는지 id가 들어있을 것이다
       data: result.data,
     });
     yield put({
@@ -103,7 +82,6 @@ function* addPost(action) {
 }
 
 function removePostAPI(data) {
-  //delete API는 data 못 넣는다
   return axios.delete(`/post/${data}`);
 }
 
@@ -146,8 +124,6 @@ function* addComment(action) {
   }
 }
 
-//게시글의 일부분을 수정하는 거이기 떄문에 patch로 보낸다
-//여기서 data는 postId이다
 function likePostAPI(data) {
   return axios.patch(`/post/${data}/like`);
 }
@@ -190,8 +166,6 @@ function* unlikePost(action) {
 }
 
 function uploadImagesAPI(data) {
-  //form 데이터는 이렇게 data로 그대로 가지고 와야 함, 만약
-  //무언가로 감싸주게 되면 JSON 데이터가 되버림
   return axios.post(`/post/images`, data);
 }
 
@@ -229,7 +203,6 @@ function* retweet(action) {
   }
 }
 
-//이게 singPost 만드는 api임... 다이나믹 라우팅과 연관
 function loadPostsAPI(data) {
   return axios.get(`post/${data}`);
 }

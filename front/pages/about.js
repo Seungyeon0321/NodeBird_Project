@@ -47,15 +47,12 @@ const About = () => {
   );
 };
 
-//언제 접속해도 바뀌지 않은 데이터는 getStaticProps를 사용
-//접속할때마다 그 상황에 따라 바뀌는 녀석은 getServerSideProp을 사용
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
     store.dispatch({
       type: LOAD_USER_REQUEST,
       data: 8,
     });
-    //해당 action이 success까지 받아서 가지고 오게 하려면 아래의 코드가 필요하다
     store.dispatch(END);
     await store.sagaTask.toPromise();
   }

@@ -1,47 +1,47 @@
 import { produce } from "immer";
 
 export const initialState = {
-  removeFollowerLoading: false, //팔로워 차단하기 오기
+  removeFollowerLoading: false,
   removeFollowerDone: false,
   removeFollowerError: null,
 
-  loadFollowersLoading: false, //팔로워 가지고 오기
+  loadFollowersLoading: false,
   loadFollowersDone: false,
   loadFollowersError: null,
 
-  loadFollowingsLoading: false, //팔로잉 가지고 오기
+  loadFollowingsLoading: false,
   loadFollowingsDone: false,
   loadFollowingsError: null,
 
-  loadMyInfoLoading: false, //유저정보 가지고 오기
+  loadMyInfoLoading: false,
   loadMyInfoDone: false,
   loadMyInfoError: null,
 
-  loadUserLoading: false, //유저정보 가지고 오기
+  loadUserLoading: false,
   loadUserDone: false,
   loadUserError: null,
 
-  isLoggingIn: false, //로그인 시도중 -> 로딩창을 띄을 수 있도록 해당 state가 필요한 거임
+  isLoggingIn: false,
   isLoggedIn: false,
   logInError: null,
 
-  isLoggingOut: false, //로그아웃 시도중
+  isLoggingOut: false,
   isLoggedOut: false,
   logOutError: null,
 
-  isSigningUp: false, // 회원가입 시도중
+  isSigningUp: false,
   isSignedUp: false,
   signUpError: null,
 
-  followingLoading: false, // 팔로우 시도중
+  followingLoading: false,
   followingDone: false,
   followingError: null,
 
-  unfollowingLoading: false, //언 팔로우 시도중
+  unfollowingLoading: false,
   unfollowingDone: false,
   unfollowingError: null,
 
-  changeNicknameLoading: false, //닉네임 변경 시도중
+  changeNicknameLoading: false,
   changeNicknameDone: false,
   changeNicknameError: null,
 
@@ -50,8 +50,6 @@ export const initialState = {
   loginData: {},
   userInfo: null,
 };
-
-//index.js 파일에 있던 user와 관련된 action은 다 이렇게 파일을 따로 만들어서 가지고 와야 한다
 
 export const REMOVE_FOLLOWER_REQUEST = "REMOVE_FOLLOWER_REQUEST";
 export const REMOVE_FOLLOWER_SUCCESS = "REMOVE_FOLLOWER_SUCCESS";
@@ -97,8 +95,6 @@ export const UNFOLLOW_REQUEST = "UNFOLLOW_REQUEST";
 export const UNFOLLOW_SUCCESS = "UNFOLLOW_SUCCESS";
 export const UNFOLLOW_FAILURE = "UNFOLLOW_FAILURE";
 
-//해당 액션들은 만약 post reqeust라는 action이 들어왔을 때 post가 success됐을 때
-//사가가 이를 탐지 하고 나에 관한 post 갯수를 1개씩 올려주기 위함이다
 export const ADD_POST_TO_ME = "ADD_POST_TO_ME";
 export const REMOVE_POST_OF_ME = "REMOVE_POST_OF_ME";
 
@@ -107,7 +103,6 @@ export const logInRequestAction = (data) => {
     type: LOG_IN_REQUEST,
     info: "Let reducer know about the type",
     data,
-    //action안에 return 해서 보내는 이 data는 어디서 받을 수 있을까?
   };
 };
 
@@ -173,7 +168,6 @@ const reducer = (state = initialState, action) => {
       case UNFOLLOW_SUCCESS:
         draft.unfollowingLoading = false;
         draft.unfollowingDone = true;
-        //그 언팔로워 한 사람만 빼고 나머지는 남게 된다
         draft.me.Followings = draft.me.Followings.filter(
           (v) => v.id !== action.data.UserId
         );
@@ -292,7 +286,6 @@ const reducer = (state = initialState, action) => {
       case ADD_POST_TO_ME:
         draft.me.posts.unshift({ id: action.data });
         break;
-      //이 부분도 아래 immer사용 안했을 때랑 비교해보자
       case REMOVE_POST_OF_ME:
         draft.me.posts = draft.me.posts.filter((v) => v.id !== action.data);
         break;
@@ -301,111 +294,5 @@ const reducer = (state = initialState, action) => {
         break;
     }
   });
-  // switch (action.type) {
-  //   case LOG_IN_REQUEST:
-  //     return {
-  //       ...state,
-  //       isLoggingIn: true,
-  //     };
-  //   case LOG_IN_SUCCESS:
-  //     return {
-  //       isLoggingIn: false,
-  //       isLoggedIn: true,
-  //       me: dummyUser(action.data),
-  //     };
-  //   case LOG_IN_FAILURE:
-  //     console.log("이건 왜?");
-  //     return {
-  //       ...state,
-  //       isLoggedIn: true,
-  //       logInError: action.error,
-  //     };
-
-  //   case LOG_OUT_REQUEST:
-  //     return {
-  //       ...state,
-  //       isLoggingOut: true,
-  //       isLoggedOut: false,
-  //       logOutError: null,
-  //     };
-  //   case LOG_OUT_SUCCESS:
-  //     return {
-  //       ...state,
-  //       isLoggingOut: false,
-  //       isLoggedOut: true,
-  //       me: null,
-  //     };
-  //   case LOG_OUT_FAILURE:
-  //     return {
-  //       ...state,
-  //       isLoggedOut: false,
-  //       logOutError: action.error,
-  //     };
-
-  //   case SIGN_UP_REQUEST:
-  //     return {
-  //       ...state,
-  //       isSigningUp: true,
-  //       isSignedUp: false,
-  //       signUpError: null,
-  //     };
-  //   case SIGN_UP_SUCCESS:
-  //     return {
-  //       ...state,
-  //       isSigningUp: false,
-  //       isSignedUp: true,
-  //       me: null,
-  //     };
-  //   case SIGN_UP_FAILURE:
-  //     return {
-  //       ...state,
-  //       isSignedUp: false,
-  //       signUpError: action.error,
-  //     };
-
-  //   case CHANGE_NICKNAME_REQUEST:
-  //     return {
-  //       ...state,
-  //       changeNicknameDone: true,
-  //       changeNicknameDone: false,
-  //       changeNicknameError: null,
-  //     };
-  //   case CHANGE_NICKNAME_SUCCESS:
-  //     return {
-  //       ...state,
-  //       changeNicknameDone: false,
-  //       changeNicknameDone: true,
-  //     };
-  //   case CHANGE_NICKNAME_FAILURE:
-  //     return {
-  //       ...state,
-  //       changeNicknameDone: false,
-  //       changeNicknameError: action.error,
-  //     };
-  //   case ADD_POST_TO_ME:
-  //     return {
-  //       ...state,
-  //       me: {
-  //         ...state.me,
-  //         //posts 배열에서 이 action.data는 post 사가에서 보내온 data가 action을 프롭으로 해서 들어오게 되는것이다. 그리고 이 들어오는 id를 먼저 배치하고,
-  //         //이 전 있었던 posts의 아디는 그대로 유지해서 불변성의 법칙을 지키게 되는 구조다
-  //         posts: [{ id: action.data }, ...state.me.posts],
-  //       },
-  //     };
-  //   case REMOVE_POST_OF_ME:
-  //     return {
-  //       ...state,
-  //       me: {
-  //         ...state.me,
-  //         //posts 배열에서 이 action.data는 post 사가에서 보내온 data가 action을 프롭으로 해서 들어오게 되는것이다. 그리고 이 들어오는 id를 먼저 배치하고,
-  //         //이 전 있었던 posts의 아디는 그대로 유지해서 불변성의 법칙을 지키게 되는 구조다
-  //         posts: state.me.posts.filter((v) => v.id !== action.data),
-  //       },
-  //     };
-
-  //   default:
-  //     return state;
-  // }
 };
-
 export default reducer;

@@ -22,7 +22,6 @@ const SingUp = () => {
     (state) => state.user
   );
 
-  //login이 되면 회원가입 창이 없어지게 하도록 한다
   useEffect(() => {
     if (!(me && me.id)) {
       Router.replace("./");
@@ -41,7 +40,7 @@ const SingUp = () => {
     }
   }, [signUpError]);
 
-  const [email, onChangeEmail] = CommonUserForm(""); //포인트는 이 부분이 공백으로 들어간다는것
+  const [email, onChangeEmail] = CommonUserForm("");
   const [password, onChangePassword] = CommonUserForm("");
   const [nickname, onChangeNickName] = CommonUserForm("");
   const [passwordCheck, setPasswordCheck] = useState("");
@@ -50,8 +49,6 @@ const SingUp = () => {
   const onChangePasswordCheck = useCallback(
     (e) => {
       setPasswordCheck(e.target.value);
-      //아래의 state를 추가함으로써 현재 typing하고 있는 녀석이
-      //위에 작성한 password가 동일한지 실시간으로 알 수 있다
       setPasswordError(e.target.value !== password);
     },
     [password]
