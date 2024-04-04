@@ -6,7 +6,7 @@ module.exports = class User extends Model {
     return super.init(
       {
         email: {
-          type: DataTypes.STRING(30), //STRING뿐만 아니라 다른 타입도 들어갈 수 있다
+          type: DataTypes.STRING(30),
           allowNull: false, //필수 여부, 필수일 경우 false
           unique: true, //고유한 값
         },
