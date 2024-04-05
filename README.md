@@ -22,7 +22,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Node.js (version X or above)
+- express.js (version 4.18.2 or above)
 - MySQL (version X or above)
 - npm (version X or above)
 
