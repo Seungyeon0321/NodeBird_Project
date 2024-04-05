@@ -11,10 +11,10 @@ Welcome to NodeBird, a social media platform designed to connect users through t
 
 ## Technology Stack
 
-- **Backend**: Node.js, Express
-- **Frontend**: React (or mention if it's server-side rendered with EJS, Pug, etc.)
-- **Database**: MySQL (or MongoDB, PostgreSQL, etc.)
-- **Others**: Redis for caching (if used), Socket.io for real-time communication (if used)
+- **Backend**: Node.js, Express, sequelize
+- **Frontend**: React, Next.js, Redux, Redux Saga, Ant Design
+- **Database**: MySQL
+- **Others**: ESLint
 
 ## Getting Started
 
