@@ -1,6 +1,3 @@
-Certainly! Below is the README content structured as a Markdown document, which you can directly add to your GitHub repository by creating or editing a `README.md` file in the root directory of your NodeBird project. This format is recognized by GitHub and will be automatically displayed on your repository's main page.
-
-```markdown
 # NodeBird
 
 Welcome to NodeBird, a social media platform designed to connect users through the sharing of updates, insights, and moments. Built with Node.js, this project demonstrates a robust application architecture, leveraging some of the latest technologies in web development.
