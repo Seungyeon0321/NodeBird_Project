@@ -7,6 +7,8 @@ import Head from "next/head";
 import { Card, Avatar } from "antd";
 
 const About = () => {
+  let name;
+
   const { userInfo } = useSelector((state) => state.user);
 
   console.log(userInfo);
