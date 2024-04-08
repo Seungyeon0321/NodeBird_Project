@@ -1,7 +1,8 @@
 {
   "name": "react-nodebird-back",
   "scripts": {
-    "dev": "nodemon app"
+    "dev": "nodemon app",
+    "start": "node app"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
