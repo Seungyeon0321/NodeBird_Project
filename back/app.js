@@ -13,6 +13,8 @@ const passportConfig = require("./passport");
 const passport = require("passport");
 const morgan = require("morgan");
 const path = require("path");
+const hpp = require("hpp");
+const helmet = require("helmet");
 
 dotenv.config();
 
@@ -25,6 +27,25 @@ db.sequelize
 
 passportConfig();
 
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan("combined"));
+  app.use(hpp());
+  app.use(helmet());
+} else {
+  app.use(morgan("dev"));
+}
+app.use(
+  cors({
+    origin: ["http://localhost:3060", "nodebird.com"],
+    credentials: true,
+  })
+);
+
+app.use("/", express.static(path.join(__dirname, "uploads")));
+app.use(express.json());
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(
   session({
     saveUninitialized: false,
@@ -33,22 +54,8 @@ app.use(
   })
 );
 
-app.use(cookieParser(process.env.COOKIE_SECRET));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use(morgan("dev"));
 
-app.use(express.json());
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
-
-app.use("/", express.static(path.join(__dirname, "uploads")));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
