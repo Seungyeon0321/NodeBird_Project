@@ -73,11 +73,4 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-//이렇게 해줌으로써 sequelize가 node랑
-//mySQL을 연결해주는 역활을 한다,
-//sequalizer가 mysql2라는 드라이버같은
-//녀석을 이용해서 서로 이어준다
-
-console.log(db);
-
 module.exports = db;

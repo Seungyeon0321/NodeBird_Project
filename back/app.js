@@ -25,8 +25,6 @@ db.sequelize
 
 passportConfig();
 
-app.use(cookieParser(process.env.COOKIE_SECRET));
-
 app.use(
   session({
     saveUninitialized: false,
@@ -34,6 +32,8 @@ app.use(
     secret: process.env.COOKIE_SECRET,
   })
 );
+
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(passport.initialize());
 app.use(passport.session());
