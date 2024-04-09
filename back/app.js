@@ -41,11 +41,9 @@ app.use(
   })
 );
 
-app.use("/", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
+app.use("/", express.static(path.join(__dirname, "uploads")));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(
   session({
     saveUninitialized: false,
@@ -53,8 +51,8 @@ app.use(
     secret: process.env.COOKIE_SECRET,
   })
 );
-
-app.use(morgan("dev"));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.urlencoded({ extended: true }));
 
