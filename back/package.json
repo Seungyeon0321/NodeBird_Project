@@ -2,7 +2,7 @@
   "name": "react-nodebird-back",
   "scripts": {
     "dev": "nodemon app",
-    "start": "cross-env NODE_ENV=production pm2 start app"
+    "start": "cross-env NODE_ENV=production pm2 start app.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
