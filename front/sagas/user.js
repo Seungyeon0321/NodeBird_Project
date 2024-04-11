@@ -1,5 +1,6 @@
 import { all, fork, takeLatest, call, put, delay } from "redux-saga/effects";
 import axios from "axios";
+import { backURL } from "../config/config";
 
 import {
   LOG_IN_REQUEST,
@@ -115,7 +116,7 @@ function* logOut() {
 }
 
 function signUpAPI(data) {
-  return axios.post("http://localhost:3065/user", data);
+  return axios.post(`${backURL}/user`, data);
 }
 
 function* signUp(action) {
