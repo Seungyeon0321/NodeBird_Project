@@ -27,6 +27,7 @@ db.sequelize
 
 passportConfig();
 
+// For production mode
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
   app.use(hpp());
@@ -34,9 +35,10 @@ if (process.env.NODE_ENV === "production") {
 } else {
   app.use(morgan("dev"));
 }
+
 app.use(
   cors({
-    origin: ["nodebird.com", "http://3.96.64.37", "http://localhost"],
+    origin: ["nodebird.com", "http://3.97.10.133", "http://localhost"],
     // origin: "*",
     credentials: true,
   })
@@ -66,6 +68,6 @@ app.use("/posts", postsRouter);
 app.use("/user", userRouter);
 app.use("/hashtag", hashtagRouter);
 
-app.listen(3065, () => {
+app.listen(80, () => {
   console.log("서버 실행 중");
 });
