@@ -261,11 +261,12 @@ const reducer = (state = initialState, action) => {
       case SIGN_UP_SUCCESS:
         draft.isSigningUp = false;
         draft.isSignedUp = true;
+        draft.signUpError = false;
         draft.me = null;
         break;
       case SIGN_UP_FAILURE:
         draft.isSignedUp = false;
-        draft.signUpError = action.error;
+        draft.signUpError = true;
         break;
 
       case CHANGE_NICKNAME_REQUEST:

@@ -25,26 +25,18 @@ import moment from "moment";
 moment.locale("ko");
 
 const PostCard = ({ post }) => {
-  const { removePostLoading, retweetError } = useSelector(
-    (state) => state.post
-  );
+  const { removePostLoading } = useSelector((state) => state.post);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const dispatch = useDispatch();
-  // console.log(post);
-  // {id: 1, User: {…}, content: '#Vancouver #Hello #nice good', images: Array(3), Comments: Array(2)}
 
-  // (옵셔널 체이닝)
   const id = useSelector((state) => {
     return state.user.me?.id;
   });
-
-  //내가 login을 했다고 하면 이 두가지 요소가 있겠지
 
   const liked = post.Likers.find((v) => v.id === id);
 
   const onLike = useCallback(() => {
     if (!id) {
-      //로그인을 안했을 때 이렇게 먼저 막아주는 것이좋다
       return alert("You need to login first");
     }
     return dispatch({
@@ -55,8 +47,7 @@ const PostCard = ({ post }) => {
 
   const onUnlike = useCallback(() => {
     if (!id) {
-      //로그인을 안했을 때 이렇게 먼저 막아주는 것이좋다
-      return alter("You need to login first");
+      return alert("You need to login first");
     }
     return dispatch({
       type: UNLIKE_POST_REQUEST,
@@ -70,16 +61,14 @@ const PostCard = ({ post }) => {
 
   const onRemovePost = useCallback(() => {
     if (!id) {
-      //로그인을 안했을 때 이렇게 먼저 막아주는 것이좋다
-      return alter("You need to login first");
+      return alert("You need to login first");
     }
     return dispatch({ type: REMOVE_POST_REQUEST, data: post.id });
   }, []);
 
   const onRetweet = useCallback(() => {
     if (!id) {
-      //로그인을 안했을 때 이렇게 먼저 막아주는 것이좋다
-      return alter("You need to login first");
+      return alert("You need to login first");
     }
     return dispatch({
       type: RETWEET_REQUEST,

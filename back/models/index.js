@@ -32,7 +32,6 @@
 //   });
 
 const Sequelize = require("sequelize");
-//env 환경 설정이라는 데 이게 무슨 말일까?
 const comment = require("./comment");
 const hashtag = require("./hashtag");
 const image = require("./image");
@@ -43,7 +42,6 @@ const env = process.env.NODE_ENV || "development";
 const config = require("../config/config")[env];
 const db = {};
 
-// 이렇게 하면 sequelize가 node와 mysql을 연결해줌
 const sequelize = new Sequelize(
   config.database,
   config.username,
@@ -59,6 +57,12 @@ db.Hashtag = hashtag;
 db.Image = image;
 db.Post = post;
 db.User = user;
+
+async function myFunction() {
+  const result = await sequelize.authenticate();
+  if (result) console.log("connection successful!");
+  console.log("there is error!");
+}
 
 Object.keys(db).forEach((modelName) => {
   db[modelName].init(sequelize);

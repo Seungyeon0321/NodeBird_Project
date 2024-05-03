@@ -1,4 +1,3 @@
-// hashtag/[tag].js
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
@@ -8,9 +7,8 @@ import PostCard from "../../component/PostCard";
 import wrapper from "../../store/configureStore";
 import { useRouter } from "next/router";
 import { LOAD_HASHTAG_POSTS_REQUEST } from "../../reducers/post";
-import { LOAD_MY_INFO_REQUEST, LOAD_USER_REQUEST } from "../../reducers/user";
+import { LOAD_MY_INFO_REQUEST } from "../../reducers/user";
 import { END } from "redux-saga";
-import { Card, Avatar } from "antd";
 
 const Hashtag = () => {
   const dispatch = useDispatch();
@@ -32,7 +30,7 @@ const Hashtag = () => {
             lastId:
               mainPosts[mainPosts.length - 1] &&
               mainPosts[mainPosts.length - 1].id,
-            data: id,
+            data: tag,
           });
         }
       }

@@ -1,5 +1,5 @@
 // post/[id].js
-
+import React from "react";
 import { useRouter } from "next/router";
 import { LOAD_MY_INFO_REQUEST } from "../../reducers/user";
 import { LOAD_POSTS_REQUEST } from "../../reducers/post";

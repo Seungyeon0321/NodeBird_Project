@@ -1,4 +1,4 @@
-import { all, fork, takeLatest, call, put, delay } from "redux-saga/effects";
+import { all, fork, takeLatest, call, put } from "redux-saga/effects";
 import axios from "axios";
 import { backURL } from "../config/config";
 
@@ -77,6 +77,7 @@ function* loadMyInfo(action) {
 }
 
 function logInAPI(data) {
+  console.log(data);
   return axios.post("/user/login", data);
 }
 
@@ -116,12 +117,14 @@ function* logOut() {
 }
 
 function signUpAPI(data) {
+  console.log(data);
   return axios.post(`${backURL}/user`, data);
 }
 
 function* signUp(action) {
   try {
     yield call(signUpAPI, action.data);
+    console.log(action.data);
     yield put({
       type: SIGN_UP_SUCCESS,
     });

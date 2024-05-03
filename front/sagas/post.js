@@ -37,7 +37,6 @@ import {
   LOAD_HASHTAG_POSTS_FAILURE,
 } from "../reducers/post";
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
-import shortid from "shortid";
 
 function loadPostAPI(lastId) {
   return axios.get(`/posts?lastId=${lastId || 0}`);
@@ -58,14 +57,13 @@ function* loadPost(action) {
 }
 
 function addPostAPI(data) {
-  console.log(data);
   return axios.post("/post", data);
 }
 
 function* addPost(action) {
   try {
     const result = yield call(addPostAPI, action.data);
-    const id = shortid.generate();
+
     yield put({
       type: ADD_POST_SUCCESS,
       data: result.data,
@@ -252,7 +250,6 @@ function loadHashtagPostsAPI(data, lastId) {
 function* loadHashtagPosts(action) {
   try {
     const result = yield call(loadHashtagPostsAPI, action.data, action.lastId);
-    console.log("해쉬태그 리절트!!", result);
 
     yield put({
       type: LOAD_HASHTAG_POSTS_SUCCESS,

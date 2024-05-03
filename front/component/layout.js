@@ -1,3 +1,4 @@
+import React from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import { useCallback } from "react";
@@ -54,7 +55,7 @@ const AppLayout = ({ children }) => {
           {children}
         </Col>
         <Col xs={24} md={6}>
-          <a rel="noreferred noopner">Let's go!</a>
+          <a rel="noReferred noOpener">Let`s go!</a>
         </Col>
       </Row>
     </div>

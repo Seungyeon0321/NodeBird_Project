@@ -7,7 +7,19 @@ import post from "./post";
 const rootReducer = (state, action) => {
   switch (action.type) {
     case HYDRATE:
-      return action.payload;
+      return {
+        ...state, // preserve client state
+        ...action.payload, // apply server state
+        // Handle state slices individually if needed
+        user: {
+          ...state.user, // preserve user client state
+          ...action.payload.user, // apply server state
+        },
+        post: {
+          ...state.post, // preserve post client state
+          ...action.payload.post, // apply server state
+        },
+      };
     default: {
       const combineReducer = combineReducers({
         user,

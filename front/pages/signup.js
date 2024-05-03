@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import AppLayout from "../component/layout";
 import Router from "next/router";
 import Head from "next/head";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import CommonUserForm from "../hooks/useInput";
 import styled from "styled-components";
 import { SIGN_UP_REQUEST, LOAD_MY_INFO_REQUEST } from "../reducers/user";
@@ -21,9 +21,26 @@ const SingUp = () => {
   const { isSigningUp, isSignedUp, signUpError, me } = useSelector(
     (state) => state.user
   );
+  const [messageApi, contextHolder] = message.useMessage();
 
+  const success = () => {
+    messageApi.open({
+      type: "success",
+      content: "You are all set!",
+      duration: 10,
+    });
+  };
+  const error = () => {
+    messageApi.open({
+      type: "error",
+      content: "Signup failed. Please retry or contact support",
+      duration: 10,
+    });
+  };
+
+  //If I set this one, It redirect me to the main page whenever I update the state
   useEffect(() => {
-    if (!(me && me.id)) {
+    if (me && me.id) {
       Router.replace("./");
     }
   }, [me && me.id]);
@@ -76,6 +93,13 @@ const SingUp = () => {
       type: SIGN_UP_REQUEST,
       data: { email, password, nickname },
     });
+
+    console.log(signUpError);
+    if (!signUpError) {
+      success();
+    } else {
+      error();
+    }
   }, [email, passwordCheck, term]);
 
   return (
@@ -83,6 +107,7 @@ const SingUp = () => {
       <Head>
         <title>SignUp | Node Bird</title>
       </Head>
+      {contextHolder}
       <Form onFinish={onSubmit}>
         <div>
           <label htmlFor="user-email">User Email</label>
