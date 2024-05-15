@@ -12,7 +12,6 @@ module.exports = () => {
       },
       async (email, password, done) => {
         try {
-          console.log(email, password);
           const user = await User.findOne({
             where: { email },
           });
