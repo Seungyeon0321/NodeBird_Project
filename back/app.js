@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(
   cors({
-    origin: ["nodebird.com", "http://35.182.225.233", "http://localhost"],
+    origin: ["nodebird.com", "http://3.99.163.46", "http://localhost"],
     // origin: "*",
     credentials: true,
   })
