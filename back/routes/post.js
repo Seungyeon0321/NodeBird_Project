@@ -39,7 +39,7 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
       content: req.body.content,
       UserId: req.user.id,
     });
-    console.log(post);
+
     if (hashtags) {
       const result = await Promise.all(
         hashtags.map((tag) =>
