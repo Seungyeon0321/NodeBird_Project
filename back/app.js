@@ -28,6 +28,7 @@ db.sequelize
 passportConfig();
 
 // For production mode
+
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
   app.use(hpp());
