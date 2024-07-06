@@ -33,17 +33,22 @@ if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
   app.use(hpp());
   app.use(helmet());
+  app.use(
+    cors({
+      origin: ["http://portfolio-simon.com"],
+      // origin: "*",
+      credentials: true,
+    })
+  );
 } else {
   app.use(morgan("dev"));
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    })
+  );
 }
-
-app.use(
-  cors({
-    origin: ["portfolio-simon.com", "http://localhost"],
-    // origin: "*",
-    credentials: true,
-  })
-);
 
 app.use(express.json());
 app.use("/", express.static(path.join(__dirname, "uploads")));
