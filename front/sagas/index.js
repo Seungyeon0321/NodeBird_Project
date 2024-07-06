@@ -1,10 +1,11 @@
 import { all, fork } from "redux-saga/effects";
+import { backURL } from "../config/config";
 
 import postSaga from "./post";
 import userSaga from "./user";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://35.182.63.155";
+axios.defaults.baseURL = backURL;
 axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {
