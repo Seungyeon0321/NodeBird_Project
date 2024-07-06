@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(
   cors({
-    origin: ["nodebird.com", "http://35.182.105.91", "http://localhost"],
+    origin: ["portfolio-simon.com", "http://localhost"],
     // origin: "*",
     credentials: true,
   })
@@ -70,5 +70,5 @@ app.use("/user", userRouter);
 app.use("/hashtag", hashtagRouter);
 
 app.listen(80, () => {
-  console.log("서버 실행 중");
+  console.log("Server is running on port 80");
 });
