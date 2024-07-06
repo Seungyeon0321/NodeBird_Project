@@ -53,6 +53,14 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      domain:
+        process.env.NODE_ENV === "production"
+          ? ".portfolio-simon.com"
+          : "localhost",
+    },
   })
 );
 app.use(passport.initialize());
