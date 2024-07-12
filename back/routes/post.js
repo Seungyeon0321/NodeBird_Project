@@ -2,6 +2,8 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const multerS3 = require("multer-s3");
+const AWS = require("aws-sdk");
 
 const { Post, Comment, Image, User, Hashtag } = require("../models");
 
@@ -17,16 +19,17 @@ try {
 }
 
 //////////////////////Work for img/////////////////////
+AWS.config.update({
+  accessKeyId: process.env.S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  region: "ca-central-1",
+});
 const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, "uploads");
-    },
-    filename(req, file, done) {
-      const ext = path.extname(file.originalname); // 확장자 추출(.png)
-      const basename = path.basename(file.originalname, ext);
-
-      done(null, basename + "_" + new Date().getTime() + ext);
+  storage: multerS3({
+    s3: new AWS.S3(),
+    bucket: "portfolio-simon-nodebird",
+    key(req, file, cb) {
+      cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
     },
   }),
   limits: { fieldNameSize: 20 * 1024 * 1024 },
@@ -96,13 +99,14 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
   }
 });
 
+//s3인 경우에는 v.location으로 된다
 router.post(
   "/images",
   isLoggedIn,
   upload.array("image"),
   async (req, res, next) => {
     console.log(req.files);
-    res.json(req.files.map((v) => v.filename));
+    res.json(req.files.map((v) => v.location));
   }
 );
 
