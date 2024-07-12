@@ -2,7 +2,6 @@ import { PlusOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import React, { useCallback, useState } from "react";
 import ImageZoom from "./ImageZoom";
-import { backURL } from "../config/config";
 
 const PostImages = ({ images }) => {
   const [showImagesZoom, setShowImagesZoom] = useState(false);
@@ -21,7 +20,7 @@ const PostImages = ({ images }) => {
         {/* Button이나 input이 아닌 애들은 이 role presentation을 넣도록 하자 스크린리더에서 굳이 클릭할 필요가 없는 img는 presentation을 넣도록 하자*/}
         <img
           role="presentation"
-          src={`${backURL}/${images[0].src}`}
+          src={`${images[0].src}`}
           alt={images[0].src}
           onClick={onZoom}
         />
@@ -35,14 +34,14 @@ const PostImages = ({ images }) => {
         <img
           role="presentation"
           width="50%"
-          src={`${backURL}/${images[0].src}`}
+          src={`${images[0].src}`}
           alt={images[0].src}
           onClick={onZoom}
         />
         <img
           role="presentation"
           width="50%"
-          src={`${backURL}/${images[1].src}`}
+          src={`${images[1].src}`}
           alt={images[1].src}
           onClick={onZoom}
         />
@@ -63,7 +62,7 @@ const PostImages = ({ images }) => {
         <img
           role="presentation"
           style={{ width: "50%" }}
-          src={`${backURL}/${images[0].src}`}
+          src={`${images[0].src}`}
           alt={images[0].src}
           onClick={onZoom}
         />
