@@ -3,7 +3,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const multerS3 = require("multer-s3");
-const AWS = require("aws-sdk");
+const { S3Client } = require("@aws-sdk/client-s3");
 
 const { Post, Comment, Image, User, Hashtag } = require("../models");
 
@@ -19,17 +19,20 @@ try {
 }
 
 //////////////////////Work for img/////////////////////
-AWS.config.update({
-  accessKeyId: process.env.S3_ACCESS_KEY_ID,
-  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+
+const s3 = new S3Client({
   region: "ca-central-1",
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  },
 });
 
 const upload = multer({
   storage: multerS3({
-    s3: new AWS.S3(),
+    s3: s3,
     bucket: "portfolio-simon-nodebird",
-    key(req, file, cb) {
+    key: function (req, file, cb) {
       cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
     },
   }),
@@ -106,7 +109,7 @@ router.post(
   isLoggedIn,
   upload.array("image"),
   async (req, res, next) => {
-    console.log(req.files);
+    console.log("immmmmmmmmmmmmmmmmmmmmmmmmage", req.files);
     res.json(req.files.map((v) => v.location));
   }
 );
