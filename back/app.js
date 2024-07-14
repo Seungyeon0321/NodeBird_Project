@@ -73,6 +73,10 @@ app.use(passport.session());
 
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/", (req, res) => {
+  res.send("<h1>hello express</h1>");
+});
+
 app.use("/post", postRouter);
 app.use("/posts", postsRouter);
 app.use("/user", userRouter);
