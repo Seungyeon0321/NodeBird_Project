@@ -24,6 +24,7 @@ AWS.config.update({
   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
   region: "ca-central-1",
 });
+
 const upload = multer({
   storage: multerS3({
     s3: new AWS.S3(),
@@ -106,9 +107,7 @@ router.post(
   upload.array("image"),
   async (req, res, next) => {
     console.log(req.files);
-    res.json(
-      req.files.map((v) => v.location.replace(/\/original\//, "/thumb/"))
-    );
+    res.json(req.files.map((v) => v.location));
   }
 );
 
