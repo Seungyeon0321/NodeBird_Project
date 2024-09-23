@@ -215,7 +215,6 @@ const reducer = (state = initialState, action) => {
         break;
 
       case REMOVE_POST_REQUEST:
-        console.log(draft.mainPosts);
         draft.removePostLoading = true;
         draft.removePostDone = false;
         draft.removePostError = null;

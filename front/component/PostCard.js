@@ -140,7 +140,7 @@ const PostCard = ({ post }) => {
             {/* moment를 쓰게 되면 편하게 현재 날짜를 만들 수 있다, 한번 찾아보기!*/}
             <Card.Meta
               avatar={
-                <Link href={`/user/${post.Retweet.User.id}`}>
+                <Link href={`/user/${post.Retweet.User.id}`} prefetch={false}>
                   <Avatar>{post.Retweet.User.nickname[0]}</Avatar>
                 </Link>
               }
@@ -159,7 +159,7 @@ const PostCard = ({ post }) => {
             </div>
             <Card.Meta
               avatar={
-                <Link href={`/user/${post.User.id}`}>
+                <Link href={`/user/${post.User.id}`} prefetch={false}>
                   <Avatar>{post.User.nickname[0]}</Avatar>
                 </Link>
               }
@@ -193,7 +193,7 @@ const PostCard = ({ post }) => {
                   <List.Item.Meta
                     author={item.User.nickname}
                     avatar={
-                      <Link href={`/user/${item.User.id}`}>
+                      <Link href={`/user/${item.User.id}`} prefetch={false}>
                         <Avatar>{item.User.nickname[0]}</Avatar>
                       </Link>
                     }

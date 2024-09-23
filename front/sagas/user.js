@@ -77,7 +77,6 @@ function* loadMyInfo(action) {
 }
 
 function logInAPI(data) {
-  console.log(data);
   return axios.post("/user/login", data);
 }
 
@@ -117,14 +116,12 @@ function* logOut() {
 }
 
 function signUpAPI(data) {
-  console.log(data);
   return axios.post(`${backURL}/user`, data);
 }
 
 function* signUp(action) {
   try {
     yield call(signUpAPI, action.data);
-    console.log(action.data);
     yield put({
       type: SIGN_UP_SUCCESS,
     });

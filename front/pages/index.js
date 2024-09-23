@@ -16,8 +16,6 @@ const Home = () => {
     (state) => state.post
   );
 
-  console.log(mainPosts);
-
   useEffect(() => {
     if (retweetError) {
       alert(retweetError);

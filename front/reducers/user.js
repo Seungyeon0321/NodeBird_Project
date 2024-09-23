@@ -233,7 +233,6 @@ const reducer = (state = initialState, action) => {
         draft.me = action.data;
         break;
       case LOG_IN_FAILURE:
-        console.log(action);
         draft.isLoggedIn = true;
         draft.logInError = action.error.response;
         break;
