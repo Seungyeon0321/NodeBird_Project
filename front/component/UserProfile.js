@@ -1,12 +1,7 @@
 import React, { useCallback } from "react";
 import Link from "next/link";
 import { Avatar, Button, Card } from "antd";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { logOutRequestAction } from "../reducers/user";
 const { Meta } = Card;
@@ -47,7 +42,7 @@ const UserProfile = () => {
     >
       <Meta
         avatar={
-          <Link href={`/user/${me.id}`}>
+          <Link href={`/user/${me.id}`} prefetch={false}>
             <Avatar
               shape="square"
               size={64}
@@ -68,5 +63,3 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
-
-//로그인하게 되면 나오는 창

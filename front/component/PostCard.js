@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Popover, Button, Avatar, List, Skeleton } from "antd";
@@ -98,7 +98,7 @@ const PostCard = ({ post }) => {
               <Button.Group>
                 {id && post.User.id === id ? (
                   <>
-                    <Button>Modify</Button>
+                    {!post.RetweetId && <Button>Modify</Button>}
                     <Button
                       type="primary"
                       danger
