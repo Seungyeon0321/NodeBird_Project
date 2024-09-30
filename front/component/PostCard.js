@@ -19,6 +19,7 @@ import {
   LIKE_POST_REQUEST,
   UNLIKE_POST_REQUEST,
   RETWEET_REQUEST,
+  UPDATE_POST_REQUEST,
 } from "../reducers/post";
 import moment from "moment";
 
@@ -26,8 +27,30 @@ moment.locale("ko");
 
 const PostCard = ({ post }) => {
   const { removePostLoading } = useSelector((state) => state.post);
+  const [editMode, setEditMode] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const dispatch = useDispatch();
+
+  const onClickUpdate = useCallback(() => {
+    setEditMode(true);
+  }, []);
+
+  const onCancelUpdatePost = useCallback(() => {
+    setEditMode(false);
+  }, []);
+
+  const onChangePost = useCallback(
+    (editContent) => () => {
+      dispatch({
+        type: UPDATE_POST_REQUEST,
+        date: {
+          postId: post.id,
+          content: editContent,
+        },
+      });
+    },
+    [post]
+  );
 
   const id = useSelector((state) => {
     return state.user.me?.id;
@@ -98,7 +121,9 @@ const PostCard = ({ post }) => {
               <Button.Group>
                 {id && post.User.id === id ? (
                   <>
-                    {!post.RetweetId && <Button>Modify</Button>}
+                    {!post.RetweetId && (
+                      <Button onClick={onClickUpdate}>Modify</Button>
+                    )}
                     <Button
                       type="primary"
                       danger
@@ -148,6 +173,9 @@ const PostCard = ({ post }) => {
               description={
                 <PostCardContent
                   postData={post.Retweet.content}
+                  editMode={editMode}
+                  onCancelUpdatePost={onCancelUpdatePost}
+                  onChangePost={onChangePost}
                 ></PostCardContent>
               }
             />
@@ -165,7 +193,11 @@ const PostCard = ({ post }) => {
               }
               title={post.User.nickname}
               description={
-                <PostCardContent postData={post.content}>
+                <PostCardContent
+                  postData={post.content}
+                  onCancelUpdatePost={onCancelUpdatePost}
+                  onChangePost={onChangePost}
+                >
                   #해시태그
                 </PostCardContent>
               }
