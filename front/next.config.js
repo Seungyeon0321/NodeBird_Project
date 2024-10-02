@@ -4,10 +4,17 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 module.exports = withBundleAnalyzer({
   compress: true,
-  webpack(config, { webpack }) {
+  webpack(config, { webpack, isServer }) {
     const prod = process.env.NODE_ENV === "production";
     // const plugins = [...config.plugins,
     // new webpack.ContextReplacementPlugin(/moment[/\\\]locale$/, /^\.\/en$/)];
+
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false,
+        path: false,
+      };
+    }
 
     return {
       ...config,
