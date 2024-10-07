@@ -88,7 +88,7 @@ router.post("/", isNotLoggedIn, async (req, res, next) => {
       },
     });
     if (exUser) {
-      return res.status(403).send("이미 사용중인 아이디입니다.");
+      return res.status(403).send("This email is already in use.");
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -307,7 +307,7 @@ router.get("/:userId", async (req, res, next) => {
       data.Followings = data.Followings.length;
       res.status(200).json(data);
     } else {
-      res.status(404).json("존재하지 않는 사용자입니다.");
+      res.status(404).json("The user does not exist!");
     }
   } catch (error) {
     console.error(error);

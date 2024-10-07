@@ -2,68 +2,112 @@ import React from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import { useCallback } from "react";
-import { Menu, Input, Row, Col } from "antd";
+import { Layout, Input, Row, Col } from "antd";
+
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import CommonUserForm from "../hooks/useInput";
-import UserProfile from "./UserProfile";
-import LoginForm from "./LoginForm";
+import StyledButton from "./button";
 import Router from "next/router";
 
 const SearchWrapper = styled(Input.Search)`
   vertical-align: middle;
+
+  .ant-input-search-button {
+    background-color: #8685ef;
+    border-color: #8685ef;
+  }
 `;
-//만약 이런식으로 styled-components를 이용하는 것이 싫다면
-//useMemo를 이용하는 것도 하나의 방법이다
 
-// const style = useMemo(() => ({
-// marginTop:10
-// }),[])
-
-//이런식으로 만들어서 style={{style}} 라고 해주면 이 useMemo는
-//rendering이 되도 변화가 없는한 rendering을 하지 않기 때문에 최적화 측면에서 좋다
+const { Header, Content } = Layout;
 
 const AppLayout = ({ children }) => {
   const [searchInput, onChangeSearchInput] = CommonUserForm("");
-  //이 loginState 바뀌면 알아서 다 바뀐다
   const { me } = useSelector((state) => state.user);
 
-  //enter을 누르게 되면 onSearch가 실행되게 된다
   const onSearch = useCallback(() => {
     Router.push(`/hashtag/${searchInput}`);
   }, [searchInput]);
 
   return (
-    <div>
-      <Menu mode="horizontal">
-        <Menu.Item>
-          <Link href="/">Node Bird</Link>
-        </Menu.Item>
-        <Menu.Item>
-          <Link href="/profile">Profile</Link>
-        </Menu.Item>
-        <SearchWrapper
-          enterButton
-          value={searchInput}
-          onChange={onChangeSearchInput}
-          onSearch={onSearch}
-        />
-      </Menu>
-      <Row gutter={8}>
-        <Col xs={12}>{me ? <UserProfile /> : <LoginForm />}</Col>
-        <Col xs={24} md={12}>
-          {children}
-        </Col>
-        <Col xs={24} md={6}>
+    <Layout>
+      <Header style={{ background: "#e3e0f3" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            key="logo"
+            style={{ fontSize: "24px", fontWeight: "bold", flex: 1 }}
+          >
+            <Link href="/">Node Bird</Link>
+          </div>
+
+          <div style={{ flex: 4 }}></div>
+
+          <div
+            style={{
+              display: "flex",
+              flex: 0.7,
+              justifyContent: "space-evenly",
+            }}
+          >
+            {me ? (
+              <>
+                <StyledButton
+                  href="/profile"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 15,
+                    marginLeft: "30vw",
+                  }}
+                >
+                  Profile
+                </StyledButton>
+              </>
+            ) : (
+              <>
+                <StyledButton
+                  href="/login"
+                  style={{ fontWeight: "bold", fontSize: 15 }}
+                >
+                  Login
+                </StyledButton>
+                <StyledButton
+                  href="/signup"
+                  style={{ fontWeight: "bold", fontSize: 15 }}
+                >
+                  Signup
+                </StyledButton>
+              </>
+            )}
+          </div>
+
+          <div style={{ flex: 2, marginLeft: 20 }}>
+            <SearchWrapper
+              enterButton
+              value={searchInput}
+              onChange={onChangeSearchInput}
+              onSearch={onSearch}
+            />
+          </div>
+        </div>
+      </Header>
+
+      <Content>
+        <Row gutter={8} justify="center" style={{ marginTop: "10px" }}>
+          {/* <Col xs={12}>{me ? <UserProfile /> : <LoginForm />}</Col> */}
+          <Col xs={24} md={{ span: 12 }}>
+            {children}
+          </Col>
+          {/* <Col xs={24} md={6}>
           <a rel="noReferred noOpener">Let`s go!</a>
-        </Col>
-      </Row>
-    </div>
+        </Col> */}
+        </Row>
+      </Content>
+    </Layout>
   );
 };
 
 export default AppLayout;
 
-AppLayout.prototype = {
+AppLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };

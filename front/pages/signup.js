@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import AppLayout from "../component/layout";
 import Router from "next/router";
 import Head from "next/head";
-import { Button, Checkbox, Form, Input, message } from "antd";
+import { Checkbox, Form, Input, message } from "antd";
 import CommonUserForm from "../hooks/useInput";
 import styled from "styled-components";
 import { SIGN_UP_REQUEST, LOAD_MY_INFO_REQUEST } from "../reducers/user";
@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import axios from "axios";
 import wrapper from "../store/configureStore";
-
+import CustomButton from "../styles/CustomButton";
 const ErrorMessage = styled.div`
   color: "blue";
 `;
@@ -94,7 +94,6 @@ const SingUp = () => {
       data: { email, password, nickname },
     });
 
-    console.log(signUpError);
     if (!signUpError) {
       success();
     } else {
@@ -163,10 +162,10 @@ const SingUp = () => {
             I agree with the terms
           </Checkbox>
         </div>
-        <div style={{ marginTop: 10 }}>
-          <Button type="primary" htmlType="submit" loading={isSigningUp}>
+        <div style={{ marginTop: 10, marginBottom: 20 }}>
+          <CustomButton htmlType="submit" loading={isSigningUp}>
             Sing Up
-          </Button>
+          </CustomButton>
         </div>
       </Form>
     </AppLayout>

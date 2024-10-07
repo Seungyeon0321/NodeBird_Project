@@ -6,13 +6,14 @@ import CommonUserForm from "../hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logInRequestAction } from "../reducers/user";
-
+import CustomButton from "../styles/CustomButton";
 const ButtonWrapper = styled.div`
   margin-top: 15px;
 `;
 
 const FormWrapper = styled(Form)`
   padding: 10px;
+  margin-bottom: 20px;
 `;
 
 const LoginForm = () => {
@@ -56,14 +57,13 @@ const LoginForm = () => {
         ></Input>
       </div>
       <ButtonWrapper>
-        <Button
-          type="primary"
+        <CustomButton
           htmlType="submit"
           loading={isLoggingIn}
           style={{ marginRight: 10 }}
         >
           Login
-        </Button>
+        </CustomButton>
         <Link href="/signup">
           <Button>Sing Up</Button>
         </Link>

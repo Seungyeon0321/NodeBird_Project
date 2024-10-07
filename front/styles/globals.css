@@ -1,0 +1,15 @@
+.clicked {
+  font-weight: bold;
+  font-size: 15px;
+  transition: transform 0.2s ease-in-out;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transform: scale(1.1);
+}
+
+.ant-btn-primary {
+  background-color: #8685ef !important;
+  border-color: #8685ef !important;
+}
