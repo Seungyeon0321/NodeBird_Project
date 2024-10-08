@@ -30,6 +30,8 @@ const PostForm = () => {
     });
     //req.body.content가 된다
     formData.append("content", text);
+
+    console.log("formData", formData);
     return dispatch({
       type: ADD_POST_REQUEST,
       data: formData,

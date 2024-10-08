@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { useCallback } from "react";
 import { Layout, Input, Row, Col } from "antd";
-
+import UserProfile from "./userProfile";
+import LoginForm from "./LoginForm";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import CommonUserForm from "../hooks/useInput";
@@ -93,7 +94,11 @@ const AppLayout = ({ children }) => {
 
       <Content>
         <Row gutter={8} justify="center" style={{ marginTop: "10px" }}>
-          {/* <Col xs={12}>{me ? <UserProfile /> : <LoginForm />}</Col> */}
+          {me && (
+            <Col xs={12}>
+              <UserProfile />
+            </Col>
+          )}
           <Col xs={24} md={{ span: 12 }}>
             {children}
           </Col>

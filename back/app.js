@@ -36,8 +36,8 @@ if (process.env.NODE_ENV === "production") {
   app.use(helmet());
   app.use(
     cors({
-      origin: ["http://portfolio-simon.com"],
-      // origin: "*",
+      // origin: ["http://portfolio-simon.com"],
+      origin: "*",
       credentials: true,
     })
   );
@@ -59,10 +59,10 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
-    proxy: true,
+    proxy: false,
     cookie: {
       httpOnly: true,
-      secure: true,
+      secure: false,
       domain:
         process.env.NODE_ENV === "production"
           ? ".portfolio-simon.com"

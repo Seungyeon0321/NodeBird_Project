@@ -14,6 +14,7 @@ import { Card, Avatar } from "antd";
 const User = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+
   const { id } = router.query;
   const { mainPosts, hasMorePost, loadPostLoading } = useSelector(
     (state) => state.post
