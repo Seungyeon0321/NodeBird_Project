@@ -60,13 +60,11 @@ function* loadPost(action) {
 }
 
 function addPostAPI(data) {
-  console.log("action.datatttttttttttttttttttttttttttttttttt", data);
   return axios.post("/post", data);
 }
 
 function* addPost(action) {
   try {
-    console.log("action.datatttttttttttttttttttttttttttttttttt", action.data);
     const result = yield call(addPostAPI, action.data);
 
     yield put({

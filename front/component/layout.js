@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useCallback } from "react";
 import { Layout, Input, Row, Col } from "antd";
 import UserProfile from "./userProfile";
-import LoginForm from "./LoginForm";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import CommonUserForm from "../hooks/useInput";
@@ -33,63 +32,78 @@ const AppLayout = ({ children }) => {
   return (
     <Layout>
       <Header style={{ background: "#e3e0f3" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <div
+        <Row style={{ display: "flex", alignItems: "center" }}>
+          <Col
+            span={3}
             key="logo"
             style={{ fontSize: "24px", fontWeight: "bold", flex: 1 }}
           >
             <Link href="/">Node Bird</Link>
-          </div>
+          </Col>
 
-          <div style={{ flex: 4 }}></div>
+          <Col span={9}></Col>
 
-          <div
-            style={{
-              display: "flex",
-              flex: 0.7,
-              justifyContent: "space-evenly",
-            }}
-          >
-            {me ? (
-              <>
-                <StyledButton
-                  href="/profile"
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: 15,
-                    marginLeft: "30vw",
-                  }}
-                >
-                  Profile
-                </StyledButton>
-              </>
-            ) : (
-              <>
-                <StyledButton
-                  href="/login"
-                  style={{ fontWeight: "bold", fontSize: 15 }}
-                >
-                  Login
-                </StyledButton>
-                <StyledButton
-                  href="/signup"
-                  style={{ fontWeight: "bold", fontSize: 15 }}
-                >
-                  Signup
-                </StyledButton>
-              </>
-            )}
-          </div>
+          <Col span={12}>
+            <Row style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Col
+                span={12}
+                style={{
+                  display: "flex",
+                  gap: 20,
+                  justifyContent: "flex-end",
+                  paddingRight: 20,
+                }}
+              >
+                {me ? (
+                  <>
+                    <StyledButton
+                      href="/logout"
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: 15,
+                      }}
+                    >
+                      Logout
+                    </StyledButton>
+                    <StyledButton
+                      href="/profile"
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: 15,
+                      }}
+                    >
+                      Profile
+                    </StyledButton>
+                  </>
+                ) : (
+                  <>
+                    <StyledButton
+                      href="/login"
+                      style={{ fontWeight: "bold", fontSize: 15 }}
+                    >
+                      Login
+                    </StyledButton>
+                    <StyledButton
+                      href="/signup"
+                      style={{ fontWeight: "bold", fontSize: 15 }}
+                    >
+                      Signup
+                    </StyledButton>
+                  </>
+                )}
+              </Col>
 
-          <div style={{ flex: 2, marginLeft: 20 }}>
-            <SearchWrapper
-              enterButton
-              value={searchInput}
-              onChange={onChangeSearchInput}
-              onSearch={onSearch}
-            />
-          </div>
-        </div>
+              <Col span={12}>
+                <SearchWrapper
+                  enterButton
+                  value={searchInput}
+                  onChange={onChangeSearchInput}
+                  onSearch={onSearch}
+                />
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       </Header>
 
       <Content>

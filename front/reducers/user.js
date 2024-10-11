@@ -261,7 +261,7 @@ const reducer = (state = initialState, action) => {
         draft.isSigningUp = false;
         draft.isSignedUp = true;
         draft.signUpError = false;
-        draft.me = null;
+        draft.me = action.data;
         break;
       case SIGN_UP_FAILURE:
         draft.isSignedUp = false;

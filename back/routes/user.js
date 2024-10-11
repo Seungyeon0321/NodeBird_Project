@@ -8,7 +8,6 @@ const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
 const router = express.Router();
 router.get("/", async (req, res, next) => {
-  console.log("coooooooooookie", req.headers);
   try {
     if (req.user) {
       const fullUserWithoutPassword = await User.findOne({
@@ -93,12 +92,27 @@ router.post("/", isNotLoggedIn, async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
     await User.create({
       email: req.body.email,
       nickname: req.body.nickname,
       password: hashedPassword,
     });
-    res.status(201).send("ok!");
+
+    const newUser = await User.findOne({
+      where: { email: req.body.email },
+      attributes: {
+        exclude: ["password"],
+      },
+    });
+
+    req.login(newUser, (loginErr) => {
+      if (loginErr) {
+        console.error(loginErr);
+        return next(loginErr);
+      }
+      res.status(201).json(newUser);
+    });
   } catch (error) {
     console.error("error!");
     next(error);
