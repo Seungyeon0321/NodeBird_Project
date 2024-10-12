@@ -8,7 +8,6 @@ import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
 import axios from "axios";
-import LoginForm from "../component/LoginForm";
 
 const Home = () => {
   const dispatch = useDispatch();
