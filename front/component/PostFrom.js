@@ -67,7 +67,7 @@ const PostForm = () => {
   return (
     <>
       <Form
-        style={{ margin: "10px 0 20px" }}
+        style={{ margin: "0px 0 20px" }}
         encType="multipart/form-data"
         onFinish={onSubmit}
       >
@@ -75,7 +75,7 @@ const PostForm = () => {
           value={text}
           onChange={onChangeText}
           maxLength={140}
-          placeholder="There is something mysterious?"
+          placeholder="Please write something..."
         />
         <div>
           <input
@@ -86,10 +86,12 @@ const PostForm = () => {
             style={{ display: "none" }}
             onChange={onChangeImages}
           />
-          <Button onClick={onclickImageUpload}>Upload Image</Button>
-          <Button type="primary" style={{ float: "right" }} htmlType="submit">
-            Post
-          </Button>
+          <div style={{ marginTop: 10 }}>
+            <Button onClick={onclickImageUpload}>Upload Image</Button>
+            <Button type="primary" style={{ float: "right" }} htmlType="submit">
+              Post
+            </Button>
+          </div>
         </div>
         <div>
           {imagePaths.map((v, i) => (

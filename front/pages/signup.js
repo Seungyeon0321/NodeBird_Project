@@ -23,6 +23,12 @@ const SingUp = () => {
   );
   const [messageApi, contextHolder] = message.useMessage();
 
+  useEffect(() => {
+    if (isSignedUp) {
+      Router.replace("/");
+    }
+  }, [isSignedUp]);
+
   const success = () => {
     messageApi.open({
       type: "success",
@@ -44,12 +50,6 @@ const SingUp = () => {
       Router.replace("./");
     }
   }, [me && me.id]);
-
-  useEffect(() => {
-    if (isSignedUp) {
-      Router.replace("/");
-    }
-  }, [isSignedUp]);
 
   useEffect(() => {
     if (signUpError) {

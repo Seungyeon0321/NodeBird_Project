@@ -24,6 +24,7 @@ const { Header, Content } = Layout;
 const AppLayout = ({ children }) => {
   const [searchInput, onChangeSearchInput] = CommonUserForm("");
   const { me } = useSelector((state) => state.user);
+  const { isSignedUp } = useSelector((state) => state.user);
 
   const onSearch = useCallback(() => {
     Router.push(`/hashtag/${searchInput}`);
@@ -34,24 +35,33 @@ const AppLayout = ({ children }) => {
       <Header style={{ background: "#e3e0f3" }}>
         <Row style={{ display: "flex", alignItems: "center" }}>
           <Col
-            span={3}
+            xs={12}
+            sm={8}
+            md={6}
+            lg={3}
+            xl={3}
             key="logo"
             style={{ fontSize: "24px", fontWeight: "bold", flex: 1 }}
           >
             <Link href="/">Node Bird</Link>
           </Col>
 
-          <Col span={9}></Col>
+          <Col xs={0} sm={0} md={6} lg={9} xl={9}></Col>
 
-          <Col span={12}>
+          <Col xs={12} sm={16} md={12} lg={12} xl={12}>
             <Row style={{ display: "flex", justifyContent: "flex-end" }}>
               <Col
-                span={12}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={12}
+                xl={12}
                 style={{
                   display: "flex",
                   gap: 20,
                   justifyContent: "flex-end",
                   paddingRight: 20,
+                  marginBottom: 10,
                 }}
               >
                 {me ? (
@@ -93,7 +103,7 @@ const AppLayout = ({ children }) => {
                 )}
               </Col>
 
-              <Col span={12}>
+              <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                 <SearchWrapper
                   enterButton
                   value={searchInput}
@@ -107,13 +117,17 @@ const AppLayout = ({ children }) => {
       </Header>
 
       <Content>
-        <Row gutter={8} justify="center" style={{ marginTop: "10px" }}>
+        <Row
+          gutter={[16, 16]}
+          justify="center"
+          style={{ marginTop: "20px", margin: 10 }}
+        >
           {me && (
-            <Col xs={12}>
+            <Col xs={24} sm={24} md={8} lg={6} xl={6}>
               <UserProfile />
             </Col>
           )}
-          <Col xs={24} md={{ span: 12 }}>
+          <Col xs={24} sm={24} md={18} lg={18} xl={18}>
             {children}
           </Col>
           {/* <Col xs={24} md={6}>
