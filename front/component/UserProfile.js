@@ -13,7 +13,6 @@ const UserProfile = () => {
     dispatch(logOutRequestAction());
   }, []);
 
-  console.log("me", me);
   return (
     <Card
       style={{ width: 300 }}

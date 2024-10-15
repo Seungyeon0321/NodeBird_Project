@@ -149,7 +149,6 @@ const PostCard = ({ post }) => {
         title={
           post.RetweetId ? `It's retweeted by ${post.User.nickname}` : null
         }
-        //로그인 했을 때만 post의 Follow 버튼이 보이게 한다
         extra={id && <FollowButton post={post}></FollowButton>}
       >
         {post.RetweetId && post.Retweet ? (
@@ -163,7 +162,6 @@ const PostCard = ({ post }) => {
             <div style={{ float: "right" }}>
               {moment(post.createdAt).format("YYYY.MM.DD")}
             </div>
-            {/* moment를 쓰게 되면 편하게 현재 날짜를 만들 수 있다, 한번 찾아보기!*/}
             <Card.Meta
               avatar={
                 <Link href={`/user/${post.Retweet.User.id}`} prefetch={false}>
@@ -231,7 +229,6 @@ const PostCard = ({ post }) => {
                       </Link>
                     }
                     title={
-                      // 여기 a을 클릭하면 그 사람 profile이 뜰 수 있도록 설정
                       <a href="https://ant.design">{item.User.nickname}</a>
                     }
                     description={item.content}

@@ -16,7 +16,6 @@ const FollowButton = ({ post }) => {
       dispatch({
         type: UNFOLLOW_REQUEST,
         data: post.User.id,
-        //그럼 그 사람 아이디는 어떻게 얻을까? 이미 이 부분은 generatePost의 함수에서 임의로 만들도록 되어있기 때문에 받을 수 있다.
       });
     } else {
       dispatch({

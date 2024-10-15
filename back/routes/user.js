@@ -104,6 +104,19 @@ router.post("/", isNotLoggedIn, async (req, res, next) => {
       attributes: {
         exclude: ["password"],
       },
+      include: [
+        {
+          model: Post,
+        },
+        {
+          model: User,
+          as: "Followings",
+        },
+        {
+          model: User,
+          as: "Followers",
+        },
+      ],
     });
 
     req.login(newUser, (loginErr) => {

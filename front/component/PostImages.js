@@ -17,7 +17,6 @@ const PostImages = ({ images }) => {
   if (images.length === 1) {
     return (
       <>
-        {/* Button이나 input이 아닌 애들은 이 role presentation을 넣도록 하자 스크린리더에서 굳이 클릭할 필요가 없는 img는 presentation을 넣도록 하자*/}
         <img
           role="presentation"
           src={`${images[0].src}`}
@@ -77,7 +76,7 @@ const PostImages = ({ images }) => {
         >
           <PlusOutlined />
           <br />
-          {images.length - 1} 개의 사진 더 보기
+          see {images.length - 1} more photos
         </div>
       </div>
       {showImagesZoom && <ImageZoom images={images} onClose={onClose} />}

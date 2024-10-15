@@ -24,7 +24,6 @@ const { Header, Content } = Layout;
 const AppLayout = ({ children }) => {
   const [searchInput, onChangeSearchInput] = CommonUserForm("");
   const { me } = useSelector((state) => state.user);
-  const { isSignedUp } = useSelector((state) => state.user);
 
   const onSearch = useCallback(() => {
     Router.push(`/hashtag/${searchInput}`);
