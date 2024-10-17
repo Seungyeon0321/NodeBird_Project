@@ -2,15 +2,11 @@ import React, { useCallback, useState, useEffect } from "react";
 import AppLayout from "../component/layout";
 import Router from "next/router";
 import Head from "next/head";
-import { Checkbox, Form, Input, message } from "antd";
+import { Checkbox, Form, Input, message, Spin, Flex } from "antd";
 import CommonUserForm from "../hooks/useInput";
 import styled from "styled-components";
-import { SIGN_UP_REQUEST, LOAD_MY_INFO_REQUEST } from "../reducers/user";
-import { LOAD_POST_REQUEST } from "../reducers/post";
+import { SIGN_UP_REQUEST } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
-import { END } from "redux-saga";
-import axios from "axios";
-import wrapper from "../store/configureStore";
 import CustomButton from "../styles/CustomButton";
 const ErrorMessage = styled.div`
   color: "blue";
@@ -107,88 +103,75 @@ const SingUp = () => {
         <title>SignUp | Node Bird</title>
       </Head>
       {contextHolder}
-      <Form onFinish={onSubmit}>
-        <div>
-          <label htmlFor="user-email">User Email</label>
-          <br />
-          <Input
-            name="user-email"
-            type="email"
-            value={email}
-            onChange={onChangeEmail}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="user-nick">Nick Name</label>
-          <br />
-          <Input
-            name="user-nick"
-            value={nickname}
-            onChange={onChangeNickName}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="user-password">Password</label>
-          <br />
-          <Input
-            name="user-password"
-            value={password}
-            onChange={onChangePassword}
-            required
-          ></Input>
-        </div>
-        <div>
-          <label htmlFor="user-id">Confirm Password</label>
-          <br />
-          <Input
-            name="user-id"
-            value={passwordCheck}
-            onChange={onChangePasswordCheck}
-            required
-          ></Input>
-          {passwordError && (
-            <ErrorMessage>The password is not valid</ErrorMessage>
-          )}
-        </div>
-        <div>
-          {termError && (
-            <div style={{ color: "red" }}>
-              You must agree with the time of terms
-            </div>
-          )}
-          <Checkbox name="user-term" checked={term} onChange={onChangeTerm}>
-            I agree with the terms
-          </Checkbox>
-        </div>
-        <div style={{ marginTop: 10, marginBottom: 20 }}>
-          <CustomButton htmlType="submit" loading={isSigningUp}>
-            Sing Up
-          </CustomButton>
-        </div>
-      </Form>
+      {!isSignedUp ? (
+        <Form onFinish={onSubmit}>
+          <div>
+            <label htmlFor="user-email">User Email</label>
+            <br />
+            <Input
+              name="user-email"
+              type="email"
+              value={email}
+              onChange={onChangeEmail}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="user-nick">Nick Name</label>
+            <br />
+            <Input
+              name="user-nick"
+              value={nickname}
+              onChange={onChangeNickName}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="user-password">Password</label>
+            <br />
+            <Input
+              name="user-password"
+              value={password}
+              onChange={onChangePassword}
+              required
+            ></Input>
+          </div>
+          <div>
+            <label htmlFor="user-id">Confirm Password</label>
+            <br />
+            <Input
+              name="user-id"
+              value={passwordCheck}
+              onChange={onChangePasswordCheck}
+              required
+            ></Input>
+            {passwordError && (
+              <ErrorMessage>The password is not valid</ErrorMessage>
+            )}
+          </div>
+          <div>
+            {termError && (
+              <div style={{ color: "red" }}>
+                You must agree with the time of terms
+              </div>
+            )}
+            <Checkbox name="user-term" checked={term} onChange={onChangeTerm}>
+              I agree with the terms
+            </Checkbox>
+          </div>
+          <div style={{ marginTop: 10, marginBottom: 20 }}>
+            <CustomButton htmlType="submit" loading={isSigningUp}>
+              Sing Up
+            </CustomButton>
+          </div>
+        </Form>
+      ) : (
+        <Flex justify="center" align="center" style={{ height: "100vh" }}>
+          <Spin size="large" />
+        </Flex>
+      )}
     </AppLayout>
   );
 };
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    const cookie = context.req ? context.req.headers.cookie : "";
-    axios.defaults.headers.Cookie = "";
-    if (context.req && cookie) {
-      axios.defaults.headers.Cookie = cookie;
-    }
-
-    store.dispatch({
-      type: LOAD_MY_INFO_REQUEST,
-    });
-    store.dispatch({
-      type: LOAD_POST_REQUEST,
-    });
-    store.dispatch(END);
-    await store.sagaTask.toPromise();
-  }
-);
 
 export default SingUp;

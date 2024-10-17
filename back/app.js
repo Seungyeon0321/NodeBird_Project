@@ -36,10 +36,10 @@ if (process.env.NODE_ENV === "production") {
   app.use(helmet());
   app.use(
     cors({
-      origin: ["https://portfolio-simon.com"],
-      // origin: "*",
+      // origin: ["https://portfolio-simon.com"],
+      origin: "*",
       // origin: ["http://localhost:3060", "portfolio-simon.com"],
-      credentials: true,
+      credentials: false,
     })
   );
 } else {
@@ -63,7 +63,7 @@ app.use(
     proxy: true,
     cookie: {
       httpOnly: true,
-      secure: true,
+      secure: false,
       domain:
         process.env.NODE_ENV === "production"
           ? ".portfolio-simon.com"
