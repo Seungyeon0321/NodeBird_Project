@@ -9,21 +9,15 @@ import { SIGN_UP_REQUEST } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../styles/CustomButton";
 const ErrorMessage = styled.div`
-  color: "blue";
+  color: "red";
 `;
 
-const SingUp = () => {
+const SignUp = () => {
   const dispatch = useDispatch();
   const { isSigningUp, isSignedUp, signUpError, me } = useSelector(
     (state) => state.user
   );
   const [messageApi, contextHolder] = message.useMessage();
-
-  useEffect(() => {
-    if (isSignedUp) {
-      Router.replace("/");
-    }
-  }, [isSignedUp]);
 
   const success = () => {
     messageApi.open({
@@ -32,6 +26,7 @@ const SingUp = () => {
       duration: 10,
     });
   };
+
   const error = () => {
     messageApi.open({
       type: "error",
@@ -42,14 +37,15 @@ const SingUp = () => {
 
   //If I set this one, It redirect me to the main page whenever I update the state
   useEffect(() => {
-    if (me && me.id) {
+    if ((me && me.id) || isSignedUp) {
+      success();
       Router.replace("./");
     }
-  }, [me && me.id]);
+  }, [me && me.id, isSignedUp]);
 
   useEffect(() => {
     if (signUpError) {
-      alert(signUpError);
+      error();
     }
   }, [signUpError]);
 
@@ -70,13 +66,10 @@ const SingUp = () => {
   const [term, setTerm] = useState("");
   const [termError, setTermError] = useState(false);
 
-  const onChangeTerm = useCallback(
-    (e) => {
-      setTerm(e.target.checked);
-      setTermError(false);
-    },
-    [term]
-  );
+  const onChangeTerm = useCallback((e) => {
+    setTerm(e.target.checked);
+    setTermError(false);
+  }, []);
 
   const onSubmit = useCallback(() => {
     if (password !== passwordCheck) {
@@ -89,12 +82,6 @@ const SingUp = () => {
       type: SIGN_UP_REQUEST,
       data: { email, password, nickname },
     });
-
-    if (!signUpError) {
-      success();
-    } else {
-      error();
-    }
   }, [email, passwordCheck, term]);
 
   return (
@@ -174,4 +161,4 @@ const SingUp = () => {
   );
 };
 
-export default SingUp;
+export default SignUp;

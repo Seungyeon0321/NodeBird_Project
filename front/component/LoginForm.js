@@ -65,7 +65,7 @@ const LoginForm = () => {
           Login
         </CustomButton>
         <Link href="/signup">
-          <Button>Sing Up</Button>
+          <Button>Sign Up</Button>
         </Link>
       </ButtonWrapper>
     </FormWrapper>

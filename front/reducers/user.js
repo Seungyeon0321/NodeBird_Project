@@ -46,7 +46,7 @@ export const initialState = {
   changeNicknameError: null,
 
   me: null,
-  singUpData: {},
+  signUpData: {},
   loginData: {},
   userInfo: null,
 };
