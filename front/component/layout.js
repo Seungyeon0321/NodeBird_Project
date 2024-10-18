@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { useCallback } from "react";
 import { Layout, Input, Row, Col } from "antd";
-import UserProfile from "./UserProfile";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import CommonUserForm from "../hooks/useInput";
@@ -21,7 +20,7 @@ const SearchWrapper = styled(Input.Search)`
 
 const { Header, Content } = Layout;
 
-const AppLayout = ({ children }) => {
+const AppLayout = ({ children, profile, postFrom, content }) => {
   const [searchInput, onChangeSearchInput] = CommonUserForm("");
   const { me } = useSelector((state) => state.user);
 
@@ -121,12 +120,15 @@ const AppLayout = ({ children }) => {
           justify="center"
           style={{ marginTop: "20px", margin: 10 }}
         >
-          {me && (
+          {profile && (
             <Col xs={24} sm={24} md={8} lg={6} xl={6}>
-              <UserProfile />
+              {profile}
             </Col>
           )}
+
           <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+            {postFrom}
+            {content}
             {children}
           </Col>
           {/* <Col xs={24} md={6}>
@@ -142,4 +144,7 @@ export default AppLayout;
 
 AppLayout.propTypes = {
   children: PropTypes.node.isRequired,
+  profile: PropTypes.node,
+  postFrom: PropTypes.node,
+  content: PropTypes.node,
 };

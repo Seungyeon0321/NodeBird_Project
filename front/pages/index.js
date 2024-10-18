@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import AppLayout from "../component/layout";
 import PostCard from "../component/PostCard";
 import PostForm from "../component/PostFrom";
+import UserProfile from "../component/UserProfile";
 import { LOAD_POST_REQUEST } from "../reducers/post";
 import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
 import wrapper from "../store/configureStore";
@@ -45,12 +46,13 @@ const Home = () => {
   }, [hasMorePost, loadPostLoading, mainPosts]);
 
   return (
-    <AppLayout>
-      {me && <PostForm />}
-      {mainPosts.map((post) => (
+    <AppLayout
+      profile={me && <UserProfile />}
+      postFrom={me && <PostForm />}
+      content={mainPosts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
-    </AppLayout>
+    />
   );
 };
 

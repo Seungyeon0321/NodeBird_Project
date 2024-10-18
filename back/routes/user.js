@@ -127,7 +127,7 @@ router.post("/", isNotLoggedIn, async (req, res, next) => {
       res.status(201).json(newUser);
     });
   } catch (error) {
-    console.error("error!");
+    console.error(error);
     next(error);
   }
 });

@@ -106,7 +106,7 @@ export const logInRequestAction = (data) => {
   };
 };
 
-export const logOutRequestAction = (data) => {
+export const logOutRequestAction = () => {
   return {
     type: LOG_OUT_REQUEST,
   };

@@ -103,7 +103,7 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
       case REMOVE_IMAGE:
         draft.imagePaths = draft.imagePaths.filter((v, i) => i !== action.data);
-
+        break;
       case RETWEET_REQUEST:
         draft.retweetLoading = true;
         draft.retweetError = null;

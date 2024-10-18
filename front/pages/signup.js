@@ -1,8 +1,9 @@
 import React, { useCallback, useState, useEffect } from "react";
 import AppLayout from "../component/layout";
+import LoadingSpin from "../component/LoadingSpin";
 import Router from "next/router";
 import Head from "next/head";
-import { Checkbox, Form, Input, message, Spin, Flex } from "antd";
+import { Checkbox, Form, Input, message } from "antd";
 import CommonUserForm from "../hooks/useInput";
 import styled from "styled-components";
 import { SIGN_UP_REQUEST } from "../reducers/user";
@@ -153,9 +154,7 @@ const SignUp = () => {
           </div>
         </Form>
       ) : (
-        <Flex justify="center" align="center" style={{ height: "100vh" }}>
-          <Spin size="large" />
-        </Flex>
+        <LoadingSpin />
       )}
     </AppLayout>
   );

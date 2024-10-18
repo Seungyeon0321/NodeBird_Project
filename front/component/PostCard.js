@@ -249,10 +249,10 @@ const PostCard = ({ post }) => {
 PostCard.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.number,
-    user: PropTypes.object,
+    User: PropTypes.object,
     content: PropTypes.string,
     createdAt: PropTypes.string,
-    Comment: PropTypes.arrayOf(PropTypes.object),
+    Comments: PropTypes.arrayOf(PropTypes.object),
     Images: PropTypes.arrayOf(PropTypes.object),
     Likers: PropTypes.arrayOf(PropTypes.object),
     RetweetId: PropTypes.number,

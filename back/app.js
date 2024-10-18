@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === "production") {
     cors({
       origin: ["https://portfolio-simon.com"],
       // origin: "*",
-      // origin: ["http://localhost:3060", "portfolio-simon.com"],
+      // origin: ["http://localhost:3060"],
       credentials: true,
     })
   );
@@ -67,7 +67,8 @@ app.use(
       domain:
         process.env.NODE_ENV === "production"
           ? ".portfolio-simon.com"
-          : "localhost",
+          : // ? "localhost"
+            "localhost",
     },
   })
 );
