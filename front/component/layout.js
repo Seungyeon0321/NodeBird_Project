@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { useCallback } from "react";
 import { Layout, Input, Row, Col } from "antd";
-import UserProfile from "./userProfile";
+import UserProfile from "./UserProfile";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import CommonUserForm from "../hooks/useInput";
