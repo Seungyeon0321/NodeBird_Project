@@ -1,25 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-
-const StyledButton = ({ href, children, style }) => {
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleClick = () => {
-    setIsClicked(true);
-    setTimeout(() => setIsClicked(false), 200); // Reset after animation
-  };
-
+import PropTypes from "prop-types";
+const StyledButton = ({ href, children, style, onClick }) => {
   return (
-    <Link
-      href={href}
-      className={isClicked ? "clicked" : ""}
-      passHref
-      style={style}
-      onClick={handleClick}
-    >
+    <Link href={href} passHref style={style} onClick={onClick}>
       {children}
     </Link>
   );
+};
+
+StyledButton.propTypes = {
+  href: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  style: PropTypes.object,
+  onClick: PropTypes.func,
 };
 
 export default StyledButton;

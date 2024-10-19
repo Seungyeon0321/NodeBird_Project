@@ -9,6 +9,7 @@ const { Meta } = Card;
 const UserProfile = () => {
   const dispatch = useDispatch();
   const { me, isLoggingOut } = useSelector((state) => state.user);
+
   const logoutHandler = useCallback(() => {
     dispatch(logOutRequestAction());
   }, []);

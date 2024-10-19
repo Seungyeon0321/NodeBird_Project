@@ -9,6 +9,9 @@ import CommonUserForm from "../hooks/useInput";
 import StyledButton from "./button";
 import Router from "next/router";
 
+import { useDispatch } from "react-redux";
+import { logOutRequestAction } from "../reducers/user";
+
 const SearchWrapper = styled(Input.Search)`
   vertical-align: middle;
 
@@ -23,10 +26,14 @@ const { Header, Content } = Layout;
 const AppLayout = ({ children, profile, postFrom, content }) => {
   const [searchInput, onChangeSearchInput] = CommonUserForm("");
   const { me } = useSelector((state) => state.user);
-
+  const dispatch = useDispatch();
   const onSearch = useCallback(() => {
     Router.push(`/hashtag/${searchInput}`);
   }, [searchInput]);
+
+  const logoutHandler = useCallback(() => {
+    dispatch(logOutRequestAction());
+  }, []);
 
   return (
     <Layout>
@@ -65,11 +72,12 @@ const AppLayout = ({ children, profile, postFrom, content }) => {
                 {me ? (
                   <>
                     <StyledButton
-                      href="/logout"
+                      href=""
                       style={{
                         fontWeight: "bold",
                         fontSize: 15,
                       }}
+                      onClick={logoutHandler}
                     >
                       Logout
                     </StyledButton>
@@ -104,6 +112,7 @@ const AppLayout = ({ children, profile, postFrom, content }) => {
               <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                 <SearchWrapper
                   enterButton
+                  placeholder="search hashtag"
                   value={searchInput}
                   onChange={onChangeSearchInput}
                   onSearch={onSearch}

@@ -33,6 +33,7 @@ const PostCard = ({ post }) => {
 
   const onClickUpdate = useCallback(() => {
     setEditMode(true);
+    console.log(editMode);
   }, []);
 
   const onCancelUpdatePost = useCallback(() => {
@@ -194,6 +195,7 @@ const PostCard = ({ post }) => {
               description={
                 <PostCardContent
                   postData={post.content}
+                  editMode={editMode}
                   onCancelUpdatePost={onCancelUpdatePost}
                   onChangePost={onChangePost}
                 >
