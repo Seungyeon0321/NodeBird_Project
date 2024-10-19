@@ -15,7 +15,7 @@ const PostCardContent = ({
     (state) => state.post
   );
   const [editContent, setEditContent] = useState(postData);
-  console.log(editMode);
+
   const onChangeContent = useCallback((e) => {
     setEditContent(e.target.value);
   }, []);
@@ -26,7 +26,6 @@ const PostCardContent = ({
     }
   }, [updatePostDone]);
 
-  console.log(editMode);
   return (
     <div>
       {editMode ? (
