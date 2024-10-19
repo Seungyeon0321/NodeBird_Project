@@ -35,7 +35,7 @@ const PostCardContent = ({
           <Button.Group>
             <Button
               loading={updatePostLoading}
-              onClick={() => onChangePost(editContent)}
+              onClick={onChangePost(editContent)}
             >
               Modify
             </Button>
