@@ -26,7 +26,7 @@ import moment from "moment";
 moment.locale("ko");
 
 const PostCard = ({ post }) => {
-  const { removePostLoading } = useSelector((state) => state.post);
+  const { removePostLoading, singlePost } = useSelector((state) => state.post);
   const [editMode, setEditMode] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const PostCard = ({ post }) => {
     (editContent) => () => {
       dispatch({
         type: UPDATE_POST_REQUEST,
-        date: {
+        data: {
           postId: post.id,
           content: editContent,
         },
