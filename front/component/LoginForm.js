@@ -6,6 +6,7 @@ import CommonUserForm from "../hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import { logInRequestAction } from "../reducers/user";
 import CustomButton from "../styles/CustomButton";
+import { CLICK_NAV_SIGNUP } from "../reducers/user";
 
 const ButtonWrapper = styled.div`
   margin-top: 15px;
@@ -31,6 +32,14 @@ const LoginForm = () => {
   const onSubmitFrom = useCallback(() => {
     dispatch(logInRequestAction({ email, userPassword }));
   }, [email, userPassword]);
+
+  const clickHandler = useCallback(
+    (actionType) => {
+      console.log("actionType", actionType);
+      dispatch({ type: actionType });
+    },
+    [dispatch]
+  );
 
   return (
     <FormWrapper onFinish={onSubmitFrom}>
@@ -64,7 +73,7 @@ const LoginForm = () => {
         >
           Login
         </CustomButton>
-        <Link href="/signup">
+        <Link href="" onClick={() => clickHandler(CLICK_NAV_SIGNUP)}>
           <Button>Sign Up</Button>
         </Link>
       </ButtonWrapper>

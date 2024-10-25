@@ -14,6 +14,9 @@ const rootReducer = (state, action) => {
         user: {
           ...state.user, // preserve user client state
           ...action.payload.user, // apply server state
+          clickNavLogin: state.user.clickNavLogin,
+          clickNavSignup: state.user.clickNavSignup,
+          clickNavLogo: state.user.clickNavLogo,
         },
         post: {
           ...state.post, // preserve post client state

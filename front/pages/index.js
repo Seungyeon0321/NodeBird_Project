@@ -1,21 +1,29 @@
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 import AppLayout from "../component/layout";
 import PostCard from "../component/PostCard";
 import PostForm from "../component/PostFrom";
+import SignUp from "../component/signup";
+import Login from "../component/login";
 import UserProfile from "../component/UserProfile";
+
 import { LOAD_POST_REQUEST } from "../reducers/post";
 import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
+
 import axios from "axios";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { me } = useSelector((state) => state.user);
+  const { me, clickNavSignup, clickNavLogin, isLoggedIn } = useSelector(
+    (state) => state.user
+  );
   const { mainPosts, hasMorePost, loadPostLoading, retweetError } = useSelector(
     (state) => state.post
   );
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (retweetError) {
@@ -45,14 +53,38 @@ const Home = () => {
     };
   }, [hasMorePost, loadPostLoading, mainPosts]);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch({ type: LOAD_POST_REQUEST });
+    }
+  }, [isLoggedIn, dispatch]);
+
+  useEffect(() => {
+    if (!loadPostLoading && mainPosts.length > 0) {
+      setIsLoading(false);
+    }
+  }, [loadPostLoading, mainPosts]);
+
   return (
-    <AppLayout
-      profile={me && <UserProfile />}
-      postFrom={me && <PostForm />}
-      content={mainPosts.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
-    />
+    <>
+      <AppLayout
+        profile={me && <UserProfile />}
+        postFrom={me && <PostForm />}
+        content={(() => {
+          if (isLoading) {
+            return <div>Loading...</div>;
+          } else if (clickNavSignup) {
+            return <SignUp />;
+          } else if (clickNavLogin && !isLoggedIn) {
+            return <Login />;
+          } else {
+            return mainPosts.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ));
+          }
+        })()}
+      />
+    </>
   );
 };
 

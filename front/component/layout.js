@@ -1,126 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Link from "next/link";
 import { useCallback } from "react";
-import { Layout, Input, Row, Col } from "antd";
+import { Layout, Row, Col } from "antd";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
+
 import CommonUserForm from "../hooks/useInput";
-import StyledButton from "./button";
-import Router from "next/router";
 
-import { useDispatch } from "react-redux";
+import Nav from "./Nav";
+
 import { logOutRequestAction } from "../reducers/user";
-
-const SearchWrapper = styled(Input.Search)`
-  vertical-align: middle;
-
-  .ant-input-search-button {
-    background-color: #8685ef;
-    border-color: #8685ef;
-  }
-`;
 
 const { Header, Content } = Layout;
 
 const AppLayout = ({ children, profile, postFrom, content }) => {
-  const [searchInput, onChangeSearchInput] = CommonUserForm("");
   const { me } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  const onSearch = useCallback(() => {
-    Router.push(`/hashtag/${searchInput}`);
-  }, [searchInput]);
-
-  const logoutHandler = useCallback(() => {
-    dispatch(logOutRequestAction());
-  }, []);
 
   return (
     <Layout>
       <Header style={{ background: "#e3e0f3" }}>
-        <Row style={{ display: "flex", alignItems: "center" }}>
-          <Col
-            xs={12}
-            sm={8}
-            md={6}
-            lg={3}
-            xl={3}
-            key="logo"
-            style={{ fontSize: "24px", fontWeight: "bold", flex: 1 }}
-          >
-            <Link href="/">Node Bird</Link>
-          </Col>
-
-          <Col xs={0} sm={0} md={6} lg={9} xl={9}></Col>
-
-          <Col xs={12} sm={16} md={12} lg={12} xl={12}>
-            <Row style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Col
-                xs={24}
-                sm={12}
-                md={12}
-                lg={12}
-                xl={12}
-                style={{
-                  display: "flex",
-                  gap: 20,
-                  justifyContent: "flex-end",
-                  paddingRight: 20,
-                  marginBottom: 10,
-                }}
-              >
-                {me ? (
-                  <>
-                    <StyledButton
-                      href=""
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: 15,
-                      }}
-                      onClick={logoutHandler}
-                    >
-                      Logout
-                    </StyledButton>
-                    <StyledButton
-                      href="/profile"
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: 15,
-                      }}
-                    >
-                      Profile
-                    </StyledButton>
-                  </>
-                ) : (
-                  <>
-                    <StyledButton
-                      href="/login"
-                      style={{ fontWeight: "bold", fontSize: 15 }}
-                    >
-                      Login
-                    </StyledButton>
-                    <StyledButton
-                      href="/signup"
-                      style={{ fontWeight: "bold", fontSize: 15 }}
-                    >
-                      Signup
-                    </StyledButton>
-                  </>
-                )}
-              </Col>
-
-              <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                <SearchWrapper
-                  enterButton
-                  placeholder="search hashtag"
-                  value={searchInput}
-                  onChange={onChangeSearchInput}
-                  onSearch={onSearch}
-                />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+        <Nav />
       </Header>
 
       <Content>

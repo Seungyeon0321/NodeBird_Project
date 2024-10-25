@@ -16,11 +16,7 @@ const Login = () => {
 
   return (
     <AppLayout>
-      {!isLoggedIn ? (
-        <LoginForm />
-      ) : (
-        <LoadingSpin />
-      )}
+      {!isLoggedIn && !me ? <LoginForm /> : <LoadingSpin />}
     </AppLayout>
   );
 };
