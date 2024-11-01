@@ -1,18 +1,41 @@
 import React from "react";
 import Link from "next/link";
 import PropTypes from "prop-types";
-const StyledButton = ({ href, children, style, onClick }) => {
+import styled from "styled-components";
+
+const StyledLink = styled.a`
+  color: ${(props) => props.theme.colors.primary};
+  text-decoration: none;
+
+  &:hover {
+    color: ${(props) =>
+      props.theme.colors.hover.primary}; /* 원하는 색상으로 변경 */
+    text-decoration: underline;
+  }
+`;
+
+const StyledButton = ({ children, onClick }) => {
   return (
-    <Link href={href} passHref style={style} onClick={onClick}>
+    <button
+      type="button"
+      style={{
+        fontWeight: "bold",
+        fontSize: 15,
+        color: "#a3cfcd",
+        border: "none",
+        background: "none",
+        cursor: "pointer",
+        padding: 0,
+      }}
+      onClick={onClick}
+    >
       {children}
-    </Link>
+    </button>
   );
 };
 
 StyledButton.propTypes = {
-  href: PropTypes.string,
   children: PropTypes.node.isRequired,
-  style: PropTypes.object,
   onClick: PropTypes.func,
 };
 

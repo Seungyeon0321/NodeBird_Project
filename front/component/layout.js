@@ -12,12 +12,12 @@ import { logOutRequestAction } from "../reducers/user";
 
 const { Header, Content } = Layout;
 
-const AppLayout = ({ children, profile, postFrom, content }) => {
+const AppLayout = ({ profile, postFrom, content }) => {
   const { me } = useSelector((state) => state.user);
 
   return (
     <Layout>
-      <Header style={{ background: "#e3e0f3" }}>
+      <Header style={{ background: "#2a272a" }}>
         <Nav />
       </Header>
 
@@ -36,7 +36,6 @@ const AppLayout = ({ children, profile, postFrom, content }) => {
           <Col xs={24} sm={24} md={18} lg={18} xl={18}>
             {postFrom}
             {content}
-            {children}
           </Col>
           {/* <Col xs={24} md={6}>
           <a rel="noReferred noOpener">Let`s go!</a>

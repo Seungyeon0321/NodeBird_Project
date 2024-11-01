@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
 import wrapper from "../store/configureStore";
+import { ThemeProvider } from "styled-components";
+import { theme } from "../styles/theme";
 
 const NodeBird = ({ Component }) => {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Head>
         <meta charSet="utf-8" />
         <title>Node Bird</title>
@@ -32,7 +34,7 @@ const NodeBird = ({ Component }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Component />
-    </>
+    </ThemeProvider>
   );
 };
 

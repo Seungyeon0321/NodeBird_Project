@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
 import CommonUserForm from "../hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import { logInRequestAction } from "../reducers/user";
-import CustomButton from "../styles/CustomButton";
+import { CustomButton, CustomButton2 } from "../styles/CustomButton";
 import { CLICK_NAV_SIGNUP } from "../reducers/user";
 
 const ButtonWrapper = styled.div`
@@ -73,9 +73,9 @@ const LoginForm = () => {
         >
           Login
         </CustomButton>
-        <Link href="" onClick={() => clickHandler(CLICK_NAV_SIGNUP)}>
-          <Button>Sign Up</Button>
-        </Link>
+        <CustomButton2 onClick={() => clickHandler(CLICK_NAV_SIGNUP)}>
+          Sign Up
+        </CustomButton2>
       </ButtonWrapper>
     </FormWrapper>
   );
