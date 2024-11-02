@@ -10,10 +10,12 @@ import {
   HeartTwoTone,
 } from "@ant-design/icons";
 import Link from "next/link";
+
 import PostImages from "./PostImages";
 import CommentForm from "./CommentForm";
 import PostCardContent from "./PostCardContent";
 import FollowButton from "./FollowButton";
+
 import {
   REMOVE_POST_REQUEST,
   LIKE_POST_REQUEST,
@@ -25,8 +27,7 @@ import moment from "moment";
 
 moment.locale("ko");
 
-const PostCard = ({ post }) => {
-  const { removePostLoading, singlePost } = useSelector((state) => state.post);
+const PostCard = ({ post }) => {  const { removePostLoading } = useSelector((state) => state.post);
   const [editMode, setEditMode] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const dispatch = useDispatch();
@@ -108,26 +109,30 @@ const PostCard = ({ post }) => {
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
           <RetweetOutlined key="retweet" onClick={onRetweet} />,
-          liked ? (
-            <HeartTwoTone
-              twoToneColor="#eb2f96"
-              key="heart"
-              onClick={onUnlike}
-            />
-          ) : (
-            <HeartOutlined key="heart" onClick={onLike} />
-          ),
-          <MessageOutlined key="comment" onClick={onToggleComment} />,
+          <div key={`like-${post.id}`}>
+            {liked ? (
+              <HeartTwoTone twoToneColor="#eb2f96" onClick={onUnlike} />
+            ) : (
+              <HeartOutlined onClick={onLike} />
+            )}
+          </div>,
+          <MessageOutlined
+            key={`comment-${post.id}`}
+            onClick={onToggleComment}
+          />,
           <Popover
-            key="more"
+            key={`more-${post.id}`}
             content={
               <Button.Group>
                 {id && post.User.id === id ? (
                   <>
                     {!post.RetweetId && (
-                      <Button onClick={onClickUpdate}>Modify</Button>
+                      <Button key={`modify-${post.id}`} onClick={onClickUpdate}>
+                        Modify
+                      </Button>
                     )}
                     <Button
+                      key={`delete-${post.id}`}
                       type="primary"
                       danger
                       onClick={onRemovePost}
@@ -137,9 +142,8 @@ const PostCard = ({ post }) => {
                     </Button>
                   </>
                 ) : (
-                  <Button>
-                    {`Report${post.User.id}-
-                    ${id}`}
+                  <Button key={`report-${post.id}`}>
+                    {`Report${post.User.id}-${id}`}
                   </Button>
                 )}
               </Button.Group>
@@ -192,6 +196,7 @@ const PostCard = ({ post }) => {
                   <Avatar>{post.User.nickname[0]}</Avatar>
                 </Link>
               }
+              key={`meta-${post.id}`}
               title={post.User.nickname}
               description={
                 <PostCardContent
@@ -199,9 +204,7 @@ const PostCard = ({ post }) => {
                   editMode={editMode}
                   onCancelUpdatePost={onCancelUpdatePost}
                   onChangePost={onChangePost}
-                >
-                  #해시태그
-                </PostCardContent>
+                />
               }
             />
           </>
@@ -218,9 +221,10 @@ const PostCard = ({ post }) => {
             dataSource={post.Comments}
             renderItem={(item) => (
               <List.Item
+                key={`comment-${item.id}`}
                 actions={[
-                  <a key="list-loadmore-edit">Edit</a>,
-                  <a key="list-loadmore-more">More</a>,
+                  <a key={`comment-${item.id}-edit`}>Edit</a>,
+                  <a key={`comment-${item.id}-more`}>More</a>,
                 ]}
               >
                 <Skeleton avatar title={false} loading={item.loading} active>

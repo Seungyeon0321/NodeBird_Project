@@ -17,20 +17,43 @@ import axios from "axios";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { me, clickNavSignup, clickNavLogin, isLoggedIn } = useSelector(
-    (state) => state.user
-  );
+  const { me, isLoggedIn } = useSelector((state) => state.user);
+
   const { mainPosts, hasMorePost, loadPostLoading, retweetError } = useSelector(
     (state) => state.post
   );
+
   const [isLoading, setIsLoading] = useState(true);
 
+  const { currentView } = useSelector((state) => state.ui);
+
+  // UI
+  const renderContent = () => {
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+
+    switch (currentView) {
+      case "login":
+        return !isLoggedIn && <Login />;
+      case "signup":
+        return <SignUp />;
+      case "main":
+      default:
+        return mainPosts.map((post, index) => (
+          <PostCard key={`${post.id}-${index}`} post={post} />
+        ));
+    }
+  };
+
+  // Error handling
   useEffect(() => {
     if (retweetError) {
       alert(retweetError);
     }
   }, [retweetError]);
 
+  // Scroll event
   useEffect(() => {
     function onScroll() {
       if (
@@ -53,6 +76,7 @@ const Home = () => {
     };
   }, [hasMorePost, loadPostLoading, mainPosts]);
 
+  // Load post
   useEffect(() => {
     if (isLoggedIn) {
       dispatch({ type: LOAD_POST_REQUEST });
@@ -70,19 +94,7 @@ const Home = () => {
       <AppLayout
         profile={me && <UserProfile />}
         postFrom={me && <PostForm />}
-        content={(() => {
-          if (isLoading) {
-            return <div>Loading...</div>;
-          } else if (clickNavSignup) {
-            return <SignUp />;
-          } else if (clickNavLogin && !isLoggedIn) {
-            return <Login />;
-          } else {
-            return mainPosts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ));
-          }
-        })()}
+        content={renderContent()}
       />
     </>
   );

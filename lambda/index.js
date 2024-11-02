@@ -10,18 +10,11 @@ const s3 = new S3Client();
 exports.handler = async (event, context, callback) => {
   const Bucket = event.Records[0].s3.bucket.name;
   const Key = decodeURIComponent(event.Records[0].s3.object.key);
-  console.log(Bucket, Key);
+
   const filename = Key.split("/")[Key.split("/").length - 1];
   const ext = Key.split(".")[Key.split(".").length - 1].toLowerCase();
   const requiredFormat = ext === "jpg" ? "jpeg" : ext;
-  console.log(
-    "filename",
-    filename,
-    "ext",
-    ext,
-    "requiredFormat",
-    requiredFormat
-  );
+
   try {
     const getObjectCommand = new GetObjectCommand({ Bucket, Key });
     const s3Object = await s3.send(getObjectCommand);

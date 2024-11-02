@@ -14,7 +14,6 @@ const router = express.Router();
 try {
   fs.accessSync("uploads");
 } catch (error) {
-  console.log("uploads 폴더가 없음으로 생성합니다");
   fs.mkdirSync("uploads");
 }
 

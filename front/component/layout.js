@@ -1,20 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useCallback } from "react";
 import { Layout, Row, Col } from "antd";
-import { useSelector } from "react-redux";
-
-import CommonUserForm from "../hooks/useInput";
-
 import Nav from "./Nav";
-
-import { logOutRequestAction } from "../reducers/user";
-
 const { Header, Content } = Layout;
 
 const AppLayout = ({ profile, postFrom, content }) => {
-  const { me } = useSelector((state) => state.user);
-
   return (
     <Layout>
       <Header style={{ background: "#2a272a" }}>
@@ -49,7 +39,6 @@ const AppLayout = ({ profile, postFrom, content }) => {
 export default AppLayout;
 
 AppLayout.propTypes = {
-  children: PropTypes.node.isRequired,
   profile: PropTypes.node,
   postFrom: PropTypes.node,
   content: PropTypes.node,

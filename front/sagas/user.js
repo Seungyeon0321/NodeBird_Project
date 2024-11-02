@@ -38,6 +38,8 @@ import {
   REMOVE_FOLLOWER_FAILURE,
 } from "../reducers/user";
 
+import { SET_CURRENT_VIEW } from "../reducers/ui";
+
 function loadUserAPI(data) {
   return axios.get(`/user/${data}`);
 }
@@ -88,7 +90,12 @@ function* logIn(action) {
       type: LOG_IN_SUCCESS,
       data: result.data,
     });
+    yield put({
+      type: SET_CURRENT_VIEW,
+      data: "main",
+    });
   } catch (err) {
+    console.log("Login Error", err);
     yield put({
       type: LOG_IN_FAILURE,
       error: err,

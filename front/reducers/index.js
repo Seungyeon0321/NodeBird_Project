@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 
 import user from "./user";
 import post from "./post";
+import ui from "./ui";
 
 const rootReducer = (state, action) => {
   switch (action.type) {
@@ -22,11 +23,16 @@ const rootReducer = (state, action) => {
           ...state.post, // preserve post client state
           ...action.payload.post, // apply server state
         },
+        ui: {
+          ...state.ui, // preserve ui client state
+          ...action.payload.ui, // apply server state
+        },
       };
     default: {
       const combineReducer = combineReducers({
         user,
         post,
+        ui,
       });
       return combineReducer(state, action);
     }

@@ -69,17 +69,17 @@ const User = () => {
         <Card
           style={{ width: 300, marginBottom: 20 }}
           actions={[
-            <div key="twit">
+            <div key={`twit-${userInfo.id}`}>
               Twit
               <br />
               {userInfo.Posts}
             </div>,
-            <div key="followings">
+            <div key={`followings-${userInfo.id}`}>
               Followings
               <br />
               {userInfo.Followings}
             </div>,
-            <div key="followers">
+            <div key={`followers-${userInfo.id}`}>
               Followers
               <br />
               {userInfo.Followers}
@@ -93,7 +93,7 @@ const User = () => {
         </Card>
       ) : null}
       {mainPosts.map((c) => (
-        <PostCard key={c.id} post={c} />
+        <PostCard key={`post-${c.id}`} post={c} />
       ))}
     </AppLayout>
   );

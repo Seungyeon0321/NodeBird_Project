@@ -44,7 +44,7 @@ const Hashtag = () => {
   return (
     <AppLayout>
       {mainPosts.map((post) => (
-        <React.Fragment key={post.id}>
+        <React.Fragment key={`meta-${post.id}`}>
           <Head>
             <title>{post.User.nickname}</title>
             <meta property="og:title" content={post.content}></meta>

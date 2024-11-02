@@ -45,11 +45,6 @@ export const initialState = {
   changeNicknameDone: false,
   changeNicknameError: null,
 
-  clickNavLogo: true,
-  clickNavLogin: false,
-  clickNavSignup: false,
-  clickNavProfile: false,
-
   me: null,
   signUpData: {},
   loginData: {},
@@ -103,11 +98,6 @@ export const UNFOLLOW_FAILURE = "UNFOLLOW_FAILURE";
 export const ADD_POST_TO_ME = "ADD_POST_TO_ME";
 export const REMOVE_POST_OF_ME = "REMOVE_POST_OF_ME";
 
-export const CLICK_NAV_LOGO = "CLICK_NAV_LOGO";
-export const CLICK_NAV_LOGIN = "CLICK_NAV_LOGIN";
-export const CLICK_NAV_SIGNUP = "CLICK_NAV_SIGNUP";
-export const CLICK_NAV_PROFILE = "CLICK_NAV_PROFILE";
-
 export const logInRequestAction = (data) => {
   return {
     type: LOG_IN_REQUEST,
@@ -148,10 +138,7 @@ const reducer = (state = initialState, action) => {
         draft.loadUserLoading = false;
         draft.loadUserDone = true;
         draft.userInfo = action.data;
-        draft.clickNavLogin = false;
-        draft.clickNavSignup = false;
-        draft.clickNavProfile = false;
-        draft.clickNavLogin = true;
+
         break;
       case LOAD_USER_FAILURE:
         draft.loadUserDone = true;
@@ -246,7 +233,7 @@ const reducer = (state = initialState, action) => {
         draft.me = action.data;
         break;
       case LOG_IN_FAILURE:
-        draft.isLoggedIn = true;
+        draft.isLoggedIn = false;
         draft.logInError = action.error.response;
         break;
 
@@ -305,31 +292,6 @@ const reducer = (state = initialState, action) => {
         draft.me.posts = draft.me.posts.filter((v) => v.id !== action.data);
         break;
 
-      case CLICK_NAV_LOGO:
-        draft.clickNavLogo = true;
-        draft.clickNavLogin = false;
-        draft.clickNavSignup = false;
-        draft.clickNavProfile = false;
-        break;
-      case CLICK_NAV_LOGIN:
-        draft.clickNavLogo = false;
-        draft.clickNavLogin = true;
-        draft.clickNavSignup = false;
-        draft.clickNavProfile = false;
-        break;
-      case CLICK_NAV_SIGNUP:
-        draft.clickNavLogo = false;
-        draft.clickNavLogin = false;
-        draft.clickNavSignup = true;
-        draft.clickNavProfile = false;
-        break;
-      case CLICK_NAV_PROFILE:
-        draft.clickNavLogo = false;
-        draft.clickNavLogin = false;
-        draft.clickNavSignup = false;
-        draft.clickNavProfile = true;
-
-        break;
       default:
         break;
     }

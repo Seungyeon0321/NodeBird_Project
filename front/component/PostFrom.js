@@ -87,7 +87,7 @@ const PostForm = () => {
         </div>
         <div>
           {imagePaths.map((v, i) => (
-            <div key={v} style={{ display: "inline-block" }}>
+            <div key={`image-${i}`} style={{ display: "inline-block" }}>
               <img
                 src={v.replace(/\/thumb\//, "/original/")}
                 style={{ width: "200px" }}

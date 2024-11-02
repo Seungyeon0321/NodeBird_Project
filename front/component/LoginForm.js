@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { Form, Input } from "antd";
-import Link from "next/link";
+
 import styled from "styled-components";
 import CommonUserForm from "../hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import { logInRequestAction } from "../reducers/user";
-import { CustomButton, CustomButton2 } from "../styles/CustomButton";
+import { CustomButton, CustomButton2 } from "../styles/GlobalStyleComponent";
 import { CLICK_NAV_SIGNUP } from "../reducers/user";
 
 const ButtonWrapper = styled.div`
@@ -19,15 +19,9 @@ const FormWrapper = styled(Form)`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { isLoggingIn, logInError } = useSelector((state) => state.user);
+  const { isLoggingIn } = useSelector((state) => state.user);
   const [email, onChangeEmail] = CommonUserForm("");
   const [userPassword, onChangePassword] = CommonUserForm("");
-
-  useEffect(() => {
-    if (logInError) {
-      alert(logInError.data);
-    }
-  }, [logInError]);
 
   const onSubmitFrom = useCallback(() => {
     dispatch(logInRequestAction({ email, userPassword }));
@@ -35,7 +29,6 @@ const LoginForm = () => {
 
   const clickHandler = useCallback(
     (actionType) => {
-      console.log("actionType", actionType);
       dispatch({ type: actionType });
     },
     [dispatch]

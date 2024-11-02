@@ -4,6 +4,7 @@ import Head from "next/head";
 import wrapper from "../store/configureStore";
 import { ThemeProvider } from "styled-components";
 import { theme } from "../styles/theme";
+// import MillionLint from "@million/lint";
 
 const NodeBird = ({ Component }) => {
   return (
@@ -43,3 +44,4 @@ NodeBird.propTypes = {
 };
 
 export default wrapper.withRedux(NodeBird);
+// export default MillionLint.next({ rsc: true })(wrapper.withRedux(NodeBird));

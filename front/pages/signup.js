@@ -8,7 +8,7 @@ import CommonUserForm from "../hooks/useInput";
 import styled from "styled-components";
 import { SIGN_UP_REQUEST } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
-import CustomButton from "../styles/CustomButton";
+import { CustomButton } from "../styles/GlobalStyleComponent";
 const ErrorMessage = styled.div`
   color: "red";
 `;
