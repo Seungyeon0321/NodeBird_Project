@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import Router from "next/router";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
-import { CLICK_NAV_PROFILE } from "../reducers/user";
 import { SET_CURRENT_VIEW } from "../reducers/ui";
 
 import { logOutRequestAction } from "../reducers/user";
@@ -11,19 +10,21 @@ import { Row, Col } from "antd";
 import StyledButton from "./button";
 import { SearchWrapper } from "../styles/GlobalStyleComponent";
 import CommonUserForm from "../hooks/useInput";
+import { useRouter } from "next/router";
 
 function Nav() {
   const [searchInput, onChangeSearchInput] = CommonUserForm("");
   const dispatch = useDispatch();
-
+  const router = useRouter();
   const { me } = useSelector((state) => state.user);
 
   // login in
   const clickHandler = useCallback(
     (action) => {
       dispatch({ type: SET_CURRENT_VIEW, data: action });
+      router.push("/");
     },
-    [dispatch]
+    [dispatch, router]
   );
 
   const logoutHandler = useCallback(() => {
@@ -68,7 +69,7 @@ function Nav() {
               {me ? (
                 <>
                   <StyledButton onClick={logoutHandler}>Logout</StyledButton>
-                  <StyledButton onClick={() => clickHandler(CLICK_NAV_PROFILE)}>
+                  <StyledButton onClick={() => router.push("/profile")}>
                     Profile
                   </StyledButton>
                 </>

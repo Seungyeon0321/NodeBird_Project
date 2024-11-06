@@ -4,7 +4,7 @@ import { Layout, Row, Col } from "antd";
 import Nav from "./Nav";
 const { Header, Content } = Layout;
 
-const AppLayout = ({ profile, postFrom, content }) => {
+const AppLayout = ({ profile, postFrom, content, children }) => {
   return (
     <Layout>
       <Header style={{ background: "#2a272a" }}>
@@ -26,6 +26,7 @@ const AppLayout = ({ profile, postFrom, content }) => {
           <Col xs={24} sm={24} md={18} lg={18} xl={18}>
             {postFrom}
             {content}
+            {children}
           </Col>
           {/* <Col xs={24} md={6}>
           <a rel="noReferred noOpener">Let`s go!</a>
@@ -42,4 +43,5 @@ AppLayout.propTypes = {
   profile: PropTypes.node,
   postFrom: PropTypes.node,
   content: PropTypes.node,
+  children: PropTypes.node,
 };

@@ -7,6 +7,7 @@ import {
   REMOVE_IMAGE,
 } from "../reducers/post";
 import CommonUserForm from "../hooks/useInput";
+import { CustomButton } from "../styles/GlobalStyleComponent";
 
 const PostForm = () => {
   const { imagePaths, addPostDone } = useSelector((state) => state.post);
@@ -80,9 +81,13 @@ const PostForm = () => {
           />
           <div style={{ marginTop: 10 }}>
             <Button onClick={onclickImageUpload}>Upload Image</Button>
-            <Button type="primary" style={{ float: "right" }} htmlType="submit">
+            <CustomButton
+              type="primary"
+              style={{ float: "right" }}
+              htmlType="submit"
+            >
               Post
-            </Button>
+            </CustomButton>
           </div>
         </div>
         <div>

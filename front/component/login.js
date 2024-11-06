@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import LoginForm from "../component/LoginForm";
+import LoginForm from "./LoginForm";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import useMessageAPI from "../component/message/messageAPI";
+import useMessageAPI from "./message/messageAPI";
 import { Alert } from "antd";
 
 const Login = () => {
