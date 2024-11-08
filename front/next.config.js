@@ -4,6 +4,9 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 module.exports = withBundleAnalyzer({
   compress: true,
+  images: {
+    domains: ["portfolio-simon-nodebird.s3.ca-central-1.amazonaws.com"],
+  },
   webpack(config, { webpack, isServer }) {
     const prod = process.env.NODE_ENV === "production";
     // const plugins = [...config.plugins,

@@ -49,6 +49,7 @@ const PostImages = ({ images }) => {
                   width: `${imageStyle.width}px`,
                   height: `${imageStyle.height}px`,
                   margin: "10px",
+                  objectFit: "cover",
                 }}
                 src={v.src}
                 alt={v.src}

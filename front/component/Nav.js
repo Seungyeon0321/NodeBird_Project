@@ -11,6 +11,7 @@ import StyledButton from "./button";
 import { SearchWrapper } from "../styles/GlobalStyleComponent";
 import CommonUserForm from "../hooks/useInput";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 function Nav() {
   const [searchInput, onChangeSearchInput] = CommonUserForm("");
@@ -22,7 +23,6 @@ function Nav() {
   const clickHandler = useCallback(
     (action) => {
       dispatch({ type: SET_CURRENT_VIEW, data: action });
-      router.push("/");
     },
     [dispatch, router]
   );
@@ -40,7 +40,26 @@ function Nav() {
   return (
     <div>
       <Row>
-        <Col span={10} style={{ fontSize: "24px", fontWeight: "bold" }}>
+        <Col span={0.5}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              marginRight: 10,
+              marginTop: 5,
+            }}
+          >
+            <Image
+              src="https://portfolio-simon-nodebird.s3.ca-central-1.amazonaws.com/20241107_232138519.png"
+              alt="logo"
+              width={50}
+              height={50}
+              objectFit="cover"
+            />
+          </div>
+        </Col>
+        <Col span={7.5} style={{ fontSize: "30px", fontWeight: "bold" }}>
           <Link
             href="/"
             onClick={() => clickHandler("main")}
@@ -49,8 +68,8 @@ function Nav() {
             Node Bird
           </Link>
         </Col>
-
-        <Col span={14}>
+        {/* 9+10 */}
+        <Col span={16}>
           <Row style={{ display: "flex", justifyContent: "flex-end" }}>
             <Col
               xs={24}
@@ -63,7 +82,6 @@ function Nav() {
                 gap: 20,
                 justifyContent: "flex-end",
                 paddingRight: 20,
-                marginBottom: 10,
               }}
             >
               {me ? (

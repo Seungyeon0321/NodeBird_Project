@@ -7,7 +7,7 @@ const { Header, Content } = Layout;
 const AppLayout = ({ profile, postFrom, content, children }) => {
   return (
     <Layout>
-      <Header style={{ background: "#2a272a" }}>
+      <Header style={{ background: "#000000" }}>
         <Nav />
       </Header>
 

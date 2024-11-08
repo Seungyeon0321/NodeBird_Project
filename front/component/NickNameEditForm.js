@@ -1,17 +1,16 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Form, Input } from "antd";
 import { CHANGE_NICKNAME_REQUEST } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import useMessageAPI from "../component/message/messageAPI";
 
 import useInput from "../hooks/useInput";
 
 const NickNameEditForm = () => {
-  const { me } = useSelector((state) => state.user);
+  const { me, changeNicknameDone } = useSelector((state) => state.user);
   const [nickname, onChangeNickname] = useInput(me?.nickname || "");
   const dispatch = useDispatch();
-
-  console.log(nickname);
+  const { success, contextHolder } = useMessageAPI();
 
   const style = {
     marginBottom: "20px",
@@ -26,8 +25,15 @@ const NickNameEditForm = () => {
     });
   }, [nickname]);
 
+  useEffect(() => {
+    if (changeNicknameDone) {
+      success("Your nickname has successfully been changed");
+    }
+  }, [changeNicknameDone]);
+
   return (
     <Form style={style}>
+      {contextHolder}
       <Input.Search
         value={nickname}
         onChange={onChangeNickname}
