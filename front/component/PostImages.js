@@ -14,11 +14,20 @@ const PostImages = ({ images }) => {
     setShowImagesZoom(false);
   }, []);
 
+  const imageStyle = {
+    width: 200,
+    height: 200,
+  };
+
   if (images.length === 1) {
     return (
       <>
         <img
           role="presentation"
+          style={{
+            width: `${imageStyle.width}px`,
+            height: `${imageStyle.height}px`,
+          }}
           src={`${images[0].src}`}
           alt={images[0].src}
           onClick={onZoom}
@@ -27,25 +36,29 @@ const PostImages = ({ images }) => {
       </>
     );
   }
-  if (images.length === 2) {
+
+  if (images.length > 2) {
     return (
-      <>
-        <img
-          role="presentation"
-          width="50%"
-          src={`${images[0].src}`}
-          alt={images[0].src}
-          onClick={onZoom}
-        />
-        <img
-          role="presentation"
-          width="50%"
-          src={`${images[1].src}`}
-          alt={images[1].src}
-          onClick={onZoom}
-        />
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {images.map((v) => {
+          return (
+            <div key={v.src}>
+              <img
+                role="presentation"
+                style={{
+                  width: `${imageStyle.width}px`,
+                  height: `${imageStyle.height}px`,
+                  margin: "10px",
+                }}
+                src={v.src}
+                alt={v.src}
+                onClick={onZoom}
+              />
+            </div>
+          );
+        })}
         {showImagesZoom && <ImageZoom images={images} onClose={onClose} />}
-      </>
+      </div>
     );
   }
 
@@ -89,3 +102,23 @@ PostImages.propTypes = {
 };
 
 export default PostImages;
+
+{
+  /* <img
+          role="presentation"
+          style={{
+            width: `${imageStyle.width}px`,
+            height: `${imageStyle.height}px`,
+          }}
+          src={`${images[0].src}`}
+          alt={images[0].src}
+          onClick={onZoom}
+        />
+        <img
+          role="presentation"
+          width="50%"
+          src={`${images[1].src}`}
+          alt={images[1].src}
+          onClick={onZoom}
+        /> */
+}
