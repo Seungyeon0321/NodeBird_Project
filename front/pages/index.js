@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 
-import AppLayout from "../component/PageLayout.js";
-import PostCard from "../component/PostCard.js";
-import PostForm from "../component/PostFrom.js";
-import SignUp from "../component/SignupPage.js";
-import Login from "../component/LoginPage.js";
-import UserProfile from "../component/UserProfile.js";
+import AppLayout from "../component/PageLayout";
+import PostCard from "../component/PostCard";
+import PostForm from "../component/PostFrom";
+import SignUp from "../component/SignupPage";
+import Login from "../component/LoginPage";
+import UserProfile from "../component/UserProfile";
 
-import { LOAD_POST_REQUEST } from "../reducers/post.js";
-import { LOAD_MY_INFO_REQUEST } from "../reducers/user.js";
-import wrapper from "../store/configureStore.js";
+import { LOAD_POST_REQUEST } from "../reducers/post";
+import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
+import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
 
 import axios from "axios";
