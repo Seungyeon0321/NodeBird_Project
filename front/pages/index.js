@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 
-import AppLayout from "../component/Layout.js";
+import AppLayout from "../component/PageLayout.js";
 import PostCard from "../component/PostCard.js";
 import PostForm from "../component/PostFrom.js";
 import SignUp from "../component/SignupPage.js";
