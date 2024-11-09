@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 
-import AppLayout from "../component/Layout";
-import PostCard from "../component/PostCard";
-import PostForm from "../component/PostFrom";
-import SignUp from "../component/Signup";
-import Login from "../component/Login";
-import UserProfile from "../component/UserProfile";
+import AppLayout from "../component/Layout.js";
+import PostCard from "../component/PostCard.js";
+import PostForm from "../component/PostFrom.js";
+import SignUp from "../component/SignupPage.js";
+import Login from "../component/LoginPage.js";
+import UserProfile from "../component/UserProfile.js";
 
 import { LOAD_POST_REQUEST } from "../reducers/post";
 import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
