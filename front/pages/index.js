@@ -8,9 +8,9 @@ import SignUp from "../component/SignupPage.js";
 import Login from "../component/LoginPage.js";
 import UserProfile from "../component/UserProfile.js";
 
-import { LOAD_POST_REQUEST } from "../reducers/post";
-import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
-import wrapper from "../store/configureStore";
+import { LOAD_POST_REQUEST } from "../reducers/post.js";
+import { LOAD_MY_INFO_REQUEST } from "../reducers/user.js";
+import wrapper from "../store/configureStore.js";
 import { END } from "redux-saga";
 
 import axios from "axios";

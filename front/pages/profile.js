@@ -1,17 +1,17 @@
-import AppLayout from "../component/layout";
+import AppLayout from "../component/PageLayout.js";
 import Head from "next/head";
-import NickNameEditForm from "../component/NickNameEditForm";
+import NickNameEditForm from "../component/NickNameEditForm.js";
 import React, { useEffect, useState, useCallback } from "react";
 import Router from "next/router";
-import FollowList from "../component/FollowList";
+import FollowList from "../component/FollowList.js";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { END } from "redux-saga";
 import useSWR from "swr";
-import wrapper from "../store/configureStore";
-import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
-import { LOAD_POST_REQUEST } from "../reducers/post";
-import { backURL } from "../config/config";
+import wrapper from "../store/configureStore.js";
+import { LOAD_MY_INFO_REQUEST } from "../reducers/user.js";
+import { LOAD_POST_REQUEST } from "../reducers/post.js";
+import { backURL } from "../config/config.js";
 
 const fetcher = (url) =>
   axios.get(url, { withCredentials: true }).then((result) => result.data);

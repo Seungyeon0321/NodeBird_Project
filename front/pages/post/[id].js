@@ -5,9 +5,9 @@ import { LOAD_MY_INFO_REQUEST } from "../../reducers/user";
 import { LOAD_POSTS_REQUEST } from "../../reducers/post";
 import { END } from "redux-saga";
 import axios from "axios";
-import wrapper from "../../store/configureStore";
-import AppLayout from "../../component/Layout";
-import PostCard from "../../component/PostCard";
+import wrapper from "../../store/configureStore.js";
+import AppLayout from "../../component/PageLayout.js";
+import PostCard from "../../component/PostCard.js";
 import { useSelector } from "react-redux";
 import Head from "next/head";
 

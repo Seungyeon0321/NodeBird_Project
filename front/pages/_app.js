@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
-import wrapper from "../store/configureStore";
+import wrapper from "../store/configureStore.js";
 import { ThemeProvider } from "styled-components";
-import { theme } from "../styles/theme";
+import { theme } from "../styles/theme.js";
 // import MillionLint from "@million/lint";
 
 const NodeBird = ({ Component }) => {
