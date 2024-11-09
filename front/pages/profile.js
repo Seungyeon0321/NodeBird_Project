@@ -1,4 +1,4 @@
-import AppLayout from "../component/PageLayout";
+import AppLayoutPage from "../component/PageLayout";
 import Head from "next/head";
 import NickNameEditForm from "../component/NickNameEditForm";
 import React, { useEffect, useState, useCallback } from "react";
@@ -58,7 +58,7 @@ const Profile = () => {
       <Head>
         <title>My Profile | Node Bird</title>
       </Head>
-      <AppLayout>
+      <AppLayoutPage>
         <NickNameEditForm />
         <FollowList
           header="Followings"
@@ -72,8 +72,7 @@ const Profile = () => {
           onClickMore={loadMoreFollowers}
           loading={!followersData && followerError}
         />
-      </AppLayout>
-      ;
+      </AppLayoutPage>
     </>
   );
 };

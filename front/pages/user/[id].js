@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
 import Head from "next/head";
-import AppLayout from "../../component/PageLayout";
+import AppLayoutPage from "../../component/PageLayout";
 import PostCard from "../../component/PostCard";
 import wrapper from "../../store/configureStore";
 import { useRouter } from "next/router";
@@ -48,7 +48,7 @@ const User = () => {
   }, [mainPosts.length, hasMorePost, id, loadPostLoading]);
 
   return (
-    <AppLayout>
+    <AppLayoutPage>
       <Head>
         <title>{userInfo.nickname}</title>
 
@@ -98,7 +98,7 @@ const User = () => {
       {mainPosts.map((c) => (
         <PostCard key={`post-${c.id}`} post={c} />
       ))}
-    </AppLayout>
+    </AppLayoutPage>
   );
 };
 

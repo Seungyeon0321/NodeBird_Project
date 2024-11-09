@@ -6,7 +6,7 @@ import { LOAD_POSTS_REQUEST } from "../../reducers/post";
 import { END } from "redux-saga";
 import axios from "axios";
 import wrapper from "../../store/configureStore";
-import AppLayout from "../../component/PageLayout";
+import AppLayoutPage from "../../component/PageLayout";
 import PostCard from "../../component/PostCard";
 import { useSelector } from "react-redux";
 import Head from "next/head";
@@ -21,7 +21,7 @@ const Post = () => {
   }
 
   return (
-    <AppLayout>
+    <AppLayoutPage>
       {singlePost && (
         <>
           <Head>
@@ -49,7 +49,7 @@ const Post = () => {
           <PostCard post={singlePost}></PostCard>
         </>
       )}
-    </AppLayout>
+    </AppLayoutPage>
   );
 };
 

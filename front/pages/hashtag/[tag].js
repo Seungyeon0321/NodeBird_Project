@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
 import Head from "next/head";
-import AppLayout from "../../component/PageLayout";
+import AppLayoutPage from "../../component/PageLayout";
 import PostCard from "../../component/PostCard";
 import wrapper from "../../store/configureStore";
 import { useRouter } from "next/router";
@@ -42,7 +42,7 @@ const Hashtag = () => {
   }, [mainPosts.length, hasMorePost, tag, loadPostLoading]);
 
   return (
-    <AppLayout>
+    <AppLayoutPage>
       {mainPosts.map((post) => (
         <React.Fragment key={`meta-${post.id}`}>
           <Head>
@@ -68,7 +68,7 @@ const Hashtag = () => {
           <PostCard post={post} />
         </React.Fragment>
       ))}
-    </AppLayout>
+    </AppLayoutPage>
   );
 };
 

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 
-import AppLayout from "../component/PageLayout";
+import AppLayoutPage from "../component/PageLayout";
 import PostCard from "../component/PostCard";
 import PostForm from "../component/PostFrom";
 import SignUp from "../component/SignupPage";
@@ -91,7 +91,7 @@ const Home = () => {
 
   return (
     <>
-      <AppLayout
+      <AppLayoutPage
         profile={me && <UserProfile />}
         postFrom={me && <PostForm />}
         content={renderContent()}
