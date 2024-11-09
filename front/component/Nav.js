@@ -7,7 +7,7 @@ import { SET_CURRENT_VIEW } from "../reducers/ui";
 import { logOutRequestAction } from "../reducers/user";
 
 import { Row, Col } from "antd";
-import StyledButton from "./button";
+import NavCustomButton from "./NavCustomButton";
 import { SearchWrapper } from "../styles/GlobalStyleComponent";
 import CommonUserForm from "../hooks/useInput";
 import { useRouter } from "next/router";
@@ -40,7 +40,7 @@ function Nav() {
   return (
     <div>
       <Row>
-        <Col span={0.5}>
+        <Col span={1}>
           <div
             style={{
               display: "flex",
@@ -59,7 +59,13 @@ function Nav() {
             />
           </div>
         </Col>
-        <Col span={7.5} style={{ fontSize: "30px", fontWeight: "bold" }}>
+        <Col
+          span={6}
+          style={{
+            fontSize: "30px",
+            fontWeight: "bold",
+          }}
+        >
           <Link
             href="/"
             onClick={() => clickHandler("main")}
@@ -69,50 +75,42 @@ function Nav() {
           </Link>
         </Col>
         {/* 9+10 */}
-        <Col span={16}>
-          <Row style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Col
-              xs={24}
-              sm={12}
-              md={12}
-              lg={12}
-              xl={12}
+        <Col span={5}></Col>
+
+        <Col span={6} style={{ display: "flex", justifyContent: "flex-end" }}>
+          {me ? (
+            <div
               style={{
                 display: "flex",
-                gap: 20,
                 justifyContent: "flex-end",
-                paddingRight: 20,
+                border: "blue solid 2px",
               }}
             >
-              {me ? (
-                <>
-                  <StyledButton onClick={logoutHandler}>Logout</StyledButton>
-                  <StyledButton onClick={() => router.push("/profile")}>
-                    Profile
-                  </StyledButton>
-                </>
-              ) : (
-                <>
-                  <StyledButton onClick={() => clickHandler("login")}>
-                    Login
-                  </StyledButton>
-                  <StyledButton onClick={() => clickHandler("signup")}>
-                    Signup
-                  </StyledButton>
-                </>
-              )}
-            </Col>
+              <NavCustomButton onClick={logoutHandler}>Logout</NavCustomButton>
+              <NavCustomButton onClick={() => router.push("/profile")}>
+                Profile
+              </NavCustomButton>
+            </div>
+          ) : (
+            <>
+              <NavCustomButton onClick={() => clickHandler("login")}>
+                Login
+              </NavCustomButton>
+              <NavCustomButton onClick={() => clickHandler("signup")}>
+                Signup
+              </NavCustomButton>
+            </>
+          )}
+        </Col>
 
-            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-              <SearchWrapper
-                enterButton
-                placeholder="search hashtag"
-                value={searchInput}
-                onChange={onChangeSearchInput}
-                onSearch={onSearch}
-              />
-            </Col>
-          </Row>
+        <Col span={6} style={{ border: "1px solid green" }}>
+          <SearchWrapper
+            enterButton
+            placeholder="search hashtag"
+            value={searchInput}
+            onChange={onChangeSearchInput}
+            onSearch={onSearch}
+          />
         </Col>
       </Row>
     </div>

@@ -43,4 +43,21 @@ const NavButton = styled(Button)`
   padding: 0;
 `;
 
-export { CustomButton, CustomButton2, SearchWrapper, NavButton };
+const StyledButton = styled.button`
+  font-weight: bold;
+  font-size: 18px;
+  color: #a3cfcd;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 10px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+    color: #7ba8a6;
+  }
+`;
+
+export { CustomButton, CustomButton2, SearchWrapper, NavButton, StyledButton };
