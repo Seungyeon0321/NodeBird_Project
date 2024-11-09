@@ -2,12 +2,15 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
 import Head from "next/head";
-import AppLayout from "../../component/layout";
-import PostCard from "../../component/PostCard";
-import wrapper from "../../store/configureStore";
+import AppLayout from "../../component/PageLayout.js";
+import PostCard from "../../component/PostCard.js";
+import wrapper from "../../store/configureStore.js";
 import { useRouter } from "next/router";
-import { LOAD_USER_POSTS_REQUEST } from "../../reducers/post";
-import { LOAD_MY_INFO_REQUEST, LOAD_USER_REQUEST } from "../../reducers/user";
+import { LOAD_USER_POSTS_REQUEST } from "../../reducers/post.js";
+import {
+  LOAD_MY_INFO_REQUEST,
+  LOAD_USER_REQUEST,
+} from "../../reducers/user.js";
 import { END } from "redux-saga";
 import { Card, Avatar } from "antd";
 
