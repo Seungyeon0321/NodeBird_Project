@@ -1,0 +1,18 @@
+.main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  color: #152934;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
