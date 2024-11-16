@@ -3,6 +3,7 @@ let isChecking = false;
 let tryCount = 0;
 
 async function checkServerStatus() {
+  console.log("Checking server status");
   if (isChecking) return;
   try {
     isChecking = true;
@@ -13,14 +14,14 @@ async function checkServerStatus() {
       console.log("Server is not running");
       return;
     }
-    let result = await fetch("https://start.portfolio-simon.com/start", {
+    let result = await fetch("https://open.portfolio-simon.com/start", {
       method: "GET",
     });
 
     console.log(result.status);
     if (result.status == 202) {
       h1.textContent = "Server is running!!";
-      window.location.href = "https://simon-portfolio.com";
+      window.location.href = "https://portfolio-simon.com";
     } else {
       console.log("Server is not running");
     }
