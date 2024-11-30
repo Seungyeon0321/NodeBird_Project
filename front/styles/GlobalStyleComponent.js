@@ -8,9 +8,16 @@ const BasicLayout = styled.div`
   height: 100%;
   width: 1400px;
   background-color: #f0f0f0;
+  margin-top: 10px;
 `;
 
-const leftSideLayout = styled.div`
+const MainLayout = styled.div`
+  width: 700px;
+  height: 100%;
+  background-color: #f0f0f0;
+`;
+
+const SideLayout = styled.div`
   width: 350px;
   height: 100%;
   background-color: #f0f0f0;
@@ -77,10 +84,11 @@ const StyledButton = styled.button`
 
 export {
   BasicLayout,
-  leftSideLayout,
+  SideLayout,
   CustomButton,
   CustomButton2,
   SearchWrapper,
   NavButton,
   StyledButton,
+  MainLayout,
 };

@@ -4,11 +4,9 @@ import {
   HeartOutlined,
   HomeOutlined,
   TeamOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
-const { Header, Content, Footer, Sider } = Layout;
-import { PlusOutlined } from "@ant-design/icons";
+import { Layout, Menu } from "antd";
+const { Sider } = Layout;
 import { CustomButton } from "../styles/GlobalStyleComponent";
 
 // Need to make different component for this lists
@@ -29,11 +27,9 @@ const items = [
   getItem("Likes", "5", <HeartOutlined />),
 ];
 
-const SideBar = () => {
+const LeftSideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+
   return (
     <Layout
       style={{
@@ -42,24 +38,39 @@ const SideBar = () => {
         position: "sticky", // fixed 대신 sticky 사용
         top: 0, // 상단에 고정
         height: "100vh",
+        borderRadius: "10px",
+
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "end",
       }}
     >
       <Sider
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
-        style={{ backgroundColor: "#f0f0f0" }}
+        style={{
+          backgroundColor: "#f0f0f0",
+        }}
         className="custom-sider"
       >
         <div className="demo-logo-vertical" />
         <Menu
-          style={{ backgroundColor: "#f0f0f0" }}
+          style={{
+            backgroundColor: "#f0f0f0",
+            maxWidth: "260px",
+            minWidth: "260px",
+          }}
           defaultSelectedKeys={["1"]}
           mode="inline"
           items={items}
         />
         <CustomButton
-          style={{ marginTop: "30px", marginLeft: "20px", width: "90%" }}
+          style={{
+            marginTop: "30px",
+            marginLeft: "20px",
+            width: "100%",
+          }}
         >
           Post
         </CustomButton>
@@ -67,4 +78,5 @@ const SideBar = () => {
     </Layout>
   );
 };
-export default SideBar;
+
+export default LeftSideBar;
