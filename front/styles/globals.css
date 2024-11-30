@@ -1,3 +1,13 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: #f0f0f0;
+}
+
 .clicked {
   font-weight: bold;
   font-size: 15px;
@@ -12,4 +22,9 @@
 .ant-btn-primary {
   background-color: #8685ef !important;
   border-color: #8685ef !important;
+}
+
+.custom-sider .ant-layout-sider-trigger {
+  background-color: #f0f0f0 !important; /* 원하는 배경색으로 변경 */
+  color: black !important;
 }

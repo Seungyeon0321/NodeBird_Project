@@ -90,13 +90,13 @@ const Home = () => {
   }, [loadPostLoading, mainPosts]);
 
   return (
-    <>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <AppLayoutPage
         profile={me && <UserProfile />}
         postFrom={me && <PostForm />}
         content={renderContent()}
       />
-    </>
+    </div>
   );
 };
 

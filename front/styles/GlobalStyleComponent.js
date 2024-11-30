@@ -1,6 +1,21 @@
 import styled from "styled-components";
 import { Button, Input } from "antd";
 
+//layout
+const BasicLayout = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 1400px;
+  background-color: #f0f0f0;
+`;
+
+const leftSideLayout = styled.div`
+  width: 350px;
+  height: 100%;
+  background-color: #f0f0f0;
+`;
+
 const CustomButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.primary} !important;
   border-color: ${(props) => props.theme.colors.primary} !important;
@@ -60,4 +75,12 @@ const StyledButton = styled.button`
   }
 `;
 
-export { CustomButton, CustomButton2, SearchWrapper, NavButton, StyledButton };
+export {
+  BasicLayout,
+  leftSideLayout,
+  CustomButton,
+  CustomButton2,
+  SearchWrapper,
+  NavButton,
+  StyledButton,
+};

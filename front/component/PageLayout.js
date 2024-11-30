@@ -2,16 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Layout, Row, Col } from "antd";
 import Nav from "./Nav";
-const { Header, Content } = Layout;
+import { BasicLayout, leftSideLayout } from "../styles/GlobalStyleComponent";
+const { Content } = Layout;
+import SideBar from "./SideBar";
 
 const AppLayoutPage = ({ profile, postFrom, content, children }) => {
   return (
-    <Layout>
-      <Header style={{ background: "#000000" }}>
-        <Nav />
-      </Header>
+    <BasicLayout>
+      <leftSideLayout>
+        <SideBar />
+      </leftSideLayout>
 
-      <Content>
+      <div>
         <Row
           gutter={[16, 16]}
           justify="center"
@@ -28,12 +30,12 @@ const AppLayoutPage = ({ profile, postFrom, content, children }) => {
             {content}
             {children}
           </Col>
-          {/* <Col xs={24} md={6}>
-          <a rel="noReferred noOpener">Let`s go!</a>
-        </Col> */}
+          <Col xs={24} md={6}>
+            <a rel="noReferred noOpener">Let`s go!</a>
+          </Col>
         </Row>
-      </Content>
-    </Layout>
+      </div>
+    </BasicLayout>
   );
 };
 
