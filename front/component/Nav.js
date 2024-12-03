@@ -38,15 +38,20 @@ function Nav() {
 
   // xs 768, sm 992, md 1200, lg 1600
   return (
-    <div style={{ width: "100%" }}>
+    <div
+      style={{
+        width: "100%", // 1400px에서 100%로 변경
+        maxWidth: "1400px", // 최대 너비 추가
+        minWidth: "1400px",
+        height: "30px",
+        display: "flex",
+        justifyContent: "flex-end",
+        paddingRight: "65px",
+        position: "fixed",
+      }}
+    >
       {me ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            border: "blue solid 2px",
-          }}
-        >
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <NavCustomButton onClick={logoutHandler}>Logout</NavCustomButton>
           <NavCustomButton onClick={() => router.push("/profile")}>
             Profile

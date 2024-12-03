@@ -7,6 +7,7 @@ const LayoutWrapper = styled(Layout)`
   display: flex;
   justify-content: center;
   width: 1400px;
+  max-width: 1400px;
 `;
 
 const HeaderLayout = styled(Header)`
@@ -15,6 +16,8 @@ const HeaderLayout = styled(Header)`
   margin: 0;
   height: 30px;
   width: 100%;
+  max-width: 1400px;
+  min-width: 1400px;
 `;
 
 const BasicLayout = styled.div`
@@ -40,6 +43,7 @@ const SideLayout = styled.div`
 const CustomMenu = styled(Menu)`
   background-color: #f0f0f0 !important;
   width: 300px;
+  margin: 0;
   .ant-menu-item:hover {
     background-color: transparent !important;
     color: inherit !important;
@@ -55,12 +59,11 @@ const CustomButton = styled(Button)`
   border-color: ${(props) => props.theme.colors.primary} !important;
   color: white !important;
 
-  &:hover {
-    background-color: ${(props) =>
-      props.theme.colors.hover
-        .primary} !important; /* 원하는 호버 색상으로 변경 */
-    border-color: ${(props) => props.theme.colors.hover.primary} !important;
-    color: black !important;
+   &:hover {
+      background-color: ${(props) =>
+        props.theme.colors.hover.secondary} !important;
+      border-color: ${(props) => props.theme.colors.hover.secondary} !important;
+    }
   }
 `;
 
@@ -70,9 +73,9 @@ const CustomButton2 = styled(Button)`
   color: black !important;
 
   &:hover {
-    background-color: #2a272a !important; /* 원하는 호버 색상으로 변경 */
-    border-color: #2a272a !important;
-    color: white !important;
+    background-color: ${(props) =>
+      props.theme.colors.hover.secondary} !important;
+    border-color: ${(props) => props.theme.colors.hover.secondary} !important;
   }
 `;
 
@@ -82,7 +85,14 @@ const SearchWrapper = styled(Input.Search).withConfig({
   vertical-align: middle;
   left: 0;
   .ant-input-search-button {
-    background-color: #a3cfcd;
+    background-color: ${(props) => props.theme.colors.primary} !important;
+    border-color: ${(props) => props.theme.colors.primary} !important;
+
+    &:hover {
+      background-color: ${(props) =>
+        props.theme.colors.hover.secondary} !important;
+      border-color: ${(props) => props.theme.colors.hover.secondary} !important;
+    }
   }
 `;
 

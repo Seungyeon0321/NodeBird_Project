@@ -35,11 +35,8 @@ const LeftSideBar = () => {
       style={{
         minHeight: "100vh",
         backgroundColor: "#f0f0f0",
-        position: "sticky",
-        top: 0,
         height: "100vh",
         borderRadius: "10px",
-
         display: "flex",
         flexDirection: "column",
         alignItems: "end",

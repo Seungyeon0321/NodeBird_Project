@@ -55,6 +55,7 @@ function RightSideBar() {
         <SearchWrapper
           enterButton
           placeholder="search hashtag"
+          className="ant-input-search-button"
           value={searchInput}
           onChange={onChangeSearchInput}
           onSearch={onSearch}
