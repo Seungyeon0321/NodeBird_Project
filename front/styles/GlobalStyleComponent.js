@@ -1,14 +1,28 @@
 import styled from "styled-components";
-import { Button, Input } from "antd";
-
+import { Button, Input, Menu, Layout } from "antd";
+const { Header } = Layout;
 //layout
+
+const LayoutWrapper = styled(Layout)`
+  display: flex;
+  justify-content: center;
+  width: 1400px;
+`;
+
+const HeaderLayout = styled(Header)`
+  background-color: #f0f0f0;
+  padding: 0;
+  margin: 0;
+  height: 30px;
+  width: 100%;
+`;
+
 const BasicLayout = styled.div`
   display: flex;
   justify-content: center;
   height: 100%;
-  width: 1400px;
+  width: 100%;
   background-color: #f0f0f0;
-  margin-top: 10px;
 `;
 
 const MainLayout = styled.div`
@@ -21,6 +35,19 @@ const SideLayout = styled.div`
   width: 350px;
   height: 100%;
   background-color: #f0f0f0;
+`;
+
+const CustomMenu = styled(Menu)`
+  background-color: #f0f0f0 !important;
+  width: 300px;
+  .ant-menu-item:hover {
+    background-color: transparent !important;
+    color: inherit !important;
+    cursor: default;
+  }
+  .ant-menu-item {
+    padding-left: 0px !important;
+  }
 `;
 
 const CustomButton = styled(Button)`
@@ -53,7 +80,7 @@ const SearchWrapper = styled(Input.Search).withConfig({
   componentId: "Search-wrapper",
 })`
   vertical-align: middle;
-
+  left: 0;
   .ant-input-search-button {
     background-color: #a3cfcd;
   }
@@ -91,4 +118,7 @@ export {
   NavButton,
   StyledButton,
   MainLayout,
+  CustomMenu,
+  HeaderLayout,
+  LayoutWrapper,
 };

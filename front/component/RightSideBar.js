@@ -6,18 +6,31 @@ import { SET_CURRENT_VIEW } from "../reducers/ui";
 
 import { logOutRequestAction } from "../reducers/user";
 
-import { Row, Col } from "antd";
+import { Row, Col, Layout, Menu } from "antd";
+
 import NavCustomButton from "./NavCustomButton";
 import { SearchWrapper } from "../styles/GlobalStyleComponent";
 import CommonUserForm from "../hooks/useInput";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import { CustomMenu } from "../styles/GlobalStyleComponent";
+const { Sider } = Layout;
 
-function Nav() {
+function getItem(label, key, icon, children) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+  };
+}
+
+function RightSideBar() {
   const [searchInput, onChangeSearchInput] = CommonUserForm("");
   const dispatch = useDispatch();
   const router = useRouter();
   const { me } = useSelector((state) => state.user);
+
+  //antd
 
   // login in
   const clickHandler = useCallback(
@@ -36,22 +49,32 @@ function Nav() {
     Router.push(`/hashtag/${searchInput}`);
   }, [searchInput]);
 
+  const items = [
+    getItem(
+      <div style={{ left: "0", margin: "0" }}>
+        <SearchWrapper
+          enterButton
+          placeholder="search hashtag"
+          value={searchInput}
+          onChange={onChangeSearchInput}
+          onSearch={onSearch}
+        />
+      </div>
+    ),
+  ];
+
   // xs 768, sm 992, md 1200, lg 1600
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <Row
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-        }}
-      >
-        {/* <Col span={1}>
+    <Layout style={{ backgroundColor: "#f0f0f0", width: "350px" }}>
+      <Sider width={350} style={siderStyle}>
+        <CustomMenu
+          className="right-side-bar-menu"
+          selectedKeys={[]} // 선택된 아이템 하이라이트 제거
+          mode="inline"
+          items={items}
+        />
+      </Sider>
+      {/* <Col span={1}>
           <div
             style={{
               display: "flex",
@@ -71,7 +94,7 @@ function Nav() {
             />
           </div>
         </Col> */}
-        {/* <Col
+      {/* <Col
           span={6}
           style={{
             fontSize: "10px",
@@ -87,48 +110,54 @@ function Nav() {
           </Link>
         </Col>
         {/* 9+10 */}
-        {/* <Col span={5}></Col>  */}
-        <Col span={6} style={{ display: "flex", justifyContent: "flex-end" }}>
-          {me ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                border: "blue solid 2px",
-              }}
-            >
-              <NavCustomButton onClick={logoutHandler}>Logout</NavCustomButton>
-              <NavCustomButton onClick={() => router.push("/profile")}>
-                Profile
-              </NavCustomButton>
-            </div>
-          ) : (
-            <>
-              <NavCustomButton onClick={() => clickHandler("login")}>
-                Login
-              </NavCustomButton>
-              <NavCustomButton onClick={() => clickHandler("signup")}>
-                Signup
-              </NavCustomButton>
-            </>
-          )}
-        </Col>
-        <Col
-          span={6}
-          style={{ border: "1px solid green", marginTop: 10, minWidth: "100%" }}
-        >
-          <SearchWrapper
-            enterButton
-            placeholder="search hashtag"
-            value={searchInput}
-            onChange={onChangeSearchInput}
-            onSearch={onSearch}
-          />
-        </Col>
-        <Col span={6}>Box!</Col>
-      </Row>
-    </div>
+      {/* <Col span={5}></Col>  */}
+      {/* <Col span={6} style={{ display: "flex", justifyContent: "flex-end" }}>
+        {me ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              border: "blue solid 2px",
+            }}
+          >
+            <NavCustomButton onClick={logoutHandler}>Logout</NavCustomButton>
+            <NavCustomButton onClick={() => router.push("/profile")}>
+              Profile
+            </NavCustomButton>
+          </div>
+        ) : (
+          <>
+            <NavCustomButton onClick={() => clickHandler("login")}>
+              Login
+            </NavCustomButton>
+            <NavCustomButton onClick={() => clickHandler("signup")}>
+              Signup
+            </NavCustomButton>
+          </>
+        )}
+      </Col>
+      <Col
+        span={6}
+        style={{ border: "1px solid green", marginTop: 10, minWidth: "100%" }}
+      >
+        <SearchWrapper
+          enterButton
+          placeholder="search hashtag"
+          value={searchInput}
+          onChange={onChangeSearchInput}
+          onSearch={onSearch}
+        />
+      </Col>
+      <Col span={6}>Box!</Col> */}
+    </Layout>
   );
 }
 
-export default Nav;
+const siderStyle = {
+  height: "100vh",
+  width: "250px",
+  position: "fixed",
+  backgroundColor: "#f0f0f0",
+};
+
+export default RightSideBar;

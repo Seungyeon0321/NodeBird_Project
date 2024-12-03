@@ -38,81 +38,30 @@ function Nav() {
 
   // xs 768, sm 992, md 1200, lg 1600
   return (
-    <div>
-      <Row>
-        <Col span={1}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              marginRight: 10,
-              marginTop: 5,
-            }}
-          >
-            <Image
-              src="https://portfolio-simon-nodebird.s3.ca-central-1.amazonaws.com/20241107_232138519.png"
-              alt="logo"
-              width={50}
-              height={50}
-              objectFit="cover"
-            />
-          </div>
-        </Col>
-        <Col
-          span={6}
+    <div style={{ width: "100%" }}>
+      {me ? (
+        <div
           style={{
-            fontSize: "30px",
-            fontWeight: "bold",
+            display: "flex",
+            justifyContent: "flex-end",
+            border: "blue solid 2px",
           }}
         >
-          <Link
-            href="/"
-            onClick={() => clickHandler("main")}
-            style={{ color: "#a3cfcd" }}
-          >
-            Node Bird
-          </Link>
-        </Col>
-        {/* 9+10 */}
-        <Col span={5}></Col>
-
-        <Col span={6} style={{ display: "flex", justifyContent: "flex-end" }}>
-          {me ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                border: "blue solid 2px",
-              }}
-            >
-              <NavCustomButton onClick={logoutHandler}>Logout</NavCustomButton>
-              <NavCustomButton onClick={() => router.push("/profile")}>
-                Profile
-              </NavCustomButton>
-            </div>
-          ) : (
-            <>
-              <NavCustomButton onClick={() => clickHandler("login")}>
-                Login
-              </NavCustomButton>
-              <NavCustomButton onClick={() => clickHandler("signup")}>
-                Signup
-              </NavCustomButton>
-            </>
-          )}
-        </Col>
-
-        <Col span={6} style={{ border: "1px solid green" }}>
-          <SearchWrapper
-            enterButton
-            placeholder="search hashtag"
-            value={searchInput}
-            onChange={onChangeSearchInput}
-            onSearch={onSearch}
-          />
-        </Col>
-      </Row>
+          <NavCustomButton onClick={logoutHandler}>Logout</NavCustomButton>
+          <NavCustomButton onClick={() => router.push("/profile")}>
+            Profile
+          </NavCustomButton>
+        </div>
+      ) : (
+        <>
+          <NavCustomButton onClick={() => clickHandler("login")}>
+            Login
+          </NavCustomButton>
+          <NavCustomButton onClick={() => clickHandler("signup")}>
+            Signup
+          </NavCustomButton>
+        </>
+      )}
     </div>
   );
 }

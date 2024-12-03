@@ -35,8 +35,8 @@ const LeftSideBar = () => {
       style={{
         minHeight: "100vh",
         backgroundColor: "#f0f0f0",
-        position: "sticky", // fixed 대신 sticky 사용
-        top: 0, // 상단에 고정
+        position: "sticky",
+        top: 0,
         height: "100vh",
         borderRadius: "10px",
 
@@ -51,6 +51,7 @@ const LeftSideBar = () => {
         onCollapse={(value) => setCollapsed(value)}
         style={{
           backgroundColor: "#f0f0f0",
+          position: "fixed",
         }}
         className="custom-sider"
       >
@@ -69,7 +70,7 @@ const LeftSideBar = () => {
           style={{
             marginTop: "30px",
             marginLeft: "20px",
-            width: "100%",
+            width: "90%",
           }}
         >
           Post
