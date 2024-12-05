@@ -247,8 +247,6 @@ router.post("/:postId/retweet", isLoggedIn, async (req, res, next) => {
   }
 });
 
-//////////////////////////////////
-
 router.post("/:postId/comment", isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({

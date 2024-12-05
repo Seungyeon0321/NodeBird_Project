@@ -5,6 +5,13 @@ const { Op } = require("sequelize");
 
 router.get("/:hashtag", async (req, res, next) => {
   try {
+    const hashtag = await Hashtag.findOne({
+      where: { name: req.params.hashtag },
+    });
+    if (!hashtag) {
+      return res.status(404).json({ message: "해시태그가 존재하지 않습니다." });
+    }
+
     const where = {};
     if (parseInt(req.query.lastId, 10)) {
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10) };
