@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
 import {
   BellOutlined,
   HeartOutlined,
@@ -7,17 +10,10 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 const { Sider } = Layout;
-import { CustomButton } from "../styles/GlobalStyleComponent";
 
-// Need to make different component for this lists
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
+import { SET_CURRENT_VIEW } from "../reducers/ui";
+import { CustomButton } from "../styles/GlobalStyleComponent";
+import getItem from "./ui/GetItem";
 
 const items = [
   getItem("Home", "1", <HomeOutlined />),
@@ -29,6 +25,17 @@ const items = [
 
 const LeftSideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const dispatch = useDispatch();
+  const { currentView } = useSelector((state) => state.ui);
+  const { me } = useSelector((state) => state.user);
+
+  const clickHandler = ({ key }) => {
+    switch (key) {
+      case "1":
+        dispatch({ type: SET_CURRENT_VIEW, data: "home" });
+        break;
+    }
+  };
 
   return (
     <Layout
@@ -42,37 +49,41 @@ const LeftSideBar = () => {
         alignItems: "end",
       }}
     >
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-        style={{
-          backgroundColor: "#f0f0f0",
-          position: "fixed",
-        }}
-        className="custom-sider"
-      >
-        <div className="demo-logo-vertical" />
-        <Menu
-          style={{
-            backgroundColor: "#f0f0f0",
-            maxWidth: "260px",
-            minWidth: "260px",
-          }}
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
-        />
-        <CustomButton
-          style={{
-            marginTop: "30px",
-            marginLeft: "20px",
-            width: "90%",
-          }}
-        >
-          Post
-        </CustomButton>
-      </Sider>
+      {currentView === "home" ||
+        (me && (
+          <Sider
+            collapsible
+            collapsed={collapsed}
+            onCollapse={(value) => setCollapsed(value)}
+            style={{
+              backgroundColor: "#f0f0f0",
+              position: "fixed",
+            }}
+            className="custom-sider"
+          >
+            <div className="demo-logo-vertical" />
+            <Menu
+              style={{
+                backgroundColor: "#f0f0f0",
+                maxWidth: "260px",
+                minWidth: "260px",
+              }}
+              defaultSelectedKeys={["1"]}
+              mode="inline"
+              items={items}
+              onClick={clickHandler}
+            />
+            <CustomButton
+              style={{
+                marginTop: "30px",
+                marginLeft: "20px",
+                width: "90%",
+              }}
+            >
+              Post
+            </CustomButton>
+          </Sider>
+        ))}
     </Layout>
   );
 };

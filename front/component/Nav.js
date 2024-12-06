@@ -1,20 +1,16 @@
 import React, { useCallback } from "react";
-import Router from "next/router";
-import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_CURRENT_VIEW } from "../reducers/ui";
 
 import { logOutRequestAction } from "../reducers/user";
 
-import { Row, Col } from "antd";
 import NavCustomButton from "./NavCustomButton";
-import { SearchWrapper } from "../styles/GlobalStyleComponent";
-import CommonUserForm from "../hooks/useInput";
+import { StyledImage } from "../styles/GlobalStyleComponent";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import { NavLayout } from "../styles/GlobalStyleComponent";
+import image from "../images/image_1.png";
 
 function Nav() {
-  const [searchInput, onChangeSearchInput] = CommonUserForm("");
   const dispatch = useDispatch();
   const router = useRouter();
   const { me } = useSelector((state) => state.user);
@@ -22,6 +18,7 @@ function Nav() {
   // login in
   const clickHandler = useCallback(
     (action) => {
+      console.log(action);
       dispatch({ type: SET_CURRENT_VIEW, data: action });
     },
     [dispatch, router]
@@ -31,43 +28,49 @@ function Nav() {
     dispatch(logOutRequestAction());
   }, []);
 
-  //search
-  const onSearch = useCallback(() => {
-    Router.push(`/hashtag/${searchInput}`);
-  }, [searchInput]);
-
   // xs 768, sm 992, md 1200, lg 1600
   return (
-    <div
-      style={{
-        width: "100%", // 1400px에서 100%로 변경
-        maxWidth: "1400px", // 최대 너비 추가
-        minWidth: "1400px",
-        height: "30px",
-        display: "flex",
-        justifyContent: "flex-end",
-        paddingRight: "65px",
-        position: "fixed",
-      }}
-    >
-      {me ? (
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <NavCustomButton onClick={logoutHandler}>Logout</NavCustomButton>
-          <NavCustomButton onClick={() => router.push("/profile")}>
-            Profile
-          </NavCustomButton>
-        </div>
-      ) : (
-        <>
-          <NavCustomButton onClick={() => clickHandler("login")}>
-            Login
-          </NavCustomButton>
-          <NavCustomButton onClick={() => clickHandler("signup")}>
-            Signup
-          </NavCustomButton>
-        </>
-      )}
-    </div>
+    <NavLayout style={{ display: "flex", justifyContent: "space-between" }}>
+      <div
+        style={{
+          paddingLeft: "180px",
+          cursor: "pointer",
+        }}
+        onClick={() => router.push("/")}
+      >
+        <StyledImage src={image} width={35} height={35} />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          gap: "10px",
+          paddingRight: "50px",
+          paddingBottom: "10px",
+          position: "sticky",
+        }}
+      >
+        {me && (
+          <>
+            <NavCustomButton onClick={logoutHandler}>Logout</NavCustomButton>
+            <NavCustomButton onClick={() => router.push("/profile")}>
+              Profile
+            </NavCustomButton>
+          </>
+        )}
+        {!me && (
+          <>
+            <NavCustomButton onClick={() => clickHandler("login")}>
+              Login
+            </NavCustomButton>
+            <NavCustomButton onClick={() => clickHandler("signup")}>
+              Signup
+            </NavCustomButton>
+          </>
+        )}
+      </div>
+    </NavLayout>
   );
 }
 

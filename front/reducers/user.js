@@ -243,6 +243,7 @@ const reducer = (state = initialState, action) => {
         draft.logOutError = null;
         break;
       case LOG_OUT_SUCCESS:
+        draft.isLoggedIn = false;
         draft.isLoggingOut = false;
         draft.isLoggedOut = true;
         draft.isSignedUp = false;

@@ -27,7 +27,8 @@ import moment from "moment";
 
 moment.locale("ko");
 
-const PostCard = ({ post }) => {  const { removePostLoading } = useSelector((state) => state.post);
+const PostCard = ({ post }) => {
+  const { removePostLoading } = useSelector((state) => state.post);
   const [editMode, setEditMode] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const dispatch = useDispatch();
@@ -104,7 +105,7 @@ const PostCard = ({ post }) => {  const { removePostLoading } = useSelector((sta
   return (
     <div style={{ marginBottom: 20 }}>
       <Card
-        style={{ background: "white" }}
+        style={{ background: "#f0f0f0", border: "1px solid #3b3b3b" }}
         hoverable={true}
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[

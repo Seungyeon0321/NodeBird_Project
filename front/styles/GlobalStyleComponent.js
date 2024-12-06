@@ -1,6 +1,7 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Button, Input, Menu, Layout } from "antd";
 const { Header } = Layout;
+import Image from "next/image";
 //layout
 
 const LayoutWrapper = styled(Layout)`
@@ -14,10 +15,28 @@ const HeaderLayout = styled(Header)`
   background-color: #f0f0f0;
   padding: 0;
   margin: 0;
-  height: 30px;
+  height: 40px;
   width: 100%;
   max-width: 1400px;
   min-width: 1400px;
+  display: flex;
+  justify-content: center;
+`;
+
+const NavLayout = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+const StyledImage = styled(Image)`
+  border-radius: 30%;
+  border: 1px solid #000;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 `;
 
 const BasicLayout = styled.div`
@@ -54,20 +73,28 @@ const CustomMenu = styled(Menu)`
   }
 `;
 
+// 공통 폰트 스타일 정의
+const commonFontStyle = css`
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif !important;
+`;
+
+// 기존 버튼 스타일에 공통 폰트 스타일 추가
 const CustomButton = styled(Button)`
+  ${commonFontStyle}
   background-color: ${(props) => props.theme.colors.primary} !important;
   border-color: ${(props) => props.theme.colors.primary} !important;
   color: white !important;
 
-   &:hover {
-      background-color: ${(props) =>
-        props.theme.colors.hover.secondary} !important;
-      border-color: ${(props) => props.theme.colors.hover.secondary} !important;
-    }
+  &:hover {
+    background-color: ${(props) =>
+      props.theme.colors.hover.secondary} !important;
+    border-color: ${(props) => props.theme.colors.hover.secondary} !important;
   }
 `;
 
 const CustomButton2 = styled(Button)`
+  ${commonFontStyle}
   background-color: white !important;
   border-color: ${(props) => props.theme.colors.secondary} !important;
   color: black !important;
@@ -103,6 +130,7 @@ const NavButton = styled(Button)`
 `;
 
 const StyledButton = styled.button`
+  ${commonFontStyle}
   font-weight: bold;
   font-size: 18px;
   color: #a3cfcd;
@@ -115,11 +143,12 @@ const StyledButton = styled.button`
 
   &:hover {
     transform: scale(1.1);
-    color: #7ba8a6;
+    color: ${(props) => props.theme.colors.secondary};
   }
 `;
 
 export {
+  StyledImage,
   BasicLayout,
   SideLayout,
   CustomButton,
@@ -131,4 +160,5 @@ export {
   CustomMenu,
   HeaderLayout,
   LayoutWrapper,
+  NavLayout,
 };

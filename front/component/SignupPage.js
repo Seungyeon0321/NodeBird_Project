@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
 import LoadingSpin from "./LoadingSpin";
 import Router from "next/router";
-import Head from "next/head";
 import { Checkbox, Form, Input } from "antd";
 import CommonUserForm from "../hooks/useInput";
 import styled from "styled-components";
@@ -70,10 +69,7 @@ const SignUp = () => {
   }, [email, passwordCheck, term]);
 
   return (
-    <>
-      <Head>
-        <title>SignUp | Node Bird</title>
-      </Head>
+    <div>
       {contextHolder}
       {!isSignedUp ? (
         <Form onFinish={onSubmit}>
@@ -140,7 +136,7 @@ const SignUp = () => {
       ) : (
         <LoadingSpin />
       )}
-    </>
+    </div>
   );
 };
 

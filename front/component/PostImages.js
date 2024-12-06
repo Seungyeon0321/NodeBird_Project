@@ -15,8 +15,8 @@ const PostImages = ({ images }) => {
   }, []);
 
   const imageStyle = {
-    width: 200,
-    height: 200,
+    width: "100%",
+    height: "100%",
   };
 
   if (images.length === 1) {
@@ -25,8 +25,9 @@ const PostImages = ({ images }) => {
         <img
           role="presentation"
           style={{
-            width: `${imageStyle.width}px`,
-            height: `${imageStyle.height}px`,
+            width: `${imageStyle.width}`,
+            height: `${imageStyle.height}`,
+            objectFit: "cover",
           }}
           src={`${images[0].src}`}
           alt={images[0].src}
@@ -46,9 +47,8 @@ const PostImages = ({ images }) => {
               <img
                 role="presentation"
                 style={{
-                  width: `${imageStyle.width}px`,
-                  height: `${imageStyle.height}px`,
-                  margin: "10px",
+                  width: `${imageStyle.width}`,
+                  height: `${imageStyle.height}`,
                   objectFit: "cover",
                 }}
                 src={v.src}

@@ -6,7 +6,6 @@ import PostCard from "../component/PostCard";
 import PostForm from "../component/PostFrom";
 import SignUp from "../component/SignupPage";
 import Login from "../component/LoginPage";
-import UserProfile from "../component/UserProfile";
 
 import { LOAD_POST_REQUEST } from "../reducers/post";
 import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
@@ -32,6 +31,8 @@ const Home = () => {
     if (isLoading) {
       return <div>Loading...</div>;
     }
+
+    console.log(isLoggedIn);
 
     switch (currentView) {
       case "login":
@@ -91,11 +92,7 @@ const Home = () => {
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <AppLayoutPage
-        profile={me && <UserProfile />}
-        postFrom={me && <PostForm />}
-        content={renderContent()}
-      />
+      <AppLayoutPage postFrom={me && <PostForm />} content={renderContent()} />
     </div>
   );
 };

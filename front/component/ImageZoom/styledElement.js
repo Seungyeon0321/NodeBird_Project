@@ -1,6 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
 
-//이렇게 스타일만 빼서 좋은점은 재사용할 수 있다는 점이다
 export const Overlay = styled.div`
   position: fixed;
   z-index: 5000;
