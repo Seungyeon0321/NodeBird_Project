@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -11,7 +11,7 @@ import {
 import { Layout, Menu } from "antd";
 const { Sider } = Layout;
 
-import { SET_CURRENT_VIEW } from "../reducers/ui";
+import { SET_CURRENT_VIEW, SET_IS_POSTING } from "../reducers/ui";
 import { CustomButton } from "../styles/GlobalStyleComponent";
 import getItem from "./ui/GetItem";
 
@@ -25,6 +25,7 @@ const items = [
 
 const LeftSideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [clickedPost, setClickedPost] = useState(false);
   const dispatch = useDispatch();
   const { currentView } = useSelector((state) => state.ui);
   const { me } = useSelector((state) => state.user);
@@ -36,6 +37,11 @@ const LeftSideBar = () => {
         break;
     }
   };
+
+  const postButtonHandler = useCallback(() => {
+    setClickedPost((prev) => !prev);
+    dispatch({ type: SET_IS_POSTING, data: clickedPost });
+  }, [clickedPost]);
 
   return (
     <Layout
@@ -79,6 +85,7 @@ const LeftSideBar = () => {
                 marginLeft: "20px",
                 width: "90%",
               }}
+              onClick={postButtonHandler}
             >
               Post
             </CustomButton>

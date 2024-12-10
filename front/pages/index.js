@@ -17,7 +17,7 @@ import axios from "axios";
 const Home = () => {
   const dispatch = useDispatch();
   const { me, isLoggedIn } = useSelector((state) => state.user);
-
+  const { isPosting } = useSelector((state) => state.ui);
   const { mainPosts, hasMorePost, loadPostLoading, retweetError } = useSelector(
     (state) => state.post
   );
@@ -31,8 +31,6 @@ const Home = () => {
     if (isLoading) {
       return <div>Loading...</div>;
     }
-
-    console.log(isLoggedIn);
 
     switch (currentView) {
       case "login":
@@ -92,7 +90,10 @@ const Home = () => {
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <AppLayoutPage postFrom={me && <PostForm />} content={renderContent()} />
+      <AppLayoutPage
+        postFrom={me && isPosting ? <PostForm /> : ""}
+        content={renderContent()}
+      />
     </div>
   );
 };
