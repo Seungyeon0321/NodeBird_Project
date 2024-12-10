@@ -24,8 +24,7 @@ const ImageZoom = ({ images, onClose }) => {
         <div>
           <Slick
             initialSlide={0}
-            // afterChange는 이미지가 더 넘어간 다음에 setCurrentSlide가 실행된다
-            beforeChange={(slide) => setCurrentSlide(slide)}
+            afterChange={(slide) => setCurrentSlide(slide)}
             infinite
             arrows={false}
             slidesToShow={1}
@@ -40,8 +39,6 @@ const ImageZoom = ({ images, onClose }) => {
               </ImageWrapper>
             ))}
           </Slick>
-          {/* Slick안에 감싸면 해당 이미지가 slick하게 된다 
-          JSX코드에서 map을 돌릴때는 {}가 아니라 ()로 돌려야 한다 명심!*/}
           <Indicator>
             <div>
               {currentSlide + 1} / {images.length}

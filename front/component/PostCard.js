@@ -105,8 +105,12 @@ const PostCard = ({ post }) => {
   return (
     <div style={{ marginBottom: 20 }}>
       <Card
-        style={{ background: "#f0f0f0", border: "1px solid #3b3b3b" }}
+        style={{
+          background: id && post.User.id === id ? "white" : "#f0f0f0",
+          border: "1px solid #3b3b3b",
+        }}
         hoverable={true}
+        header={"none"}
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
           <RetweetOutlined key="retweet" onClick={onRetweet} />,
