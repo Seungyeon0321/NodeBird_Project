@@ -6,6 +6,7 @@ import PostCard from "../component/PostCard";
 import PostForm from "../component/PostFrom";
 import SignUp from "../component/SignupPage";
 import Login from "../component/LoginPage";
+import FollowScreen from "../component/FollowScreen";
 
 import { LOAD_POST_REQUEST } from "../reducers/post";
 import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
@@ -37,6 +38,10 @@ const Home = () => {
         return !isLoggedIn && <Login />;
       case "signup":
         return <SignUp />;
+      case "following":
+        return <FollowScreen />;
+      case "follower":
+        return <FollowScreen />;
       case "main":
       default:
         return mainPosts.map((post, index) => (

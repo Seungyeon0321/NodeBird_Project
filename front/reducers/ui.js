@@ -1,7 +1,7 @@
 import { produce } from "immer";
 
 export const initialState = {
-  currentView: "main", // main, login, signup, profile, post
+  currentView: "main", // main, login, signup, profile, post, follow
   isLoading: false,
   isPosting: false,
 };

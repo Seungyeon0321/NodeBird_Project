@@ -33,7 +33,19 @@ const LeftSideBar = () => {
   const clickHandler = ({ key }) => {
     switch (key) {
       case "1":
-        dispatch({ type: SET_CURRENT_VIEW, data: "home" });
+        dispatch({ type: SET_CURRENT_VIEW, data: "main" });
+        break;
+      case "2":
+        dispatch({ type: SET_CURRENT_VIEW, data: "notification" });
+        break;
+      case "3":
+        dispatch({ type: SET_CURRENT_VIEW, data: "follower" });
+        break;
+      case "4":
+        dispatch({ type: SET_CURRENT_VIEW, data: "following" });
+        break;
+      case "5":
+        dispatch({ type: SET_CURRENT_VIEW, data: "like" });
         break;
     }
   };
@@ -55,42 +67,41 @@ const LeftSideBar = () => {
         alignItems: "end",
       }}
     >
-      {currentView === "home" ||
-        (me && (
-          <Sider
-            collapsible
-            collapsed={collapsed}
-            onCollapse={(value) => setCollapsed(value)}
+      {(currentView !== "login" && me) || (currentView !== "signup" && me) ? (
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+          style={{
+            backgroundColor: "#f0f0f0",
+            position: "fixed",
+          }}
+          className="custom-sider"
+        >
+          <div className="demo-logo-vertical" />
+          <Menu
             style={{
               backgroundColor: "#f0f0f0",
-              position: "fixed",
+              maxWidth: "260px",
+              minWidth: "260px",
             }}
-            className="custom-sider"
+            defaultSelectedKeys={["1"]}
+            mode="inline"
+            items={items}
+            onClick={clickHandler}
+          />
+          <CustomButton
+            style={{
+              marginTop: "30px",
+              marginLeft: "20px",
+              width: "90%",
+            }}
+            onClick={postButtonHandler}
           >
-            <div className="demo-logo-vertical" />
-            <Menu
-              style={{
-                backgroundColor: "#f0f0f0",
-                maxWidth: "260px",
-                minWidth: "260px",
-              }}
-              defaultSelectedKeys={["1"]}
-              mode="inline"
-              items={items}
-              onClick={clickHandler}
-            />
-            <CustomButton
-              style={{
-                marginTop: "30px",
-                marginLeft: "20px",
-                width: "90%",
-              }}
-              onClick={postButtonHandler}
-            >
-              Post
-            </CustomButton>
-          </Sider>
-        ))}
+            Post
+          </CustomButton>
+        </Sider>
+      ) : null}
     </Layout>
   );
 };

@@ -3,11 +3,7 @@ import Router from "next/router";
 import { useSelector } from "react-redux";
 import CommonUserForm from "../hooks/useInput";
 import UserProfile from "./UserProfile";
-import { Layout } from "antd";
 import { SearchWrapper } from "../styles/GlobalStyleComponent";
-import { CustomMenu } from "../styles/GlobalStyleComponent";
-import getItem from "./ui/GetItem";
-const { Sider } = Layout;
 
 function RightSideBar() {
   const [searchInput, onChangeSearchInput] = CommonUserForm("");
@@ -22,7 +18,7 @@ function RightSideBar() {
   return (
     <>
       {currentView === "signup" || currentView === "login" ? null : (
-        <>
+        <div style={{ position: "sticky", top: "40px" }}>
           <SearchWrapper
             enterButton
             placeholder="search hashtag"
@@ -33,14 +29,10 @@ function RightSideBar() {
             style={{ marginBottom: "10px", width: "300px " }}
           />
           <div>{profile && <UserProfile />}</div>
-        </>
+        </div>
       )}
     </>
   );
 }
-const siderStyle = {
-  position: "fixed",
-  backgroundColor: "#f0f0f0",
-};
 
 export default RightSideBar;

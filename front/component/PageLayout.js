@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Row, Col, Layout } from "antd";
+import { Row, Col } from "antd";
 import Nav from "./Nav";
 import {
   HeaderLayout,

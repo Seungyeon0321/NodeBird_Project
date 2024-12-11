@@ -30,7 +30,13 @@ function Nav() {
 
   // xs 768, sm 992, md 1200, lg 1600
   return (
-    <NavLayout style={{ display: "flex", justifyContent: "space-between" }}>
+    <NavLayout
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        position: "sticky",
+      }}
+    >
       <div
         style={{
           paddingLeft: "180px",

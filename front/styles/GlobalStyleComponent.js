@@ -21,6 +21,9 @@ const HeaderLayout = styled(Header)`
   min-width: 1400px;
   display: flex;
   justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 `;
 
 const NavLayout = styled.div`
