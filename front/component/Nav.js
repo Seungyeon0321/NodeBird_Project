@@ -8,7 +8,6 @@ import NavCustomButton from "./NavCustomButton";
 import { StyledImage } from "../styles/GlobalStyleComponent";
 import { useRouter } from "next/router";
 import { NavLayout } from "../styles/GlobalStyleComponent";
-import image from "../images/image_1.png";
 
 function Nav() {
   const dispatch = useDispatch();
@@ -44,7 +43,13 @@ function Nav() {
         }}
         onClick={() => router.push("/")}
       >
-        <StyledImage src={image} width={35} height={35} />
+        <StyledImage
+          src={
+            "https://portfolio-simon-nodebird.s3.ca-central-1.amazonaws.com/nodebird_logo.png"
+          }
+          width={35}
+          height={35}
+        />
       </div>
       <div
         style={{
