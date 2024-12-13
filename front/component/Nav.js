@@ -47,6 +47,7 @@ function Nav() {
           src={
             "https://portfolio-simon-nodebird.s3.ca-central-1.amazonaws.com/nodebird_logo.png"
           }
+          alt="logo"
           width={35}
           height={35}
         />

@@ -90,16 +90,18 @@ const LeftSideBar = () => {
             items={items}
             onClick={clickHandler}
           />
-          <CustomButton
-            style={{
-              marginTop: "30px",
-              marginLeft: "20px",
-              width: "90%",
-            }}
-            onClick={postButtonHandler}
-          >
-            Post
-          </CustomButton>
+          {currentView !== "login" && currentView !== "signup" && (
+            <CustomButton
+              style={{
+                marginTop: "30px",
+                marginLeft: "20px",
+                width: "90%",
+              }}
+              onClick={postButtonHandler}
+            >
+              Post
+            </CustomButton>
+          )}
         </Sider>
       ) : null}
     </Layout>
