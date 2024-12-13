@@ -5,7 +5,6 @@ import PostCard from "../PostCard";
 const LikeScreen = () => {
   const { mainPosts } = useSelector((state) => state.post);
   const { me } = useSelector((state) => state.user);
-  console.log(me.id);
 
   let likedPost = [];
 
