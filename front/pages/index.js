@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import AppLayoutPage from "../component/PageLayout";
 import PostCard from "../component/PostCard";
 import PostForm from "../component/PostFrom";
-import SignUp from "../component/SignupPage";
-import Login from "../component/LoginPage";
-import FollowScreen from "../component/FollowScreen";
-
+import SignUp from "../component/screens/SignupPage";
+import Login from "../component/screens/LoginPage";
+import FollowScreen from "../component/screens/FollowScreen";
+import LikeScreen from "../component/screens/LikeScreen";
 import { LOAD_POST_REQUEST } from "../reducers/post";
 import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
 import wrapper from "../store/configureStore";
@@ -42,6 +42,8 @@ const Home = () => {
         return <FollowScreen />;
       case "follower":
         return <FollowScreen />;
+      case "like":
+        return <LikeScreen />;
       case "main":
       default:
         return mainPosts.map((post, index) => (

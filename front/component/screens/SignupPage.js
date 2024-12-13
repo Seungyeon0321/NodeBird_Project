@@ -1,13 +1,13 @@
 import React, { useCallback, useState, useEffect } from "react";
-import LoadingSpin from "./LoadingSpin";
+import LoadingSpin from "../LoadingSpin";
 import Router from "next/router";
 import { Checkbox, Form, Input } from "antd";
-import CommonUserForm from "../hooks/useInput";
+import CommonUserForm from "../../hooks/useInput";
 import styled from "styled-components";
-import { SIGN_UP_REQUEST } from "../reducers/user";
+import { SIGN_UP_REQUEST } from "../../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
-import { CustomButton } from "../styles/GlobalStyleComponent";
-import useMessageAPI from "./message/messageAPI";
+import { CustomButton } from "../../styles/GlobalStyleComponent";
+import useMessageAPI from "../message/messageAPI";
 const ErrorMessage = styled.div`
   color: "red";
 `;

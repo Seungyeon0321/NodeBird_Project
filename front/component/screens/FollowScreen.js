@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Avatar, List, Skeleton, Popconfirm } from "antd";
-import { SearchWrapper } from "../styles/GlobalStyleComponent";
+import { SearchWrapper } from "../../styles/GlobalStyleComponent";
 import { UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { UNFOLLOW_REQUEST, REMOVE_FOLLOWER_REQUEST } from "../reducers/user";
+import { UNFOLLOW_REQUEST, REMOVE_FOLLOWER_REQUEST } from "../../reducers/user";
 import axios from "axios";
 import useSWR from "swr";
-import { backURL } from "../config/config";
+import { backURL } from "../../config/config";
 //need to make more button, 그리고 계속 안바뀌게도 해야함
 
 const fetcher = (url) =>
