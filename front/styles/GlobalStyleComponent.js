@@ -56,10 +56,19 @@ const MainLayout = styled.div`
   background-color: #f0f0f0;
 `;
 
-const SideLayout = styled.div`
-  width: 350px;
+const LeftSideLayout = styled.div`
+  max-width: 350px;
+  min-width: 100px;
   height: 100%;
   background-color: #f0f0f0;
+  border: 1px solid blue;
+`;
+
+const RightSideLayout = styled.div`
+  min-width: 350px;
+  height: 100%;
+  background-color: #f0f0f0;
+  border: 1px solid red;
 `;
 
 const CustomMenu = styled(Menu)`
@@ -153,7 +162,8 @@ const StyledButton = styled.button`
 export {
   StyledImage,
   BasicLayout,
-  SideLayout,
+  LeftSideLayout,
+  RightSideLayout,
   CustomButton,
   CustomButton2,
   SearchWrapper,

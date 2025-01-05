@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -16,11 +16,11 @@ import { CustomButton } from "../styles/GlobalStyleComponent";
 import getItem from "./ui/GetItem";
 
 const items = [
-  getItem("Home", "1", <HomeOutlined />),
-  getItem("Notifications", "2", <BellOutlined />),
-  getItem("Followers", "3", <TeamOutlined />),
-  getItem("Following", "4", <TeamOutlined />),
-  getItem("Likes", "5", <HeartOutlined />),
+  getItem("Home", "1", <HomeOutlined style={{ fontSize: "20px" }} />),
+  getItem("Notifications", "2", <BellOutlined style={{ fontSize: "20px" }} />),
+  getItem("Followers", "3", <TeamOutlined style={{ fontSize: "20px" }} />),
+  getItem("Following", "4", <TeamOutlined style={{ fontSize: "20px" }} />),
+  getItem("Likes", "5", <HeartOutlined style={{ fontSize: "20px" }} />),
 ];
 
 const LeftSideBar = () => {
@@ -50,6 +50,18 @@ const LeftSideBar = () => {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1200) {
+        setCollapsed(true);
+      } else {
+        setCollapsed(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const postButtonHandler = useCallback(() => {
     setClickedPost((prev) => !prev);
     dispatch({ type: SET_IS_POSTING, data: clickedPost });
@@ -75,6 +87,7 @@ const LeftSideBar = () => {
           style={{
             backgroundColor: "#f0f0f0",
             position: "fixed",
+            border: "1px solid red",
           }}
           className="custom-sider"
         >
@@ -83,7 +96,8 @@ const LeftSideBar = () => {
             style={{
               backgroundColor: "#f0f0f0",
               maxWidth: "260px",
-              minWidth: "260px",
+              border: "1px solid green",
+              fontSize: "16px",
             }}
             defaultSelectedKeys={["1"]}
             mode="inline"

@@ -18,7 +18,13 @@ function RightSideBar() {
   return (
     <>
       {currentView === "signup" || currentView === "login" ? null : (
-        <div style={{ position: "sticky", top: "40px" }}>
+        <div
+          style={{
+            position: "sticky",
+            top: "40px",
+            minWidth: "350px",
+          }}
+        >
           <SearchWrapper
             enterButton
             placeholder="search hashtag"

@@ -5,9 +5,10 @@ import Nav from "./Nav";
 import {
   HeaderLayout,
   BasicLayout,
-  SideLayout,
   MainLayout,
   LayoutWrapper,
+  LeftSideLayout,
+  RightSideLayout,
 } from "../styles/GlobalStyleComponent";
 
 import LeftSideBar from "./LeftSideBar";
@@ -19,9 +20,9 @@ const AppLayoutPage = ({ profile, postFrom, content, children }) => {
         <Nav />
       </HeaderLayout>
       <BasicLayout>
-        <SideLayout>
+        <LeftSideLayout>
           <LeftSideBar />
-        </SideLayout>
+        </LeftSideLayout>
 
         <MainLayout>
           <Row
@@ -50,9 +51,9 @@ const AppLayoutPage = ({ profile, postFrom, content, children }) => {
           </Row>
         </MainLayout>
 
-        <SideLayout>
+        <RightSideLayout>
           <RightSideBar />
-        </SideLayout>
+        </RightSideLayout>
       </BasicLayout>
     </LayoutWrapper>
   );
