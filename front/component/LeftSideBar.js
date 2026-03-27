@@ -88,6 +88,7 @@ const LeftSideBar = () => {
             backgroundColor: "#f0f0f0",
             position: "fixed",
             border: "1px solid red",
+            height: "100%",
           }}
           className="custom-sider"
         >
@@ -95,12 +96,13 @@ const LeftSideBar = () => {
           <Menu
             style={{
               backgroundColor: "#f0f0f0",
-              maxWidth: "260px",
               border: "1px solid green",
               fontSize: "16px",
+              height: "500px",
             }}
             defaultSelectedKeys={["1"]}
-            mode="inline"
+            // mode="inline"
+            itemHeight={100}
             items={items}
             onClick={clickHandler}
           />

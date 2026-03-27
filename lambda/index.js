@@ -10,7 +10,7 @@ const s3 = new S3Client();
 exports.handler = async (event, context, callback) => {
   const Bucket = event.Records[0].s3.bucket.name;
   const Key = decodeURIComponent(event.Records[0].s3.object.key); //Korean
-  console.log(Key);
+  
   const filename = Key.split("/")[Key.split("/").length - 1];
   const ext = Key.split(".")[Key.split(".").length - 1].toLowerCase();
   const requiredFormat = ext === "jpg" ? "jpeg" : ext;
