@@ -22,7 +22,7 @@ async function checkServerStatus() {
       // 리다이렉트 전 아주 잠깐의 여유를 주면 사용자가 메시지를 볼 수 있습니다.
       setTimeout(() => {
         window.location.href = "https://portfolio-simon.com";
-      }, 500);
+      }, 5000);
       return; // 성공했으므로 재귀 중단
     } 
     
