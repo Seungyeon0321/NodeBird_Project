@@ -2,6 +2,27 @@ let h1 = document.querySelector("h1");
 let tryCount = 0;
 const MAX_TRIES = 12; // 5초씩 12번 = 약 1분
 
+async function redirectToMain() {
+  const MAX_REDIRECT_TRIES = 10;
+  let count = 0;
+
+  while (count < MAX_REDIRECT_TRIES) {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    try {
+      const result = await fetch("https://portfolio-simon.com", { method: 'HEAD' });
+      if (result.status === 200) {
+        window.location.href = "https://portfolio-simon.com";
+        return;
+      }
+    } catch (e) {
+      console.log(`Site not ready yet... (${++count}/${MAX_REDIRECT_TRIES})`);
+    }
+    count++;
+  }
+
+  h1.textContent = "Server is down. Please try again later.";
+}
+
 async function checkServerStatus() {
   // 이미 최대 시도 횟수를 넘었으면 종료
   if (tryCount >= MAX_TRIES) {
@@ -20,9 +41,8 @@ async function checkServerStatus() {
     if (result.status === 200 || result.status === 202) {
       h1.textContent = "Server is running!!";
       // 리다이렉트 전 아주 잠깐의 여유를 주면 사용자가 메시지를 볼 수 있습니다.
-      setTimeout(() => {
-        window.location.href = "https://portfolio-simon.com";
-      }, 5000);
+      redirectToMain();
+
       return; // 성공했으므로 재귀 중단
     } 
     
