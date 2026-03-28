@@ -10,6 +10,7 @@ async function redirectToMain() {
     await new Promise(resolve => setTimeout(resolve, 2000));
     try {
       const result = await fetch("https://portfolio-simon.com", { method: 'HEAD' });
+      console.log(result);
       if (result.status === 200) {
         window.location.href = "https://portfolio-simon.com";
         return;
