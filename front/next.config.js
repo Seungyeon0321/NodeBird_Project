@@ -4,6 +4,23 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 module.exports = withBundleAnalyzer({
   compress: true,
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: 'https://start.portfolio-simon.com',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, HEAD, OPTIONS',
+          },
+        ],
+      },
+    ];
+  },
   images: {
     domains: ["portfolio-simon-nodebird.s3.ca-central-1.amazonaws.com"],
   },
