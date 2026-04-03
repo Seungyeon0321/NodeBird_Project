@@ -1,1 +1,0 @@
-- [NodeBird 프로젝트 공통 패턴 및 반복 이슈](project_nodebird_patterns.md) — 컴포넌트 디렉토리 구조, 반복 안티패턴(ant.design 링크 하드코딩, 디버그 border, useCallback 의존성 오류, alt URL 오용), 고정 너비 레이아웃 구조 특이사항

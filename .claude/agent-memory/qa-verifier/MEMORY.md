@@ -1,1 +1,0 @@
-- [CSS vars & action exports](css_vars_action_exports.md) — verify `:root` CSS vars and block QA on missing Redux action exports.
