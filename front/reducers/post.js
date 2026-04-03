@@ -68,6 +68,8 @@ export const LOAD_HASHTAG_POSTS_FAILURE = "LOAD_HASHTAG_POSTS_FAILURE";
 export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
 export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
+/** 포스트 모달을 열 때 이전 성공/에러 상태 초기화 */
+export const RESET_POST_MODAL_UI = "RESET_POST_MODAL_UI";
 
 export const UPDATE_POST_REQUEST = "UPDATE_POST_REQUEST";
 export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
@@ -206,6 +208,12 @@ const reducer = (state = initialState, action) => {
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;
         draft.loadPostsError = action.error ?? null;
+        break;
+
+      case RESET_POST_MODAL_UI:
+        draft.addPostDone = false;
+        draft.addPostError = null;
+        draft.addPostLoading = false;
         break;
 
       case ADD_POST_REQUEST:

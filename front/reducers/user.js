@@ -305,7 +305,10 @@ const reducer = (state = initialState, action) => {
         break;
 
       case ADD_POST_TO_ME:
-        draft.me.posts.unshift({ id: action.data });
+        if (draft.me) {
+          if (!draft.me.posts) draft.me.posts = [];
+          draft.me.posts.unshift({ id: action.data });
+        }
         break;
       case REMOVE_POST_OF_ME:
         draft.me.posts = draft.me.posts.filter((v) => v.id !== action.data);

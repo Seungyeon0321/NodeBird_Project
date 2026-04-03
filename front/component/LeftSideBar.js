@@ -12,6 +12,7 @@ import { Grid, Menu } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
 import { SET_CURRENT_VIEW, SET_IS_POSTING } from "../reducers/ui";
+import { RESET_POST_MODAL_UI } from "../reducers/post";
 import { CustomButton } from "../styles/GlobalStyleComponent";
 import getItem from "./ui/GetItem";
 
@@ -26,7 +27,6 @@ const items = [
 const LeftSideBar = () => {
   const screens = Grid.useBreakpoint();
   const [collapsed, setCollapsed] = useState(false);
-  const [clickedPost, setClickedPost] = useState(false);
   const dispatch = useDispatch();
   const { currentView } = useSelector((state) => state.ui);
   const { me } = useSelector((state) => state.user);
@@ -56,18 +56,19 @@ const LeftSideBar = () => {
   }, [screens.sm]);
 
   const postButtonHandler = useCallback(() => {
-    setClickedPost((prev) => !prev);
-    dispatch({ type: SET_IS_POSTING, data: clickedPost });
-  }, [clickedPost]);
+    dispatch({ type: RESET_POST_MODAL_UI });
+    dispatch({ type: SET_IS_POSTING, data: true });
+  }, [dispatch]);
 
-  if (!me) return null;
+  if (!me) return
+
 
   return (
     <div
       style={{
         width: collapsed ? 90 : 280,
         minWidth: collapsed ? 90 : 280,
-        height: "100%",
+        height: "calc(100vh - 56px)",
         backgroundColor: "transparent",
         overflow: "auto",
         transition: "width 0.2s, min-width 0.2s",
@@ -75,6 +76,7 @@ const LeftSideBar = () => {
         flexDirection: "column",
       }}
     >
+
       <Menu
         style={{
           backgroundColor: "transparent",

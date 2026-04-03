@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 
 import AppLayoutPage from "../component/PageLayout";
 import PostCard from "../component/PostCard";
-import PostForm from "../component/PostFrom";
 import SignUp from "../component/screens/SignupPage";
 import Login from "../component/screens/LoginPage";
 import FollowScreen from "../component/screens/FollowScreen";
@@ -18,7 +17,6 @@ import axios from "axios";
 const Home = () => {
   const dispatch = useDispatch();
   const { me, isLoggedIn } = useSelector((state) => state.user);
-  const { isPosting } = useSelector((state) => state.ui);
   const { mainPosts, hasMorePost, loadPostLoading, retweetError } = useSelector(
     (state) => state.post
   );
@@ -98,10 +96,7 @@ const Home = () => {
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <AppLayoutPage
-        postFrom={me && isPosting ? <PostForm /> : ""}
-        content={renderContent()}
-      />
+      <AppLayoutPage content={renderContent()} />
     </div>
   );
 };

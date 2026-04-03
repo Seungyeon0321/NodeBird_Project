@@ -13,6 +13,8 @@ import {
 
 import LeftSideBar from "./LeftSideBar";
 import RightSideBar from "./RightSideBar";
+import PopupPostCard from "./PopupPostCard";
+
 const AppLayoutPage = ({ profile, postFrom, content, children }) => {
   const screens = Grid.useBreakpoint();
   const isDesktopWithSidebars = !!screens.lg; // antd: lg >= 992px
@@ -102,6 +104,8 @@ const AppLayoutPage = ({ profile, postFrom, content, children }) => {
       >
         <RightSideBar />
       </Drawer>
+
+      <PopupPostCard />
     </>
   );
 };

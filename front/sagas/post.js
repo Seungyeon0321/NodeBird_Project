@@ -40,6 +40,7 @@ import {
   LOAD_HASHTAG_POSTS_FAILURE,
 } from "../reducers/post";
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
+import { SET_IS_POSTING } from "../reducers/ui";
 
 function serializePostError(err) {
   return err?.response?.data ?? err?.message ?? null;
@@ -76,6 +77,8 @@ function* addPost(action) {
       type: ADD_POST_SUCCESS,
       data: result.data,
     });
+    // 모달을 먼저 닫음 (ADD_POST_TO_ME에서 리듀서 예외 시에도 닫힌 상태 유지)
+    yield put({ type: SET_IS_POSTING, data: false });
     yield put({
       type: ADD_POST_TO_ME,
       data: result.data.id,
