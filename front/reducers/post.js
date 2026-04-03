@@ -115,6 +115,7 @@ const reducer = (state = initialState, action) => {
         draft.mainPosts.unshift(action.data);
         break;
       case RETWEET_FAILURE:
+        draft.retweetLoading = false;
         draft.retweetDone = true;
         draft.retweetError = action.error ?? null;
         break;
@@ -130,6 +131,7 @@ const reducer = (state = initialState, action) => {
         draft.imagePaths = draft.imagePaths.concat(action.data);
         break;
       case UPLOAD_IMAGES_FAILURE:
+        draft.uploadImagesLoading = false;
         draft.uploadImagesDone = true;
         draft.uploadImagesError = action.error ?? null;
         break;
@@ -187,6 +189,7 @@ const reducer = (state = initialState, action) => {
       case LOAD_HASHTAG_POSTS_FAILURE:
       case LOAD_POST_FAILURE:
         draft.loadPostLoading = false;
+        draft.loadPostDone = true;
         draft.loadPostError = action.error ?? null;
         break;
 

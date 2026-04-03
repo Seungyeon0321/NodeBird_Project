@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_CURRENT_VIEW } from "../reducers/ui";
 
@@ -8,16 +8,26 @@ import NavCustomButton from "./NavCustomButton";
 import { StyledImage } from "../styles/GlobalStyleComponent";
 import { useRouter } from "next/router";
 import { NavLayout } from "../styles/GlobalStyleComponent";
-import { Button, Grid } from "antd";
+import { Button, Grid, message } from "antd";
 import { MenuOutlined, SearchOutlined } from "@ant-design/icons";
 
 function Nav({ onOpenLeftMenu, onOpenRightSidebar }) {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { me } = useSelector((state) => state.user);
+  const { me, logOutError } = useSelector((state) => state.user);
   const screens = Grid.useBreakpoint();
   const isMobile = !screens.lg;
 
+  useEffect(() => {
+    if (!logOutError) return;
+    const text =
+      typeof logOutError === "string"
+        ? logOutError
+        : typeof logOutError?.data === "string"
+          ? logOutError.data
+          : logOutError?.message ?? "로그아웃에 실패했습니다. 다시 시도해 주세요.";
+    message.error(text);
+  }, [logOutError]);
 
   // login in
   const clickHandler = useCallback(

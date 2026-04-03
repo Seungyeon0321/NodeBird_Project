@@ -4,7 +4,7 @@ import { Card, Form, Input, Typography } from "antd";
 import styled from "styled-components";
 import CommonUserForm from "../hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
-import { logInRequestAction } from "../reducers/user";
+import { logInRequestAction, CLEAR_LOG_IN_ERROR } from "../reducers/user";
 import { CustomButton, CustomButton2 } from "../styles/GlobalStyleComponent";
 import { SET_CURRENT_VIEW } from "../reducers/ui";
 
@@ -19,13 +19,31 @@ const FormWrapper = styled(Form)`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { isLoggingIn } = useSelector((state) => state.user);
+  const { isLoggingIn, logInError } = useSelector((state) => state.user);
   const [email, onChangeEmail] = CommonUserForm("");
   const [userPassword, onChangePassword] = CommonUserForm("");
 
+  console.log(logInError, 'logInError');
+
+  const onChangeEmailField = useCallback(
+    (e) => {
+      onChangeEmail(e);
+      if (logInError) dispatch({ type: CLEAR_LOG_IN_ERROR });
+    },
+    [onChangeEmail, dispatch, logInError]
+  );
+
+  const onChangePasswordField = useCallback(
+    (e) => {
+      onChangePassword(e);
+      if (logInError) dispatch({ type: CLEAR_LOG_IN_ERROR });
+    },
+    [onChangePassword, dispatch, logInError]
+  );
+
   const onSubmitFrom = useCallback(() => {
     dispatch(logInRequestAction({ email, userPassword }));
-  }, [email, userPassword]);
+  }, [dispatch, email, userPassword]);
 
   const goToSignup = useCallback(() => {
     dispatch({ type: SET_CURRENT_VIEW, data: "signup" });
@@ -61,7 +79,7 @@ const LoginForm = () => {
             name="user-password"
             type="password"
             value={userPassword}
-            onChange={onChangePassword}
+            onChange={onChangePasswordField}
             required
           />
         </Form.Item>

@@ -70,7 +70,6 @@ const LeftSideBar = () => {
         height: "100%",
         backgroundColor: "transparent",
         overflow: "auto",
-        border: "1px solid orange",
         transition: "width 0.2s, min-width 0.2s",
         display: "flex",
         flexDirection: "column",
@@ -80,7 +79,6 @@ const LeftSideBar = () => {
         style={{
           backgroundColor: "transparent",
           fontSize: "16px",
-          border: "1px solid red",
           flex: 1,
         }}
         defaultSelectedKeys={["1"]}

@@ -75,7 +75,6 @@ const LeftSideLayout = styled.div`
   height: 100%;
   position: sticky;
   top: 56px;
-  border: 1px solid green;
   background: transparent;
 `;
 
