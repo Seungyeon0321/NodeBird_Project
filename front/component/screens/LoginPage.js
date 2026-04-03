@@ -33,7 +33,7 @@ const Login = () => {
   }, [logInError]);
 
   return (
-    <PageWrapper style={{ minHeight: "50vh"}}>
+    <PageWrapper style={{ minHeight: "50vh" }}>
       {contextHolder}
       {!isLoggedIn && <LoginForm />}
       {logInError && (

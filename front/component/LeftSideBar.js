@@ -8,8 +8,8 @@ import {
   HomeOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
-const { Sider } = Layout;
+import { Grid, Menu } from "antd";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
 import { SET_CURRENT_VIEW, SET_IS_POSTING } from "../reducers/ui";
 import { CustomButton } from "../styles/GlobalStyleComponent";
@@ -24,6 +24,7 @@ const items = [
 ];
 
 const LeftSideBar = () => {
+  const screens = Grid.useBreakpoint();
   const [collapsed, setCollapsed] = useState(false);
   const [clickedPost, setClickedPost] = useState(false);
   const dispatch = useDispatch();
@@ -51,80 +52,68 @@ const LeftSideBar = () => {
   };
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const handleResize = () => {
-      if (window.innerWidth < 1200) {
-        setCollapsed(true);
-      } else {
-        setCollapsed(false);
-      }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    setCollapsed(screens.xs);
+  }, [screens.sm]);
 
   const postButtonHandler = useCallback(() => {
     setClickedPost((prev) => !prev);
     dispatch({ type: SET_IS_POSTING, data: clickedPost });
   }, [clickedPost]);
 
+  if (!me) return null;
+
   return (
-    <Layout
+    <div
       style={{
+        width: collapsed ? 90 : 280,
+        minWidth: collapsed ? 90 : 280,
+        height: "100%",
+        backgroundColor: "transparent",
+        overflow: "auto",
+        border: "1px solid orange",
+        transition: "width 0.2s, min-width 0.2s",
         display: "flex",
         flexDirection: "column",
-        alignItems: "stretch",
-        width: "100%",
-        background: "transparent",
       }}
     >
-      {me ? (
-        <Sider
-          collapsible
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
-          width={280}
+      <Menu
+        style={{
+          backgroundColor: "transparent",
+          fontSize: "16px",
+          border: "1px solid red",
+          flex: 1,
+        }}
+        defaultSelectedKeys={["1"]}
+        inlineCollapsed={collapsed}
+        mode="inline"
+        items={items}
+        onClick={clickHandler}
+      />
+
+      {currentView !== "login" && currentView !== "signup" && (
+        <CustomButton
           style={{
-            backgroundColor: "transparent",
-            position: "sticky",
-            top: 56,
-            height: "100%",
-            maxHeight: "calc(100vh - 56px)",
-            overflow: "auto",
-            borderRight: "1px solid var(--border-color, #e5e7eb)",
+            margin: 16,
+            width: "calc(100% - 32px)",
           }}
-          className="custom-sider"
+          onClick={postButtonHandler}
         >
-          <div className="demo-logo-vertical" />
-          <Menu
-            style={{
-              backgroundColor: "transparent",
-              fontSize: "16px",
-              border: "none",
-            }}
-            defaultSelectedKeys={["1"]}
-            // mode="inline"
-            itemHeight={100}
-            items={items}
-            onClick={clickHandler}
-          />
-          {currentView !== "login" && currentView !== "signup" && (
-            <CustomButton
-              style={{
-                marginTop: 16,
-                marginLeft: 16,
-                marginRight: 16,
-                width: "calc(100% - 32px)",
-              }}
-              onClick={postButtonHandler}
-            >
-              Post
-            </CustomButton>
-          )}
-        </Sider>
-      ) : null}
-    </Layout>
+          {collapsed ? "+" : "Post"}
+        </CustomButton>
+      )}
+
+      {/* collapse 토글 버튼 */}
+      <div
+        style={{
+          padding: "12px 16px",
+          cursor: "pointer",
+          textAlign: collapsed ? "center" : "right",
+        }}
+        onClick={() => setCollapsed((prev) => !prev)}
+      >
+        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </div>
+    </div>
   );
 };
 

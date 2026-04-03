@@ -8,6 +8,7 @@ const LayoutWrapper = styled(Layout)`
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 100vh;
   max-width: var(--container-max, 1280px);
   margin: 0 auto;
   padding: 0 var(--container-padding, 16px);
@@ -47,7 +48,8 @@ const StyledImage = styled(Image)`
 const BasicLayout = styled.div`
   display: flex;
   justify-content: center;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   width: 100%;
   background-color: var(--page-bg, #f6f7fb);
   padding: 24px 0;
@@ -69,7 +71,11 @@ const MainLayout = styled.div`
 const LeftSideLayout = styled.div`
   width: min(100%, var(--sidebar-left-width, 280px));
   max-width: var(--sidebar-left-width, 280px);
+  align-self: flex-start;
   height: 100%;
+  position: sticky;
+  top: 56px;
+  border: 1px solid green;
   background: transparent;
 `;
 

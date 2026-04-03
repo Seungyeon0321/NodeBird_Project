@@ -18,6 +18,7 @@ function Nav({ onOpenLeftMenu, onOpenRightSidebar }) {
   const screens = Grid.useBreakpoint();
   const isMobile = !screens.lg;
 
+
   // login in
   const clickHandler = useCallback(
     (action) => {
@@ -30,7 +31,7 @@ function Nav({ onOpenLeftMenu, onOpenRightSidebar }) {
     dispatch(logOutRequestAction());
   }, []);
 
-  // xs 768, sm 992, md 1200, lg 1600
+  // antd 5 기본: sm 576, md 768, lg 992, xl 1200, xxl 1600
   return (
     <NavLayout
       style={{
@@ -38,6 +39,7 @@ function Nav({ onOpenLeftMenu, onOpenRightSidebar }) {
         justifyContent: "space-between",
         alignItems: "center",
         position: "relative",
+        paddingLeft: "14px"
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>

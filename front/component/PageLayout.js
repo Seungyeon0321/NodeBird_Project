@@ -16,7 +16,7 @@ import RightSideBar from "./RightSideBar";
 const AppLayoutPage = ({ profile, postFrom, content, children }) => {
   const screens = Grid.useBreakpoint();
   const isDesktopWithSidebars = !!screens.lg; // antd: lg >= 992px
-
+  const [collapsed, setCollapsed] = useState(false);
   const [leftDrawerOpen, setLeftDrawerOpen] = useState(false);
   const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
 
@@ -27,6 +27,10 @@ const AppLayoutPage = ({ profile, postFrom, content, children }) => {
       setRightDrawerOpen(false);
     }
   }, [isDesktopWithSidebars]);
+
+  useEffect(() => {
+    setCollapsed(screens.xs);
+  }, [screens.xs]);
 
   const openLeftDrawer = useCallback(() => setLeftDrawerOpen(true), []);
   const openRightDrawer = useCallback(() => setRightDrawerOpen(true), []);
@@ -81,7 +85,7 @@ const AppLayoutPage = ({ profile, postFrom, content, children }) => {
         placement="left"
         open={leftDrawerOpen}
         onClose={closeLeftDrawer}
-        width={280}
+        width={collapsed ? 90 : 280}
         styles={{ body: drawerBodyStyles }}
         destroyOnClose
       >
