@@ -71,9 +71,16 @@ function* loadMyInfo(action) {
       data: result.data,
     });
   } catch (err) {
+    // next-redux-wrapper의 SSR initialState를 JSON 직렬화할 때
+    // Error/AxiosError 인스턴스 자체는 실패할 수 있어, 직렬화 가능한 값만 저장합니다.
+    const serializableError = {
+      message: err?.message ?? "Unknown error",
+      status: err?.response?.status ?? null,
+      data: err?.response?.data ?? null,
+    };
     yield put({
       type: LOAD_MY_INFO_FAILURE,
-      error: err,
+      error: serializableError,
     });
   }
 }

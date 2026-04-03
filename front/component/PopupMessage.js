@@ -8,7 +8,6 @@ const PopupMessage = () => {
     messageApi.open({
       type: "success",
       content: "Signup has been succeed!",
-      className: "custom=class",
       style: {
         marginTop: "2vh",
       },

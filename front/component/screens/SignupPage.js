@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import LoadingSpin from "../LoadingSpin";
 import Router from "next/router";
-import { Checkbox, Form, Input } from "antd";
+import { Card, Checkbox, Form, Input, Typography } from "antd";
 import CommonUserForm from "../../hooks/useInput";
 import styled from "styled-components";
 import { SIGN_UP_REQUEST } from "../../reducers/user";
@@ -9,7 +9,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { CustomButton } from "../../styles/GlobalStyleComponent";
 import useMessageAPI from "../message/messageAPI";
 const ErrorMessage = styled.div`
-  color: "red";
+  color: red;
+  font-size: 13px;
+  margin-top: 6px;
+`;
+
+const PageWrapper = styled.div`
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px var(--container-padding, 16px);
 `;
 
 const SignUp = () => {
@@ -69,74 +79,98 @@ const SignUp = () => {
   }, [email, passwordCheck, term]);
 
   return (
-    <div>
+    <PageWrapper style={{ minHeight: "50vh"}}>
       {contextHolder}
       {!isSignedUp ? (
-        <Form onFinish={onSubmit}>
-          <div>
-            <label htmlFor="user-email">User Email</label>
-            <br />
-            <Input
-              name="user-email"
-              type="email"
-              value={email}
-              onChange={onChangeEmail}
+        <Card
+          bordered={false}
+          style={{
+            width: "100%",
+            maxWidth: 420,
+            borderRadius: "var(--radius-md, 16px)",
+            boxShadow: "var(--shadow-sm, 0 1px 2px rgba(16, 24, 40, 0.06))",
+          }}
+        >
+          <Typography.Title level={3} style={{ margin: 0, marginBottom: 16 }}>
+            Sign Up
+          </Typography.Title>
+
+          <Form layout="vertical" onFinish={onSubmit}>
+            <Form.Item label="User Email" required style={{ marginBottom: 12 }}>
+              <Input
+                name="user-email"
+                type="email"
+                value={email}
+                onChange={onChangeEmail}
+                required
+              />
+            </Form.Item>
+
+            <Form.Item label="Nick Name" required style={{ marginBottom: 12 }}>
+              <Input
+                name="user-nick"
+                value={nickname}
+                onChange={onChangeNickName}
+                required
+              />
+            </Form.Item>
+
+            <Form.Item label="Password" required style={{ marginBottom: 12 }}>
+              <Input
+                name="user-password"
+                value={password}
+                onChange={onChangePassword}
+                required
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Confirm Password"
               required
-            />
-          </div>
-          <div>
-            <label htmlFor="user-nick">Nick Name</label>
-            <br />
-            <Input
-              name="user-nick"
-              value={nickname}
-              onChange={onChangeNickName}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="user-password">Password</label>
-            <br />
-            <Input
-              name="user-password"
-              value={password}
-              onChange={onChangePassword}
-              required
-            ></Input>
-          </div>
-          <div>
-            <label htmlFor="user-id">Confirm Password</label>
-            <br />
-            <Input
-              name="user-id"
-              value={passwordCheck}
-              onChange={onChangePasswordCheck}
-              required
-            ></Input>
-            {passwordError && (
-              <ErrorMessage>The password is not valid</ErrorMessage>
-            )}
-          </div>
-          <div>
-            {termError && (
-              <div style={{ color: "red" }}>
-                You must agree with the time of terms
-              </div>
-            )}
-            <Checkbox name="user-term" checked={term} onChange={onChangeTerm}>
-              I agree with the terms
-            </Checkbox>
-          </div>
-          <div style={{ marginTop: 10, marginBottom: 20 }}>
-            <CustomButton htmlType="submit" loading={isSigningUp}>
-              Sing Up
-            </CustomButton>
-          </div>
-        </Form>
+              validateStatus={passwordError ? "error" : "success"}
+              style={{ marginBottom: 12 }}
+            >
+              <Input
+                name="user-id"
+                value={passwordCheck}
+                onChange={onChangePasswordCheck}
+                required
+              />
+              {passwordError && (
+                <ErrorMessage>The password is not valid</ErrorMessage>
+              )}
+            </Form.Item>
+
+            <Form.Item style={{ marginBottom: 6 }}>
+              {termError && (
+                <Typography.Text type="danger" style={{ display: "block", marginBottom: 6 }}>
+                  You must agree with the terms
+                </Typography.Text>
+              )}
+              <Checkbox
+                name="user-term"
+                checked={term}
+                onChange={onChangeTerm}
+              >
+                I agree with the terms
+              </Checkbox>
+            </Form.Item>
+
+            <Form.Item style={{ marginTop: 16, marginBottom: 0 }}>
+              <CustomButton
+                htmlType="submit"
+                loading={isSigningUp}
+                style={{ width: "100%" }}
+              >
+                Sign Up
+              </CustomButton>
+            </Form.Item>
+          </Form>
+        </Card>
       ) : (
         <LoadingSpin />
       )}
-    </div>
+    </PageWrapper>
   );
 };
 

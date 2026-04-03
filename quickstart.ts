@@ -1,4 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 async function main() {
   const anthropic = new Anthropic();

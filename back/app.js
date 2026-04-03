@@ -36,9 +36,9 @@ if (process.env.NODE_ENV === "production") {
   app.use(helmet());
   app.use(
     cors({
-      origin: ["https://portfolio-simon.com"],
+      // origin: ["https://portfolio-simon.com"],
       // origin: "*",
-      // origin: ["http://localhost:3060"],
+      origin: ["http://localhost:3060"],
       credentials: true,
     })
   );
@@ -87,6 +87,6 @@ app.use("/posts", postsRouter);
 app.use("/user", userRouter);
 app.use("/hashtag", hashtagRouter);
 
-app.listen(3065, () => {
-  console.log("Server is running on port 3065");
+app.listen(3066, () => {
+  console.log("Server is running on port 3066");
 });

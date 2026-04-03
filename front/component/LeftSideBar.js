@@ -51,6 +51,7 @@ const LeftSideBar = () => {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     const handleResize = () => {
       if (window.innerWidth < 1200) {
         setCollapsed(true);
@@ -58,6 +59,7 @@ const LeftSideBar = () => {
         setCollapsed(false);
       }
     };
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -70,35 +72,36 @@ const LeftSideBar = () => {
   return (
     <Layout
       style={{
-        minHeight: "100vh",
-        backgroundColor: "#f0f0f0",
-        height: "100vh",
-        borderRadius: "10px",
         display: "flex",
         flexDirection: "column",
-        alignItems: "end",
+        alignItems: "stretch",
+        width: "100%",
+        background: "transparent",
       }}
     >
-      {(currentView !== "login" && me) || (currentView !== "signup" && me) ? (
+      {me ? (
         <Sider
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
+          width={280}
           style={{
-            backgroundColor: "#f0f0f0",
-            position: "fixed",
-            border: "1px solid red",
+            backgroundColor: "transparent",
+            position: "sticky",
+            top: 56,
             height: "100%",
+            maxHeight: "calc(100vh - 56px)",
+            overflow: "auto",
+            borderRight: "1px solid var(--border-color, #e5e7eb)",
           }}
           className="custom-sider"
         >
           <div className="demo-logo-vertical" />
           <Menu
             style={{
-              backgroundColor: "#f0f0f0",
-              border: "1px solid green",
+              backgroundColor: "transparent",
               fontSize: "16px",
-              height: "500px",
+              border: "none",
             }}
             defaultSelectedKeys={["1"]}
             // mode="inline"
@@ -109,9 +112,10 @@ const LeftSideBar = () => {
           {currentView !== "login" && currentView !== "signup" && (
             <CustomButton
               style={{
-                marginTop: "30px",
-                marginLeft: "20px",
-                width: "90%",
+                marginTop: 16,
+                marginLeft: 16,
+                marginRight: 16,
+                width: "calc(100% - 32px)",
               }}
               onClick={postButtonHandler}
             >

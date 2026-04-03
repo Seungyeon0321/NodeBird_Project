@@ -48,14 +48,14 @@ const PostForm = () => {
       type: UPLOAD_IMAGES_REQUEST,
       data: imageFormData,
     });
-  });
+  }, [dispatch]);
 
   const onRemoveImage = useCallback((index) => () => {
     dispatch({
       type: REMOVE_IMAGE,
       data: index,
     });
-  });
+  }, [dispatch]);
 
   return (
     <>
@@ -80,26 +80,40 @@ const PostForm = () => {
             onChange={onChangeImages}
           />
           <div style={{ marginTop: 10 }}>
-            <Button onClick={onclickImageUpload}>Upload Image</Button>
-            <CustomButton
-              type="primary"
-              style={{ float: "right" }}
-              htmlType="submit"
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 12,
+                flexWrap: "wrap",
+              }}
             >
-              Post
-            </CustomButton>
+              <Button onClick={onclickImageUpload}>Upload Image</Button>
+              <CustomButton type="primary" htmlType="submit" style={{ flex: "1 1 140px", minWidth: 140 }}>
+                Post
+              </CustomButton>
+            </div>
           </div>
         </div>
-        <div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 12 }}>
           {imagePaths.map((v, i) => (
-            <div key={`image-${i}`} style={{ display: "inline-block" }}>
+            <div key={`image-${i}`} style={{ width: "clamp(120px, 26vw, 200px)" }}>
               <img
                 src={v.replace(/\/thumb\//, "/original/")}
-                style={{ width: "200px" }}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: 12,
+                  display: "block",
+                  border: "1px solid var(--border-color, #e5e7eb)",
+                }}
                 alt={v}
               />
-              <div>
-                <Button onClick={onRemoveImage(i)}>Delete</Button>
+              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8 }}>
+                <Button size="small" danger onClick={onRemoveImage(i)}>
+                  Delete
+                </Button>
               </div>
             </div>
           ))}

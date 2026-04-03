@@ -55,6 +55,7 @@ function* loadPost(action) {
   } catch (err) {
     yield put({
       type: LOAD_POST_FAILURE,
+      error: err?.response?.data ?? err?.message ?? null,
     });
   }
 }
@@ -78,6 +79,7 @@ function* addPost(action) {
   } catch (err) {
     yield put({
       type: ADD_POST_FAILURE,
+      error: err?.response?.data ?? err?.message ?? null,
     });
   }
 }
@@ -96,6 +98,7 @@ function* updatePost(action) {
   } catch (err) {
     yield put({
       type: UPDATE_POST_FAILURE,
+      error: err?.response?.data ?? err?.message ?? null,
     });
   }
 }
@@ -118,6 +121,7 @@ function* removePost(action) {
   } catch (err) {
     yield put({
       type: REMOVE_POST_FAILURE,
+      error: err?.response?.data ?? err?.message ?? null,
     });
   }
 }

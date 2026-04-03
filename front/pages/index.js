@@ -90,10 +90,11 @@ const Home = () => {
   }, [isLoggedIn, dispatch]);
 
   useEffect(() => {
-    if (!loadPostLoading && mainPosts.length > 0) {
+    // 게시글이 0개여도 첫 로드가 끝나면 메인/로그인 등 화면 전환이 가능해야 함
+    if (!loadPostLoading) {
       setIsLoading(false);
     }
-  }, [loadPostLoading, mainPosts]);
+  }, [loadPostLoading]);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>

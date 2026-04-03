@@ -22,7 +22,7 @@ module.exports = class User extends Model {
       {
         modelName: "User",
         tableName: "users",
-        charset: "utf8",
+        charset: "utf8", // 한글 저장을 위해 utf8 사용
         collate: "utf8_general_ci",
         sequelize,
       }

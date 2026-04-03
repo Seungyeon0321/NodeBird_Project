@@ -16,7 +16,12 @@ const UserProfile = () => {
 
   return (
     <Card
-      style={{ width: 300 }}
+      style={{
+        width: "100%",
+        maxWidth: 320,
+        borderRadius: "var(--radius-md, 16px)",
+        boxShadow: "var(--shadow-sm, 0 1px 2px rgba(16, 24, 40, 0.06))",
+      }}
       actions={[
         <div key="twit">
           <Link href={`/user/${me.id}`}>

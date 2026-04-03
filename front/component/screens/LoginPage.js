@@ -4,6 +4,15 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import useMessageAPI from "../message/messageAPI";
 import { Alert } from "antd";
+import styled from "styled-components";
+
+const PageWrapper = styled.div`
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px var(--container-padding, 16px);
+`;
 
 const Login = () => {
   const router = useRouter();
@@ -24,7 +33,7 @@ const Login = () => {
   }, [logInError]);
 
   return (
-    <>
+    <PageWrapper style={{ minHeight: "50vh"}}>
       {contextHolder}
       {!isLoggedIn && <LoginForm />}
       {logInError && (
@@ -32,10 +41,10 @@ const Login = () => {
           message="Login failed. Please retry"
           type="error"
           showIcon
-          style={{ marginTop: 10 }}
+          style={{ marginTop: 12, width: "100%", maxWidth: 420 }}
         />
       )}
-    </>
+    </PageWrapper>
   );
 };
 

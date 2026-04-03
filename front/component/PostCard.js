@@ -35,7 +35,6 @@ const PostCard = ({ post }) => {
 
   const onClickUpdate = useCallback(() => {
     setEditMode(true);
-    console.log(editMode);
   }, []);
 
   const onCancelUpdatePost = useCallback(() => {
@@ -106,10 +105,12 @@ const PostCard = ({ post }) => {
     <div style={{ marginBottom: 20 }}>
       <Card
         style={{
-          background: id && post.User.id === id ? "white" : "#f0f0f0",
-          border: "1px solid #3b3b3b",
+          borderRadius: "var(--radius-md, 16px)",
+          overflow: "hidden",
+          background: "var(--surface, #ffffff)",
+          border: "1px solid var(--border-color, #e5e7eb)",
+          boxShadow: "var(--shadow-sm, 0 1px 2px rgba(16, 24, 40, 0.06))",
         }}
-        header={"none"}
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
           <RetweetOutlined key="retweet" onClick={onRetweet} />,
@@ -147,7 +148,7 @@ const PostCard = ({ post }) => {
                   </>
                 ) : (
                   <Button key={`report-${post.id}`}>
-                    {`Report${post.User.id}-${id}`}
+                    Report
                   </Button>
                 )}
               </Button.Group>
@@ -169,7 +170,13 @@ const PostCard = ({ post }) => {
               )
             }
           >
-            <div style={{ float: "right" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginBottom: 8,
+              }}
+            >
               {moment(post.createdAt).format("YYYY.MM.DD")}
             </div>
             <Card.Meta
@@ -191,7 +198,13 @@ const PostCard = ({ post }) => {
           </Card>
         ) : (
           <>
-            <div style={{ float: "right" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginBottom: 8,
+              }}
+            >
               {moment(post.createdAt).format("YYYY.MM.DD")}
             </div>
             <Card.Meta
@@ -240,11 +253,10 @@ const PostCard = ({ post }) => {
                       </Link>
                     }
                     title={
-                      <a href="https://ant.design">{item.User.nickname}</a>
+                      <span>{item.User.nickname}</span>
                     }
                     description={item.content}
                   />
-                  <div>content</div>
                 </Skeleton>
               </List.Item>
             )}

@@ -116,7 +116,7 @@ const reducer = (state = initialState, action) => {
         break;
       case RETWEET_FAILURE:
         draft.retweetDone = true;
-        draft.retweetError = action.error;
+        draft.retweetError = action.error ?? null;
         break;
 
       case UPLOAD_IMAGES_REQUEST:
@@ -131,7 +131,7 @@ const reducer = (state = initialState, action) => {
         break;
       case UPLOAD_IMAGES_FAILURE:
         draft.uploadImagesDone = true;
-        draft.uploadImagesError = action.error;
+        draft.uploadImagesError = action.error ?? null;
         break;
 
       case LIKE_POST_REQUEST:
@@ -148,7 +148,7 @@ const reducer = (state = initialState, action) => {
       }
       case LIKE_POST_FAILURE:
         draft.likePostLoading = false;
-        draft.likePostError = action.error;
+        draft.likePostError = action.error ?? null;
         break;
 
       case UNLIKE_POST_REQUEST:
@@ -165,7 +165,7 @@ const reducer = (state = initialState, action) => {
       }
       case UNLIKE_POST_FAILURE:
         draft.unlikePostLoading = false;
-        draft.unlikePostError = action.error;
+        draft.unlikePostError = action.error ?? null;
         break;
 
       case LOAD_USER_POSTS_REQUEST:
@@ -187,7 +187,7 @@ const reducer = (state = initialState, action) => {
       case LOAD_HASHTAG_POSTS_FAILURE:
       case LOAD_POST_FAILURE:
         draft.loadPostLoading = false;
-        draft.loadPostError = action.error;
+        draft.loadPostError = action.error ?? null;
         break;
 
       case LOAD_POSTS_REQUEST:
@@ -202,7 +202,7 @@ const reducer = (state = initialState, action) => {
         break;
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;
-        draft.loadPostsError = action.error;
+        draft.loadPostsError = action.error ?? null;
         break;
 
       case ADD_POST_REQUEST:
@@ -218,7 +218,7 @@ const reducer = (state = initialState, action) => {
         break;
       case ADD_POST_FAILURE:
         draft.addPostLoading = false;
-        draft.addPostError = action.error;
+        draft.addPostError = action.error ?? null;
         break;
 
       case UPDATE_POST_REQUEST:
@@ -234,7 +234,7 @@ const reducer = (state = initialState, action) => {
         break;
       case UPDATE_POST_FAILURE:
         draft.updatePostLoading = false;
-        draft.updatePostError = action.error;
+        draft.updatePostError = action.error ?? null;
         break;
 
       case REMOVE_POST_REQUEST:
@@ -251,7 +251,7 @@ const reducer = (state = initialState, action) => {
         break;
       case REMOVE_POST_FAILURE:
         draft.removePostLoading = false;
-        draft.removePostError = action.error;
+        draft.removePostError = action.error ?? null;
         break;
 
       case ADD_COMMENT_REQUEST:
@@ -267,7 +267,7 @@ const reducer = (state = initialState, action) => {
       }
       case ADD_COMMENT_FAILURE:
         draft.addCommentLoading = false;
-        draft.addCommentError = action.error;
+        draft.addCommentError = action.error ?? null;
         break;
 
       default:

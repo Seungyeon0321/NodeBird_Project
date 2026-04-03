@@ -84,13 +84,17 @@ const FollowScreen = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        marginLeft: "20px",
-        marginRight: "20px",
+        width: "100%",
       }}
     >
       <SearchWrapper
         placeholder="search follower"
-        style={{ width: "500px", alignSelf: "center", marginBottom: "20px" }}
+        style={{
+          width: "100%",
+          maxWidth: 520,
+          alignSelf: "center",
+          marginBottom: 20,
+        }}
       />
       <div
         style={{
@@ -119,7 +123,7 @@ const FollowScreen = () => {
                     title="Remove"
                     description="Are you sure to remote this person?"
                     onConfirm={() => removeHandler(item.id)}
-                    onCancel={() => console.log("Cancel")}
+                    onCancel={() => {}}
                     okText="Yes"
                     cancelText="No"
                   >
@@ -144,7 +148,7 @@ const FollowScreen = () => {
                         icon={<UserOutlined />}
                       />
                     }
-                    title={<a href="https://ant.design">{item.nickname}</a>}
+                    title={<span>{item.nickname}</span>}
                   />
                 </Skeleton>
               )}

@@ -12,7 +12,7 @@ const LikeScreen = () => {
     if (post.Likers.length == 0) {
       return;
     }
-    if (post.Likers[0].id == me.id) {
+    if (post.Likers.some((v) => v.id === me.id)) {
       likedPost.push(post);
     }
   });

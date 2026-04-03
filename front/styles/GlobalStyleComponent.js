@@ -6,24 +6,26 @@ import Image from "next/image";
 
 const LayoutWrapper = styled(Layout)`
   display: flex;
-  justify-content: center;
-  width: 1400px;
-  max-width: 1400px;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--container-max, 1280px);
+  margin: 0 auto;
+  padding: 0 var(--container-padding, 16px);
 `;
 
 const HeaderLayout = styled(Header)`
-  background-color: #f0f0f0;
+  background: var(--surface, #ffffff);
   padding: 0;
   margin: 0;
-  height: 40px;
+  height: 56px;
   width: 100%;
-  max-width: 1400px;
-  min-width: 1400px;
   display: flex;
+  align-items: center;
   justify-content: center;
   position: sticky;
   top: 0;
   z-index: 1000;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
 `;
 
 const NavLayout = styled.div`
@@ -32,8 +34,8 @@ const NavLayout = styled.div`
 `;
 
 const StyledImage = styled(Image)`
-  border-radius: 30%;
-  border: 1px solid #000;
+  border-radius: 9999px;
+  border: 1px solid var(--border-color, #e5e7eb);
   transition: all 0.2s ease-in-out;
 
   &:hover {
@@ -47,32 +49,39 @@ const BasicLayout = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
-  background-color: #f0f0f0;
+  background-color: var(--page-bg, #f6f7fb);
+  padding: 24px 0;
+  gap: 24px;
+
+  @media (max-width: 768px) {
+    padding: 16px 0;
+    gap: 16px;
+  }
 `;
 
 const MainLayout = styled.div`
-  width: 700px;
+  width: 100%;
+  max-width: var(--main-max-width, 720px);
   height: 100%;
-  background-color: #f0f0f0;
+  min-width: 0;
 `;
 
 const LeftSideLayout = styled.div`
-  max-width: 350px;
-  min-width: 100px;
+  width: min(100%, var(--sidebar-left-width, 280px));
+  max-width: var(--sidebar-left-width, 280px);
   height: 100%;
-  background-color: #f0f0f0;
-  border: 1px solid blue;
+  background: transparent;
 `;
 
 const RightSideLayout = styled.div`
-  min-width: 350px;
+  width: min(100%, var(--sidebar-right-width, 320px));
+  max-width: var(--sidebar-right-width, 320px);
   height: 100%;
-  background-color: #f0f0f0;
-  border: 1px solid red;
+  background: transparent;
 `;
 
 const CustomMenu = styled(Menu)`
-  background-color: #f0f0f0 !important;
+  background-color: transparent !important;
   width: 300px;
   margin: 0;
   .ant-menu-item:hover {
@@ -100,8 +109,8 @@ const CustomButton = styled(Button)`
 
   &:hover {
     background-color: ${(props) =>
-      props.theme.colors.hover.secondary} !important;
-    border-color: ${(props) => props.theme.colors.hover.secondary} !important;
+      props.theme.colors.hover.primary} !important;
+    border-color: ${(props) => props.theme.colors.hover.primary} !important;
   }
 `;
 
@@ -113,8 +122,8 @@ const CustomButton2 = styled(Button)`
 
   &:hover {
     background-color: ${(props) =>
-      props.theme.colors.hover.secondary} !important;
-    border-color: ${(props) => props.theme.colors.hover.secondary} !important;
+      props.theme.colors.hover.primary} !important;
+    border-color: ${(props) => props.theme.colors.hover.primary} !important;
   }
 `;
 
@@ -129,8 +138,8 @@ const SearchWrapper = styled(Input.Search).withConfig({
 
     &:hover {
       background-color: ${(props) =>
-        props.theme.colors.hover.secondary} !important;
-      border-color: ${(props) => props.theme.colors.hover.secondary} !important;
+        props.theme.colors.hover.primary} !important;
+      border-color: ${(props) => props.theme.colors.hover.primary} !important;
     }
   }
 `;
@@ -145,7 +154,7 @@ const StyledButton = styled.button`
   ${commonFontStyle}
   font-weight: bold;
   font-size: 18px;
-  color: #a3cfcd;
+  color: ${(props) => props.theme?.colors?.primary ?? "#a3cfcd"};
   border: none;
   background: none;
   cursor: pointer;
