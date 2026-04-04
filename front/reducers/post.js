@@ -179,9 +179,19 @@ const reducer = (state = initialState, action) => {
         draft.loadPostDone = false;
         draft.loadPostError = null;
         break;
+      case LOAD_POST_SUCCESS:
+        draft.loadPostLoading = false;
+        draft.loadPostDone = true;
+        // 첫 페이지(lastId 없음): 교체. 무한 스크롤(lastId 있음): 이어붙임(SSR 직후 클라이언트 첫 요청 중복 방지)
+        if (action.lastId) {
+          draft.mainPosts = draft.mainPosts.concat(action.data);
+        } else {
+          draft.mainPosts = action.data;
+        }
+        draft.hasMorePost = action.data.length === 10;
+        break;
       case LOAD_USER_POSTS_SUCCESS:
       case LOAD_HASHTAG_POSTS_SUCCESS:
-      case LOAD_POST_SUCCESS:
         draft.loadPostLoading = false;
         draft.loadPostDone = true;
         draft.mainPosts = draft.mainPosts.concat(action.data);

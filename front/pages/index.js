@@ -16,7 +16,7 @@ import axios from "axios";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { me, isLoggedIn } = useSelector((state) => state.user);
+  const { isLoggedIn } = useSelector((state) => state.user);
   const { mainPosts, hasMorePost, loadPostLoading, retweetError } = useSelector(
     (state) => state.post
   );
@@ -80,12 +80,10 @@ const Home = () => {
     };
   }, [hasMorePost, loadPostLoading, mainPosts]);
 
-  // Load post
+  // Load post — 메인 피드는 로그인 여부와 무관하게 공개 API(/posts)로 로드
   useEffect(() => {
-    if (isLoggedIn) {
-      dispatch({ type: LOAD_POST_REQUEST });
-    }
-  }, [isLoggedIn, dispatch]);
+    dispatch({ type: LOAD_POST_REQUEST });
+  }, [dispatch]);
 
   useEffect(() => {
     // 게시글이 0개여도 첫 로드가 끝나면 메인/로그인 등 화면 전환이 가능해야 함

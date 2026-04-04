@@ -56,6 +56,7 @@ function* loadPost(action) {
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
+      lastId: action.lastId,
     });
   } catch (err) {
     yield put({

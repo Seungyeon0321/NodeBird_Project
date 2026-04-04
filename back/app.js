@@ -18,12 +18,21 @@ const helmet = require("helmet");
 
 dotenv.config();
 
-db.sequelize
-  .sync()
-  .then(() => {
-    console.log("Connected DB successfully!!");
-  })
-  .catch(console.error);
+if (process.env.NODE_ENV === "production") {
+  db.sequelize
+    .authenticate()
+    .then(() => {
+      console.log("DB connection authenticated.");
+    })
+    .catch(console.error);
+} else {
+  db.sequelize
+    .sync()
+    .then(() => {
+      console.log("Connected DB successfully!!");
+    })
+    .catch(console.error);
+}
 
 passportConfig();
 

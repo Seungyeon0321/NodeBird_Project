@@ -77,6 +77,8 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
         },
         {
           model: Comment,
+          separate: true,
+          order: [["createdAt", "DESC"]],
           include: [
             {
               model: User,
@@ -119,16 +121,8 @@ router.post(
 router.get("/:postId", async (req, res, next) => {
   //GET //post/1
   try {
-    const post = await Post.findOne({
-      where: { id: req.params.postId },
-    });
-
-    if (!post) {
-      return res.status(404).send("There is no data");
-    }
-
     const fullPost = await Post.findOne({
-      where: { id: post.id },
+      where: { id: req.params.postId },
       include: [
         {
           model: Post,
@@ -152,6 +146,8 @@ router.get("/:postId", async (req, res, next) => {
         },
         {
           model: Comment,
+          separate: true,
+          order: [["createdAt", "DESC"]],
           include: [{ model: User, attributes: ["id", "nickname"] }],
         },
         {
@@ -161,6 +157,10 @@ router.get("/:postId", async (req, res, next) => {
         },
       ],
     });
+
+    if (!fullPost) {
+      return res.status(404).send("There is no data");
+    }
 
     res.status(200).json(fullPost);
   } catch (error) {
@@ -230,6 +230,8 @@ router.post("/:postId/retweet", isLoggedIn, async (req, res, next) => {
         },
         {
           model: Comment,
+          separate: true,
+          order: [["createdAt", "DESC"]],
           include: [{ model: User, attributes: ["id", "nickname"] }],
         },
         {
