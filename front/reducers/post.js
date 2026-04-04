@@ -68,6 +68,8 @@ export const LOAD_HASHTAG_POSTS_FAILURE = "LOAD_HASHTAG_POSTS_FAILURE";
 export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
 export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
+/** 포스트 모달을 열 때 이전 성공/에러 상태 초기화 */
+export const RESET_POST_MODAL_UI = "RESET_POST_MODAL_UI";
 
 export const UPDATE_POST_REQUEST = "UPDATE_POST_REQUEST";
 export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
@@ -115,8 +117,9 @@ const reducer = (state = initialState, action) => {
         draft.mainPosts.unshift(action.data);
         break;
       case RETWEET_FAILURE:
+        draft.retweetLoading = false;
         draft.retweetDone = true;
-        draft.retweetError = action.error;
+        draft.retweetError = action.error ?? null;
         break;
 
       case UPLOAD_IMAGES_REQUEST:
@@ -130,8 +133,9 @@ const reducer = (state = initialState, action) => {
         draft.imagePaths = draft.imagePaths.concat(action.data);
         break;
       case UPLOAD_IMAGES_FAILURE:
+        draft.uploadImagesLoading = false;
         draft.uploadImagesDone = true;
-        draft.uploadImagesError = action.error;
+        draft.uploadImagesError = action.error ?? null;
         break;
 
       case LIKE_POST_REQUEST:
@@ -148,7 +152,7 @@ const reducer = (state = initialState, action) => {
       }
       case LIKE_POST_FAILURE:
         draft.likePostLoading = false;
-        draft.likePostError = action.error;
+        draft.likePostError = action.error ?? null;
         break;
 
       case UNLIKE_POST_REQUEST:
@@ -165,7 +169,7 @@ const reducer = (state = initialState, action) => {
       }
       case UNLIKE_POST_FAILURE:
         draft.unlikePostLoading = false;
-        draft.unlikePostError = action.error;
+        draft.unlikePostError = action.error ?? null;
         break;
 
       case LOAD_USER_POSTS_REQUEST:
@@ -175,9 +179,19 @@ const reducer = (state = initialState, action) => {
         draft.loadPostDone = false;
         draft.loadPostError = null;
         break;
+      case LOAD_POST_SUCCESS:
+        draft.loadPostLoading = false;
+        draft.loadPostDone = true;
+        // 첫 페이지(lastId 없음): 교체. 무한 스크롤(lastId 있음): 이어붙임(SSR 직후 클라이언트 첫 요청 중복 방지)
+        if (action.lastId) {
+          draft.mainPosts = draft.mainPosts.concat(action.data);
+        } else {
+          draft.mainPosts = action.data;
+        }
+        draft.hasMorePost = action.data.length === 10;
+        break;
       case LOAD_USER_POSTS_SUCCESS:
       case LOAD_HASHTAG_POSTS_SUCCESS:
-      case LOAD_POST_SUCCESS:
         draft.loadPostLoading = false;
         draft.loadPostDone = true;
         draft.mainPosts = draft.mainPosts.concat(action.data);
@@ -187,7 +201,8 @@ const reducer = (state = initialState, action) => {
       case LOAD_HASHTAG_POSTS_FAILURE:
       case LOAD_POST_FAILURE:
         draft.loadPostLoading = false;
-        draft.loadPostError = action.error;
+        draft.loadPostDone = true;
+        draft.loadPostError = action.error ?? null;
         break;
 
       case LOAD_POSTS_REQUEST:
@@ -202,7 +217,13 @@ const reducer = (state = initialState, action) => {
         break;
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;
-        draft.loadPostsError = action.error;
+        draft.loadPostsError = action.error ?? null;
+        break;
+
+      case RESET_POST_MODAL_UI:
+        draft.addPostDone = false;
+        draft.addPostError = null;
+        draft.addPostLoading = false;
         break;
 
       case ADD_POST_REQUEST:
@@ -218,7 +239,7 @@ const reducer = (state = initialState, action) => {
         break;
       case ADD_POST_FAILURE:
         draft.addPostLoading = false;
-        draft.addPostError = action.error;
+        draft.addPostError = action.error ?? null;
         break;
 
       case UPDATE_POST_REQUEST:
@@ -234,7 +255,7 @@ const reducer = (state = initialState, action) => {
         break;
       case UPDATE_POST_FAILURE:
         draft.updatePostLoading = false;
-        draft.updatePostError = action.error;
+        draft.updatePostError = action.error ?? null;
         break;
 
       case REMOVE_POST_REQUEST:
@@ -251,7 +272,7 @@ const reducer = (state = initialState, action) => {
         break;
       case REMOVE_POST_FAILURE:
         draft.removePostLoading = false;
-        draft.removePostError = action.error;
+        draft.removePostError = action.error ?? null;
         break;
 
       case ADD_COMMENT_REQUEST:
@@ -267,7 +288,7 @@ const reducer = (state = initialState, action) => {
       }
       case ADD_COMMENT_FAILURE:
         draft.addCommentLoading = false;
-        draft.addCommentError = action.error;
+        draft.addCommentError = action.error ?? null;
         break;
 
       default:

@@ -8,10 +8,11 @@ import {
   HomeOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
-const { Sider } = Layout;
+import { Grid, Menu } from "antd";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
 import { SET_CURRENT_VIEW, SET_IS_POSTING } from "../reducers/ui";
+import { RESET_POST_MODAL_UI } from "../reducers/post";
 import { CustomButton } from "../styles/GlobalStyleComponent";
 import getItem from "./ui/GetItem";
 
@@ -24,8 +25,8 @@ const items = [
 ];
 
 const LeftSideBar = () => {
+  const screens = Grid.useBreakpoint();
   const [collapsed, setCollapsed] = useState(false);
-  const [clickedPost, setClickedPost] = useState(false);
   const dispatch = useDispatch();
   const { currentView } = useSelector((state) => state.ui);
   const { me } = useSelector((state) => state.user);
@@ -51,76 +52,68 @@ const LeftSideBar = () => {
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 1200) {
-        setCollapsed(true);
-      } else {
-        setCollapsed(false);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    setCollapsed(screens.xs);
+  }, [screens.sm]);
 
   const postButtonHandler = useCallback(() => {
-    setClickedPost((prev) => !prev);
-    dispatch({ type: SET_IS_POSTING, data: clickedPost });
-  }, [clickedPost]);
+    dispatch({ type: RESET_POST_MODAL_UI });
+    dispatch({ type: SET_IS_POSTING, data: true });
+  }, [dispatch]);
+
+  if (!me) return
+
 
   return (
-    <Layout
+    <div
       style={{
-        minHeight: "100vh",
-        backgroundColor: "#f0f0f0",
-        height: "100vh",
-        borderRadius: "10px",
+        width: collapsed ? 90 : 280,
+        minWidth: collapsed ? 90 : 280,
+        height: "calc(100vh - 56px)",
+        backgroundColor: "transparent",
+        overflow: "auto",
+        transition: "width 0.2s, min-width 0.2s",
         display: "flex",
         flexDirection: "column",
-        alignItems: "end",
       }}
     >
-      {(currentView !== "login" && me) || (currentView !== "signup" && me) ? (
-        <Sider
-          collapsible
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
+
+      <Menu
+        style={{
+          backgroundColor: "transparent",
+          fontSize: "16px",
+          flex: 1,
+        }}
+        defaultSelectedKeys={["1"]}
+        inlineCollapsed={collapsed}
+        mode="inline"
+        items={items}
+        onClick={clickHandler}
+      />
+
+      {currentView !== "login" && currentView !== "signup" && (
+        <CustomButton
           style={{
-            backgroundColor: "#f0f0f0",
-            position: "fixed",
-            border: "1px solid red",
-            height: "100%",
+            margin: 16,
+            width: "calc(100% - 32px)",
           }}
-          className="custom-sider"
+          onClick={postButtonHandler}
         >
-          <div className="demo-logo-vertical" />
-          <Menu
-            style={{
-              backgroundColor: "#f0f0f0",
-              border: "1px solid green",
-              fontSize: "16px",
-              height: "500px",
-            }}
-            defaultSelectedKeys={["1"]}
-            // mode="inline"
-            itemHeight={100}
-            items={items}
-            onClick={clickHandler}
-          />
-          {currentView !== "login" && currentView !== "signup" && (
-            <CustomButton
-              style={{
-                marginTop: "30px",
-                marginLeft: "20px",
-                width: "90%",
-              }}
-              onClick={postButtonHandler}
-            >
-              Post
-            </CustomButton>
-          )}
-        </Sider>
-      ) : null}
-    </Layout>
+          {collapsed ? "+" : "Post"}
+        </CustomButton>
+      )}
+
+      {/* collapse 토글 버튼 */}
+      <div
+        style={{
+          padding: "12px 16px",
+          cursor: "pointer",
+          textAlign: collapsed ? "center" : "right",
+        }}
+        onClick={() => setCollapsed((prev) => !prev)}
+      >
+        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </div>
+    </div>
   );
 };
 

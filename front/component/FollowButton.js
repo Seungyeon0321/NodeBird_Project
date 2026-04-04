@@ -31,7 +31,11 @@ const FollowButton = ({ post }) => {
 
   return (
     <Button
-      style={isFollowing ? { backgroundColor: "#a3cfcd", color: "white" } : {}}
+      style={
+        isFollowing
+          ? { backgroundColor: "var(--color-primary)", color: "white" }
+          : {}
+      }
       loading={followingLoading || unfollowingLoading}
       onClick={onClickButton}
     >

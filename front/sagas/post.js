@@ -40,6 +40,11 @@ import {
   LOAD_HASHTAG_POSTS_FAILURE,
 } from "../reducers/post";
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
+import { SET_IS_POSTING } from "../reducers/ui";
+
+function serializePostError(err) {
+  return err?.response?.data ?? err?.message ?? null;
+}
 
 function loadPostAPI(lastId) {
   return axios.get(`/posts?lastId=${lastId || 0}`);
@@ -51,10 +56,12 @@ function* loadPost(action) {
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
+      lastId: action.lastId,
     });
   } catch (err) {
     yield put({
       type: LOAD_POST_FAILURE,
+      error: err?.response?.data ?? err?.message ?? null,
     });
   }
 }
@@ -71,6 +78,8 @@ function* addPost(action) {
       type: ADD_POST_SUCCESS,
       data: result.data,
     });
+    // 모달을 먼저 닫음 (ADD_POST_TO_ME에서 리듀서 예외 시에도 닫힌 상태 유지)
+    yield put({ type: SET_IS_POSTING, data: false });
     yield put({
       type: ADD_POST_TO_ME,
       data: result.data.id,
@@ -78,6 +87,7 @@ function* addPost(action) {
   } catch (err) {
     yield put({
       type: ADD_POST_FAILURE,
+      error: err?.response?.data ?? err?.message ?? null,
     });
   }
 }
@@ -96,6 +106,7 @@ function* updatePost(action) {
   } catch (err) {
     yield put({
       type: UPDATE_POST_FAILURE,
+      error: err?.response?.data ?? err?.message ?? null,
     });
   }
 }
@@ -118,6 +129,7 @@ function* removePost(action) {
   } catch (err) {
     yield put({
       type: REMOVE_POST_FAILURE,
+      error: err?.response?.data ?? err?.message ?? null,
     });
   }
 }
@@ -138,7 +150,7 @@ function* addComment(action) {
     console.error(err);
     yield put({
       type: ADD_COMMENT_FAILURE,
-      error: err.response.data,
+      error: serializePostError(err),
     });
   }
 }
@@ -158,7 +170,7 @@ function* likePost(action) {
   } catch (err) {
     yield put({
       type: LIKE_POST_FAILURE,
-      error: err.response.data,
+      error: serializePostError(err),
     });
   }
 }
@@ -179,7 +191,7 @@ function* unlikePost(action) {
     console.error(err);
     yield put({
       type: UNLIKE_POST_FAILURE,
-      error: err.response.data,
+      error: serializePostError(err),
     });
   }
 }
@@ -198,7 +210,7 @@ function* uploadImages(action) {
   } catch (err) {
     yield put({
       type: UPLOAD_IMAGES_FAILURE,
-      error: err.response.data,
+      error: serializePostError(err),
     });
   }
 }
@@ -217,7 +229,7 @@ function* retweet(action) {
   } catch (err) {
     yield put({
       type: RETWEET_FAILURE,
-      error: err.response.data,
+      error: serializePostError(err),
     });
   }
 }
@@ -237,7 +249,7 @@ function* loadPosts(action) {
   } catch (err) {
     yield put({
       type: LOAD_POSTS_FAILURE,
-      error: err.response.data,
+      error: serializePostError(err),
     });
   }
 }
@@ -257,7 +269,7 @@ function* loadUserPosts(action) {
   } catch (err) {
     yield put({
       type: LOAD_USER_POSTS_FAILURE,
-      error: err.response.data,
+      error: serializePostError(err),
     });
   }
 }
@@ -280,7 +292,7 @@ function* loadHashtagPosts(action) {
     console.log(err);
     yield put({
       type: LOAD_HASHTAG_POSTS_FAILURE,
-      error: err.response.data,
+      error: serializePostError(err),
     });
   }
 }

@@ -5,6 +5,13 @@ const { User, Post, Image, Comment } = require("../models");
 const passport = require("passport");
 
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
+const { getPostFeedIncludes } = require("./postFeedIncludes");
+
+const SESSION_USER_INCLUDES = [
+  { model: Post, attributes: ["id"] },
+  { model: User, as: "Followings", attributes: ["id", "nickname"] },
+  { model: User, as: "Followers", attributes: ["id", "nickname"] },
+];
 
 const router = express.Router();
 router.get("/", async (req, res, next) => {
@@ -61,19 +68,7 @@ router.post("/login", isNotLoggedIn, (req, res, next) => {
         attributes: {
           exclude: ["password"],
         },
-        include: [
-          {
-            model: Post,
-          },
-          {
-            model: User,
-            as: "Followings",
-          },
-          {
-            model: User,
-            as: "Followers",
-          },
-        ],
+        include: SESSION_USER_INCLUDES,
       });
       return res.status(200).json(fullUserWithoutPassword);
     });
@@ -104,19 +99,7 @@ router.post("/", isNotLoggedIn, async (req, res, next) => {
       attributes: {
         exclude: ["password"],
       },
-      include: [
-        {
-          model: Post,
-        },
-        {
-          model: User,
-          as: "Followings",
-        },
-        {
-          model: User,
-          as: "Followers",
-        },
-      ],
+      include: SESSION_USER_INCLUDES,
     });
 
     req.login(newUser, (loginErr) => {
@@ -140,7 +123,7 @@ router.post("/logout", isLoggedIn, (req, res, next) => {
 
 router.patch("/nickname", isLoggedIn, async (req, res, next) => {
   try {
-    User.update(
+    await User.update(
       {
         nickname: req.body.nickname,
       },
@@ -149,7 +132,10 @@ router.patch("/nickname", isLoggedIn, async (req, res, next) => {
       }
     );
     res.status(200).json({ nickname: req.body.nickname });
-  } catch {}
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
 });
 
 router.get("/followers", isLoggedIn, async (req, res, next) => {
@@ -239,41 +225,8 @@ router.get("/:userId/posts", async (req, res, next) => {
     const posts = await Post.findAll({
       where,
       limit: 10,
-      order: [
-        ["createdAt", "DESC"],
-        [Comment, "createdAt", "DESC"],
-      ],
-      include: [
-        {
-          model: User,
-          attributes: ["id", "nickname"],
-        },
-        {
-          model: Image,
-        },
-        {
-          model: Comment,
-          include: [{ model: User, attributes: ["id", "nickname"] }],
-        },
-        {
-          model: User,
-          as: "Likers",
-          attributes: ["id"],
-        },
-        {
-          model: Post,
-          as: "Retweet",
-          include: [
-            {
-              model: User,
-              attributes: ["id", "nickname"],
-            },
-            {
-              model: Image,
-            },
-          ],
-        },
-      ],
+      order: [["createdAt", "DESC"]],
+      include: getPostFeedIncludes({ User, Image, Comment, Post }),
     });
     res.status(200).json(posts);
   } catch (error) {
@@ -304,39 +257,28 @@ router.get("/:userId", async (req, res, next) => {
   // GET /user/1
 
   try {
-    const fullUserWithoutPassword = await User.findOne({
+    const user = await User.findOne({
       where: { id: req.params.userId },
       attributes: {
         exclude: ["password"],
       },
-
-      include: [
-        {
-          model: Post,
-          attributes: ["id"],
-        },
-        {
-          model: User,
-          as: "Followings",
-          attributes: ["id"],
-        },
-        {
-          model: User,
-          as: "Followers",
-          attributes: ["id"],
-        },
-      ],
     });
 
-    if (fullUserWithoutPassword) {
-      const data = fullUserWithoutPassword.toJSON();
-      data.Posts = data.Posts.length;
-      data.Followers = data.Followers.length;
-      data.Followings = data.Followings.length;
-      res.status(200).json(data);
-    } else {
-      res.status(404).json("The user does not exist!");
+    if (!user) {
+      return res.status(404).json("The user does not exist!");
     }
+
+    const [postCount, followerCount, followingCount] = await Promise.all([
+      Post.count({ where: { UserId: user.id } }),
+      user.countFollowers(),
+      user.countFollowings(),
+    ]);
+
+    const data = user.toJSON();
+    data.Posts = postCount;
+    data.Followers = followerCount;
+    data.Followings = followingCount;
+    res.status(200).json(data);
   } catch (error) {
     console.error(error);
     next(error);

@@ -2,10 +2,15 @@ import { PlusOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import React, { useCallback, useState } from "react";
 import ImageZoom from "./ImageZoom";
-import { Carousel } from "antd";
+import { Carousel, Grid } from "antd";
 
 const PostImages = ({ images }) => {
   const [showImagesZoom, setShowImagesZoom] = useState(false);
+  const screens = Grid.useBreakpoint();
+  const isMobile = !screens.md; // md >= 768px
+
+  // Mobile에서 화면을 뚫지 않도록 클램프 기반 높이를 사용합니다.
+  const mediaHeight = "clamp(240px, 42vw, 560px)";
 
   const onZoom = useCallback(() => {
     setShowImagesZoom(true);
@@ -22,12 +27,12 @@ const PostImages = ({ images }) => {
 
   if (images.length === 1) {
     return (
-      <div style={{ height: "550px" }}>
+      <div style={{ height: mediaHeight }}>
         <img
           role="presentation"
           style={{
             width: `${imageStyle.width}`,
-            height: `${imageStyle.height}`,
+            height: "100%",
             objectFit: "cover",
           }}
           src={`${images[0].src}`}
@@ -45,7 +50,7 @@ const PostImages = ({ images }) => {
         <Carousel
           style={{
             width: "100%",
-            height: "550px",
+            height: mediaHeight,
             overflow: "hidden",
           }}
         >
@@ -64,7 +69,7 @@ const PostImages = ({ images }) => {
                   role="presentation"
                   style={{
                     width: `${imageStyle.width}`,
-                    height: `${imageStyle.height}`,
+                    height: "100%",
                     objectFit: "cover",
                   }}
                   src={v.src}
@@ -85,13 +90,20 @@ const PostImages = ({ images }) => {
       <div
         style={{
           display: "flex",
+          flexDirection: isMobile ? "column" : "row",
           justifyContent: "center",
           alignItems: "center",
+          height: mediaHeight,
+          overflow: "hidden",
         }}
       >
         <img
           role="presentation"
-          style={{ width: "50%" }}
+          style={{
+            width: isMobile ? "100%" : "50%",
+            height: "100%",
+            objectFit: "cover",
+          }}
           src={`${images[0].src}`}
           alt={images[0].src}
           onClick={onZoom}
@@ -99,14 +111,19 @@ const PostImages = ({ images }) => {
         <div
           role="presentation"
           style={{
-            width: "50%",
+            width: isMobile ? "100%" : "50%",
+            height: "100%",
             textAlign: "center",
             verticalAlign: "middle",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+            gap: 8,
           }}
           onClick={onZoom}
         >
           <PlusOutlined />
-          <br />
           see {images.length - 1} more photos
         </div>
       </div>

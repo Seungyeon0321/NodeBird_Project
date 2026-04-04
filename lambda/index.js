@@ -30,7 +30,6 @@ exports.handler = async (event, context, callback) => {
     });
 
     await s3.send(putObjectCommand);
-    console.log("put", resizedImage.length);
     //we send the invoker the path of the resized image
     return callback(null, `thumb/${filename}`);
   } catch (error) {

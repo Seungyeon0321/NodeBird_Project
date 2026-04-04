@@ -40,6 +40,15 @@ import {
 
 import { SET_CURRENT_VIEW } from "../reducers/ui";
 
+/** 네트워크/404 등 response 없을 때 catch 안에서 다시 터지지 않게 직렬화 */
+function serializeRequestError(err) {
+  return {
+    message: err?.message ?? "Unknown error",
+    status: err?.response?.status ?? null,
+    data: err?.response?.data ?? null,
+  };
+}
+
 function loadUserAPI(data) {
   return axios.get(`/user/${data}`);
 }
@@ -54,7 +63,7 @@ function* loadUser(action) {
   } catch (err) {
     yield put({
       type: LOAD_USER_FAILURE,
-      error: err.response.data,
+      error: err?.response?.data ?? serializeRequestError(err),
     });
   }
 }
@@ -71,9 +80,16 @@ function* loadMyInfo(action) {
       data: result.data,
     });
   } catch (err) {
+    // next-redux-wrapper의 SSR initialState를 JSON 직렬화할 때
+    // Error/AxiosError 인스턴스 자체는 실패할 수 있어, 직렬화 가능한 값만 저장합니다.
+    const serializableError = {
+      message: err?.message ?? "Unknown error",
+      status: err?.response?.status ?? null,
+      data: err?.response?.data ?? null,
+    };
     yield put({
       type: LOAD_MY_INFO_FAILURE,
-      error: err,
+      error: serializableError,
     });
   }
 }
@@ -98,7 +114,7 @@ function* logIn(action) {
     console.log("Login Error", err);
     yield put({
       type: LOG_IN_FAILURE,
-      error: err,
+      error: serializeRequestError(err),
     });
   }
 }
@@ -117,7 +133,7 @@ function* logOut() {
   } catch (err) {
     yield put({
       type: LOG_OUT_FAILURE,
-      error: err.response.data,
+      error: serializeRequestError(err),
     });
   }
 }
@@ -136,7 +152,7 @@ function* signUp(action) {
   } catch (err) {
     yield put({
       type: SIGN_UP_FAILURE,
-      error: err.response.data,
+      error: err?.response?.data ?? serializeRequestError(err),
     });
   }
 }
@@ -155,7 +171,7 @@ function* follow(action) {
   } catch (err) {
     yield put({
       type: FOLLOW_FAILURE,
-      error: err.response.data,
+      error: err?.response?.data ?? serializeRequestError(err),
     });
   }
 }
@@ -175,7 +191,7 @@ function* unfollow(action) {
   } catch (err) {
     yield put({
       type: UNFOLLOW_FAILURE,
-      error: err.response.data,
+      error: err?.response?.data ?? serializeRequestError(err),
     });
   }
 }

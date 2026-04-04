@@ -7,10 +7,12 @@ export const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(6px);
 `;
 
 export const Header = styled.header`
-  header: 44px;
+  height: 44px;
   background: white;
   position: relative;
   padding: 0;
@@ -40,12 +42,15 @@ export const SlickWrapper = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  padding: 32px;
+  padding: clamp(16px, 4vw, 32px);
+  height: 100%;
   text-align: center;
 
   & img {
     margin: 0 auto;
-    max-height: 750px;
+    max-height: calc(100vh - 140px);
+    width: 100%;
+    object-fit: contain;
   }
 `;
 

@@ -74,6 +74,7 @@ export const LOAD_USER_FAILURE = "LOAD_USER_FAILURE";
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
 export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
 export const LOG_IN_FAILURE = "LOG_IN_FAILURE";
+export const CLEAR_LOG_IN_ERROR = "CLEAR_LOG_IN_ERROR";
 
 export const LOG_OUT_REQUEST = "LOG_OUT_REQUEST";
 export const LOG_OUT_SUCCESS = "LOG_OUT_SUCCESS";
@@ -125,6 +126,7 @@ const reducer = (state = initialState, action) => {
         draft.me = action.data;
         break;
       case LOAD_MY_INFO_FAILURE:
+        draft.loadMyInfoLoading = false;
         draft.loadMyInfoDone = true;
         draft.loadMyInfoError = action.error;
         break;
@@ -141,6 +143,7 @@ const reducer = (state = initialState, action) => {
 
         break;
       case LOAD_USER_FAILURE:
+        draft.loadUserLoading = false;
         draft.loadUserDone = true;
         draft.loadUserError = action.error;
         break;
@@ -156,6 +159,7 @@ const reducer = (state = initialState, action) => {
         draft.me.Followings.push({ id: action.data.UserId });
         break;
       case FOLLOW_FAILURE:
+        draft.followingLoading = false;
         draft.followingDone = true;
         draft.followingError = action.error;
         break;
@@ -173,6 +177,7 @@ const reducer = (state = initialState, action) => {
         );
         break;
       case UNFOLLOW_FAILURE:
+        draft.unfollowingLoading = false;
         draft.unfollowingDone = true;
         draft.unfollowingError = action.error;
         break;
@@ -188,6 +193,7 @@ const reducer = (state = initialState, action) => {
         draft.me.Followings = action.data;
         break;
       case LOAD_FOLLOWINGS_FAILURE:
+        draft.loadFollowingsLoading = false;
         draft.loadFollowingsDone = true;
         draft.loadFollowingsError = action.error;
         break;
@@ -203,6 +209,7 @@ const reducer = (state = initialState, action) => {
         draft.me.Followers = action.data;
         break;
       case LOAD_FOLLOWERS_FAILURE:
+        draft.loadFollowersLoading = false;
         draft.loadFollowersDone = true;
         draft.loadFollowersError = action.error;
         break;
@@ -220,21 +227,29 @@ const reducer = (state = initialState, action) => {
         );
         break;
       case REMOVE_FOLLOWER_FAILURE:
+        draft.removeFollowerLoading = false;
         draft.removeFollowerDone = true;
         draft.removeFollowerError = action.error;
         break;
 
       case LOG_IN_REQUEST:
         draft.isLoggingIn = true;
+        draft.logInError = null;
         break;
       case LOG_IN_SUCCESS:
         draft.isLoggingIn = false;
         draft.isLoggedIn = true;
+        draft.logInError = null;
         draft.me = action.data;
         break;
       case LOG_IN_FAILURE:
+        draft.isLoggingIn = false;
         draft.isLoggedIn = false;
-        draft.logInError = action.error.response;
+        draft.logInError = action.error;
+        break;
+
+      case CLEAR_LOG_IN_ERROR:
+        draft.logInError = null;
         break;
 
       case LOG_OUT_REQUEST:
@@ -250,6 +265,7 @@ const reducer = (state = initialState, action) => {
         draft.me = null;
         break;
       case LOG_OUT_FAILURE:
+        draft.isLoggingOut = false;
         draft.isLoggedOut = false;
         draft.logOutError = action.error;
         break;
@@ -267,6 +283,7 @@ const reducer = (state = initialState, action) => {
         draft.me = action.data;
         break;
       case SIGN_UP_FAILURE:
+        draft.isSigningUp = false;
         draft.isSignedUp = false;
         draft.signUpError = true;
         break;
@@ -282,12 +299,16 @@ const reducer = (state = initialState, action) => {
         draft.changeNicknameDone = true;
         break;
       case CHANGE_NICKNAME_FAILURE:
+        draft.changeNicknameLoading = false;
         draft.changeNicknameDone = false;
         draft.changeNicknameError = action.error;
         break;
 
       case ADD_POST_TO_ME:
-        draft.me.posts.unshift({ id: action.data });
+        if (draft.me) {
+          if (!draft.me.posts) draft.me.posts = [];
+          draft.me.posts.unshift({ id: action.data });
+        }
         break;
       case REMOVE_POST_OF_ME:
         draft.me.posts = draft.me.posts.filter((v) => v.id !== action.data);

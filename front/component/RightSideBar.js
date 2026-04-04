@@ -21,8 +21,11 @@ function RightSideBar() {
         <div
           style={{
             position: "sticky",
-            top: "40px",
-            minWidth: "350px",
+            top: 56,
+            width: "100%",
+            maxWidth: 320,
+            margin: "0 auto",
+            padding: "0 0 16px",
           }}
         >
           <SearchWrapper
@@ -32,7 +35,7 @@ function RightSideBar() {
             value={searchInput}
             onChange={onChangeSearchInput}
             onSearch={onSearch}
-            style={{ marginBottom: "10px", width: "300px " }}
+            style={{ marginBottom: 10, width: "100%", maxWidth: 320 }}
           />
           <div>{profile && <UserProfile />}</div>
         </div>

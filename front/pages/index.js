@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 
 import AppLayoutPage from "../component/PageLayout";
 import PostCard from "../component/PostCard";
-import PostForm from "../component/PostFrom";
 import SignUp from "../component/screens/SignupPage";
 import Login from "../component/screens/LoginPage";
 import FollowScreen from "../component/screens/FollowScreen";
@@ -17,8 +16,7 @@ import axios from "axios";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { me, isLoggedIn } = useSelector((state) => state.user);
-  const { isPosting } = useSelector((state) => state.ui);
+  const { isLoggedIn } = useSelector((state) => state.user);
   const { mainPosts, hasMorePost, loadPostLoading, retweetError } = useSelector(
     (state) => state.post
   );
@@ -82,25 +80,21 @@ const Home = () => {
     };
   }, [hasMorePost, loadPostLoading, mainPosts]);
 
-  // Load post
+  // Load post — 메인 피드는 로그인 여부와 무관하게 공개 API(/posts)로 로드
   useEffect(() => {
-    if (isLoggedIn) {
-      dispatch({ type: LOAD_POST_REQUEST });
-    }
-  }, [isLoggedIn, dispatch]);
+    dispatch({ type: LOAD_POST_REQUEST });
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!loadPostLoading && mainPosts.length > 0) {
+    // 게시글이 0개여도 첫 로드가 끝나면 메인/로그인 등 화면 전환이 가능해야 함
+    if (!loadPostLoading) {
       setIsLoading(false);
     }
-  }, [loadPostLoading, mainPosts]);
+  }, [loadPostLoading]);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <AppLayoutPage
-        postFrom={me && isPosting ? <PostForm /> : ""}
-        content={renderContent()}
-      />
+      <AppLayoutPage content={renderContent()} />
     </div>
   );
 };

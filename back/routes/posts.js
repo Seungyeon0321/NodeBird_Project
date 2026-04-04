@@ -2,6 +2,8 @@ const express = require("express");
 
 const { Post, User, Image, Comment } = require("../models");
 const { Op } = require("sequelize");
+const { getPostFeedIncludes } = require("./postFeedIncludes");
+
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
@@ -13,41 +15,8 @@ router.get("/", async (req, res, next) => {
     const posts = await Post.findAll({
       where,
       limit: 10,
-      order: [
-        ["createdAt", "DESC"],
-        [Comment, "createdAt", "DESC"],
-      ],
-      include: [
-        {
-          model: User,
-          attributes: ["id", "nickname"],
-        },
-        {
-          model: Image,
-        },
-        {
-          model: Comment,
-          include: [{ model: User, attributes: ["id", "nickname"] }],
-        },
-        {
-          model: User,
-          as: "Likers",
-          attributes: ["id"],
-        },
-        {
-          model: Post,
-          as: "Retweet",
-          include: [
-            {
-              model: User,
-              attributes: ["id", "nickname"],
-            },
-            {
-              model: Image,
-            },
-          ],
-        },
-      ],
+      order: [["createdAt", "DESC"]],
+      include: getPostFeedIncludes({ User, Image, Comment, Post }),
     });
     res.status(200).json(posts);
   } catch (error) {

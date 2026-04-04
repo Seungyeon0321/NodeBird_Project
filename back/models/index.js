@@ -25,6 +25,7 @@ db.Image = image;
 db.Post = post;
 db.User = user;
 
+
 async function myFunction() {
   const result = await sequelize.authenticate();
   if (result) console.log("connection successful!");

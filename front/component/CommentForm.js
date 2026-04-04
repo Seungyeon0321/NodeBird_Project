@@ -31,21 +31,22 @@ const CommentForm = ({ post }) => {
 
   return (
     <Form onFinish={onSubmitComment}>
-      <Form.Item style={{ position: "relative", margin: 0 }}>
+      <Form.Item style={{ margin: 0 }}>
         <Input.TextArea
           value={commentText}
           onChange={onChangeCommentText}
-          row={4}
+          rows={4}
         />
+      </Form.Item>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 12 }}>
         <Button
-          style={{ position: "absolute", right: 0, bottom: -40, zIndex: 1 }}
           type="primary"
           htmlType="submit"
           loading={addCommentLoading}
         >
           Leave A Comment
         </Button>
-      </Form.Item>
+      </div>
     </Form>
   );
 };

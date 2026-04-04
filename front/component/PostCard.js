@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, Popover, Button, Avatar, List, Skeleton } from "antd";
+import { Card, Popover, Button, Avatar, List, Skeleton, Typography } from "antd";
 import {
   EllipsisOutlined,
   HeartOutlined,
@@ -10,6 +10,7 @@ import {
   HeartTwoTone,
 } from "@ant-design/icons";
 import Link from "next/link";
+import styled from "styled-components";
 
 import PostImages from "./PostImages";
 import CommentForm from "./CommentForm";
@@ -27,6 +28,103 @@ import moment from "moment";
 
 moment.locale("ko");
 
+const CardShell = styled.div`
+  margin-bottom: 14px;
+`;
+
+const cardStyles = {
+  header: {
+    minHeight: "auto",
+    padding: "10px 14px",
+    borderBottom: "1px solid var(--border-color, #e5e7eb)",
+  },
+  body: {
+    padding: "15px 14px 10px",
+  },
+  actions: {
+    padding: "6px 8px",
+    margin: 0,
+    borderTop: "1px solid var(--border-color, #e5e7eb)",
+  },
+};
+
+const cardSurfaceStyle = {
+  borderRadius: "var(--radius-md, 16px)",
+  overflow: "hidden",
+  background: "var(--surface, #ffffff)",
+  border: "1px solid var(--border-color, #e5e7eb)",
+  boxShadow: "var(--shadow-sm, 0 1px 2px rgba(16, 24, 40, 0.06))",
+};
+
+const PostHeader = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+`;
+
+const PostHeaderMain = styled.div`
+  flex: 1;
+  min-width: 0;
+`;
+
+const PostHeaderRow = styled.div`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+`;
+
+const NicknameLink = styled.span`
+  font-weight: 600;
+  font-size: 15px;
+  color: #111827;
+  line-height: 1.3;
+  &:hover {
+    color: var(--color-primary, #a3cfcd);
+  }
+`;
+
+function PostBody({ post, user, editMode, onCancelUpdatePost, onChangePost }) {
+  const dateStr = moment(post.createdAt).format("YYYY.MM.DD HH:mm");
+
+  return (
+    <PostHeader>
+      <Link href={`/user/${user.id}`} prefetch={false}>
+        <Avatar
+          size={42}
+          style={{
+            backgroundColor: "var(--color-primary, #a3cfcd)",
+            color: "#fff",
+            flexShrink: 0,
+          }}
+        >
+          {user.nickname?.[0]}
+        </Avatar>
+      </Link>
+      <PostHeaderMain>
+        <PostHeaderRow>
+          <Link href={`/user/${user.id}`} prefetch={false} style={{ textDecoration: "none" }}>
+            <NicknameLink>{user.nickname}</NicknameLink>
+          </Link>
+          <Typography.Text type="secondary" style={{ fontSize: 12, whiteSpace: "nowrap" }}>
+            {dateStr}
+          </Typography.Text>
+        </PostHeaderRow>
+        <div style={{ fontSize: 15, lineHeight: 1.55, color: "#374151" }}>
+          <PostCardContent
+            postData={post.content}
+            editMode={editMode}
+            onCancelUpdatePost={onCancelUpdatePost}
+            onChangePost={onChangePost}
+          />
+        </div>
+      </PostHeaderMain>
+    </PostHeader>
+  );
+}
+
 const PostCard = ({ post }) => {
   const { removePostLoading } = useSelector((state) => state.post);
   const [editMode, setEditMode] = useState(false);
@@ -35,7 +133,6 @@ const PostCard = ({ post }) => {
 
   const onClickUpdate = useCallback(() => {
     setEditMode(true);
-    console.log(editMode);
   }, []);
 
   const onCancelUpdatePost = useCallback(() => {
@@ -52,14 +149,12 @@ const PostCard = ({ post }) => {
         },
       });
     },
-    [post]
+    [post, dispatch]
   );
 
-  const id = useSelector((state) => {
-    return state.user.me?.id;
-  });
+  const id = useSelector((state) => state.user.me?.id);
 
-  const liked = post.Likers.find((v) => v.id === id);
+  const liked = post.Likers?.find((v) => v.id === id);
 
   const onLike = useCallback(() => {
     if (!id) {
@@ -69,7 +164,7 @@ const PostCard = ({ post }) => {
       type: LIKE_POST_REQUEST,
       data: post.id,
     });
-  }, [id]);
+  }, [id, dispatch, post.id]);
 
   const onUnlike = useCallback(() => {
     if (!id) {
@@ -79,7 +174,7 @@ const PostCard = ({ post }) => {
       type: UNLIKE_POST_REQUEST,
       data: post.id,
     });
-  }, [id]);
+  }, [id, dispatch, post.id]);
 
   const onToggleComment = useCallback(() => {
     setCommentFormOpened((prev) => !prev);
@@ -90,7 +185,7 @@ const PostCard = ({ post }) => {
       return alert("You need to login first");
     }
     return dispatch({ type: REMOVE_POST_REQUEST, data: post.id });
-  }, []);
+  }, [id, dispatch, post.id]);
 
   const onRetweet = useCallback(() => {
     if (!id) {
@@ -100,29 +195,29 @@ const PostCard = ({ post }) => {
       type: RETWEET_REQUEST,
       data: post.id,
     });
-  }, [id]);
+  }, [id, dispatch, post.id]);
+
+  const actionIconStyle = { fontSize: 18, padding: "4px 8px" };
 
   return (
-    <div style={{ marginBottom: 20 }}>
+    <CardShell>
       <Card
-        style={{
-          background: id && post.User.id === id ? "white" : "#f0f0f0",
-          border: "1px solid #3b3b3b",
-        }}
-        header={"none"}
-        cover={post.Images[0] && <PostImages images={post.Images} />}
+        style={cardSurfaceStyle}
+        styles={cardStyles}
+        cover={post.Images?.[0] ? <PostImages images={post.Images} /> : undefined}
         actions={[
-          <RetweetOutlined key="retweet" onClick={onRetweet} />,
+          <RetweetOutlined key="retweet" onClick={onRetweet} style={actionIconStyle} />,
           <div key={`like-${post.id}`}>
             {liked ? (
-              <HeartTwoTone twoToneColor="#eb2f96" onClick={onUnlike} />
+              <HeartTwoTone twoToneColor="#eb2f96" onClick={onUnlike} style={actionIconStyle} />
             ) : (
-              <HeartOutlined onClick={onLike} />
+              <HeartOutlined onClick={onLike} style={actionIconStyle} />
             )}
           </div>,
           <MessageOutlined
             key={`comment-${post.id}`}
             onClick={onToggleComment}
+            style={actionIconStyle}
           />,
           <Popover
             key={`more-${post.id}`}
@@ -146,81 +241,70 @@ const PostCard = ({ post }) => {
                     </Button>
                   </>
                 ) : (
-                  <Button key={`report-${post.id}`}>
-                    {`Report${post.User.id}-${id}`}
-                  </Button>
+                  <Button key={`report-${post.id}`}>Report</Button>
                 )}
               </Button.Group>
             }
           >
-            <EllipsisOutlined />
+            <EllipsisOutlined style={actionIconStyle} />
           </Popover>,
         ]}
         title={
-          post.RetweetId ? `It's retweeted by ${post.User.nickname}` : null
+          post.RetweetId ? (
+            <Typography.Text style={{ fontSize: 13 }}>
+              <RetweetOutlined style={{ marginRight: 6, color: "var(--color-primary, #a3cfcd)" }} />
+              {post.User.nickname}님이 리트윗했습니다
+            </Typography.Text>
+          ) : null
         }
-        extra={id && <FollowButton post={post}></FollowButton>}
+        extra={id ? <FollowButton post={post} /> : null}
       >
         {post.RetweetId && post.Retweet ? (
           <Card
+            size="small"
+            bordered
+            style={{ marginTop: 4, borderRadius: 12 }}
+            styles={{
+              body: { padding: "10px 12px" },
+            }}
             cover={
-              post.Retweet.Images[0] && (
+              post.Retweet.Images?.[0] ? (
                 <PostImages images={post.Retweet.Images} />
-              )
+              ) : undefined
             }
           >
-            <div style={{ float: "right" }}>
-              {moment(post.createdAt).format("YYYY.MM.DD")}
-            </div>
-            <Card.Meta
-              avatar={
-                <Link href={`/user/${post.Retweet.User.id}`} prefetch={false}>
-                  <Avatar>{post.Retweet.User.nickname[0]}</Avatar>
-                </Link>
-              }
-              title={post.Retweet.User.nickname}
-              description={
-                <PostCardContent
-                  postData={post.Retweet.content}
-                  editMode={editMode}
-                  onCancelUpdatePost={onCancelUpdatePost}
-                  onChangePost={onChangePost}
-                ></PostCardContent>
-              }
+            <PostBody
+              post={post.Retweet}
+              user={post.Retweet.User}
+              editMode={editMode}
+              onCancelUpdatePost={onCancelUpdatePost}
+              onChangePost={onChangePost}
             />
           </Card>
         ) : (
-          <>
-            <div style={{ float: "right" }}>
-              {moment(post.createdAt).format("YYYY.MM.DD")}
-            </div>
-            <Card.Meta
-              avatar={
-                <Link href={`/user/${post.User.id}`} prefetch={false}>
-                  <Avatar>{post.User.nickname[0]}</Avatar>
-                </Link>
-              }
-              key={`meta-${post.id}`}
-              title={post.User.nickname}
-              description={
-                <PostCardContent
-                  postData={post.content}
-                  editMode={editMode}
-                  onCancelUpdatePost={onCancelUpdatePost}
-                  onChangePost={onChangePost}
-                />
-              }
-            />
-          </>
+          <PostBody
+            post={post}
+            user={post.User}
+            editMode={editMode}
+            onCancelUpdatePost={onCancelUpdatePost}
+            onChangePost={onChangePost}
+          />
         )}
       </Card>
       {commentFormOpened && (
-        <div>
-          {/* 게시글의 아이디가 필요하기 때문에 post 프롬을 넘겨주는 중 */}
+        <div
+          style={{
+            marginTop: 10,
+            padding: "12px 14px",
+            background: "var(--surface, #fff)",
+            borderRadius: "var(--radius-md, 16px)",
+            border: "1px solid var(--border-color, #e5e7eb)",
+          }}
+        >
           <CommentForm post={post} />
           <List
             className="demo-loadmore-list"
-            header={`Total Comments`}
+            header={<Typography.Text strong>Comments</Typography.Text>}
             itemLayout="horizontal"
             dataSource={post.Comments}
             renderItem={(item) => (
@@ -239,21 +323,16 @@ const PostCard = ({ post }) => {
                         <Avatar>{item.User.nickname[0]}</Avatar>
                       </Link>
                     }
-                    title={
-                      <a href="https://ant.design">{item.User.nickname}</a>
-                    }
+                    title={<span>{item.User.nickname}</span>}
                     description={item.content}
                   />
-                  <div>content</div>
                 </Skeleton>
               </List.Item>
             )}
-          ></List>
+          />
         </div>
       )}
-      {/* {<CommentForm></CommentForm>} 
-      <Comments></Comments> */}
-    </div>
+    </CardShell>
   );
 };
 
